@@ -64,9 +64,14 @@ def create_app() -> Flask:
             data=data
         )
 
+    @app.after_request
+    def setCORS(response):
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
+
     return app
 
 
 if __name__ == "__main__":
     app = create_app()
-    app.run()
+    app.run(host='0.0.0.0', port=5001)
