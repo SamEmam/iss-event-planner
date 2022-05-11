@@ -27,13 +27,13 @@ def create_app() -> Flask:
 
         if request.method == 'POST':
             if request.form['input_button'] == 'Create event':
+                input_title = request.form['input_title']
                 input_host = request.form['input_host']
-                input_months = request.form['input_months']
                 input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
                 data.append({
+                    "title": input_title,
                     "host": input_host,
-                    "months": input_months,
                     "date": input_date,
                     "description": input_desc
                 })
