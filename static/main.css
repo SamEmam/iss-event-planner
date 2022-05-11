@@ -392,6 +392,13 @@ Main components
   border-right: 7px solid #333C42;
 }
 
+@media only screen and (min-width: 0px) {
+  .cd-timeline-content h2 {
+    font-size: 20px;
+    font-size: 1.25rem;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .cd-timeline-content h2 {
     font-size: 20px;
