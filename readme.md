@@ -1,3 +1,4 @@
 ´´´
-docker run -d --restart always -p 5000:5000 --name=api -it --volume shared-data:/data api
+docker build --tag event_planner .
+docker run -d --restart always -p 5001:5001 --name=event_planner -it --volume shared-data:/data event_planner
 ´´´
