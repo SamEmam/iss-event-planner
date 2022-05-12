@@ -50,9 +50,13 @@ def create_app() -> Flask:
 
             elif request.form['input_button'] == 'Save':
                 input_index = int(request.form['input_index'])
+                input_title = request.form['input_title']
+                input_host = request.form['input_host']
                 input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
 
+                data[input_index]['title'] = input_title
+                data[input_index]['host'] = input_host
                 data[input_index]['date'] = input_date
                 data[input_index]['description'] = input_desc
 
