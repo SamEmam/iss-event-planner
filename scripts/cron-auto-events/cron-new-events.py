@@ -16,11 +16,11 @@ ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
-settings_file = os.path.join(SITE_ROOT, data_path, "settings.json")
+settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 
 if debug:
     data_file = "../../event_data.json"
-    settings_file = "../../settings.json"
+    settings_file = "../../event_settings.json"
 
 
 def get_title(today):
