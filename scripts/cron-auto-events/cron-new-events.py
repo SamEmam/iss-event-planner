@@ -1,4 +1,6 @@
 from dateutil.relativedelta import relativedelta
+from dateutil import parser
+from icalendar import Calendar, Event
 from datetime import date
 
 import requests
@@ -17,10 +19,12 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
+calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 
 if debug:
     data_file = "../../event_data.json"
     settings_file = "../../event_settings.json"
+    calendar_file = "../../rumstationen.ics"
 
 
 def get_title(today):
@@ -70,6 +74,32 @@ def auto_generate_event():
 
     json.dump(data, open(data_file, 'w'))
     json.dump(settings_data, open(settings_file, 'w'))
+
+
+def create_ical_event(event_data):
+    event = Event()
+    event.add('summary', event_data['title'])
+    event.add('organizer', event_data['host'])
+    event.add('description', event_data['description'])
+    event.add('dtstart', parser.parse(event_data['date']))
+    event.add('dtstamp', parser.parse(event_data['date']))
+    return event
+
+
+def generate_ics_file():
+    data = json.load(open(data_file, 'r'))
+    cal = Calendar()
+
+    for event_data in data:
+        cal.add_component(create_ical_event(event_data))
+
+    with open(calendar_file, 'wb') as ics_file:
+        ics_file.write(cal.to_ical())
+
+
+@aiocron.crontab('0 * * * *')
+async def update_ics_file():
+    generate_ics_file()
 
 
 @aiocron.crontab('0 0 1 */2 *')

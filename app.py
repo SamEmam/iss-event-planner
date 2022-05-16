@@ -6,20 +6,22 @@ import json
 import os
 
 
-debug = True
+debug = False
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
+calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 
 if debug:
     data_file = "event_data.json"
     personal_data_file = "personal_event_data.json"
+    calendar_file = "rumstationen.ics"
 
 
 def config_app(app):
-    app.config["DEBUG"] = True
+    app.config["DEBUG"] = debug
     app.config['SECRET_KEY'] = "marc1234"
     app.config['AUTH_DISABLED'] = "0"
 
@@ -145,14 +147,13 @@ def create_app() -> Flask:
             data=data
         )
 
-    def make_calendar():
-        return calendar_data
-
     @app.route('/calendar/')
     def calendar():
 
         #  Get the calendar data
-        _calendar = make_calendar()
+        calendar_data = open(calendar_file)
+        _calendar = str(calendar_data)
+        calendar_data.close
 
         #  turn calendar data into a response
         response = app.make_response(_calendar)
