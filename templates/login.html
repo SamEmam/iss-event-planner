@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="panel">
+    <div class="panel-header">
+      <h3 class="title">Login</h3>
+  
+      <div class="calendar-views">
+        <span>Den Internationale Rumstation</span>
+      </div>
+    </div>
+  
+    <div class="panel-body">
+      <div class="w3-container" style="padding: 2em; ">
+        <div class="w3-card-4" style="width:100%;background-color: #333C42;">
+          <!-- <header class="w3-container w3-light-grey">
+            <h3>Login</h3>
+          </header> -->
+          <form method="post">
+            <div class="w3-container">
+                <input name="appkey" placeholder="password.." style="margin-top: 1em;margin-bottom: 1em; background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);width: 100%;">
+            </div>
+            <button class="w3-button w3-block w3-dark-grey">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

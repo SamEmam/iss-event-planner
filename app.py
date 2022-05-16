@@ -1,11 +1,12 @@
 from flask import request, Flask, render_template, redirect, url_for
+from appkey import require_appkey_factory
 from datetime import date
 
 import json
 import os
 
 
-debug = False
+debug = True
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
@@ -19,7 +20,8 @@ if debug:
 
 def config_app(app):
     app.config["DEBUG"] = True
-    app.config['SECRET_KEY'] = "hest1234"
+    app.config['SECRET_KEY'] = "marc1234"
+    app.config['AUTH_DISABLED'] = "0"
 
 
 def create_app() -> Flask:
@@ -27,7 +29,18 @@ def create_app() -> Flask:
 
     config_app(app)
 
+    require_appkey = require_appkey_factory(app)
+
     @app.route('/', methods=['GET', 'POST'])
+    def login():
+
+        if request.method == 'POST':
+            return redirect(url_for('index', key=request.form['appkey']))
+
+        return render_template('login.html')
+
+    @app.route('/home', methods=['GET', 'POST'])
+    @require_appkey
     def index():
         data = json.load(open(data_file, 'r'))
         try:
@@ -77,7 +90,8 @@ def create_app() -> Flask:
 
         return render_template(
             'index.html',
-            data=data
+            data=data,
+            appkey=request.args.get('key'),
         )
 
     @app.route('/personal', methods=['GET', 'POST'])
@@ -130,6 +144,20 @@ def create_app() -> Flask:
             'personal.html',
             data=data
         )
+
+    def make_calendar():
+        return calendar_data
+
+    @app.route('/calendar/')
+    def calendar():
+
+        #  Get the calendar data
+        _calendar = make_calendar()
+
+        #  turn calendar data into a response
+        response = app.make_response(_calendar)
+        response.headers["Content-Disposition"] = "attachment; filename=calendar.ics"
+        return response
 
     @app.after_request
     def setCORS(response):
