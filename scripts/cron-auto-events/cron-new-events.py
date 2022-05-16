@@ -96,39 +96,39 @@ def generate_ics_file():
         ics_file.writelines(cal)
 
 
-def strip_empty_lines():
-    with open(calendar_file, 'r') as open_file:
-        unix_content = open_file.read()
+# def strip_empty_lines():
+#     with open(calendar_file, 'r') as open_file:
+#         unix_content = open_file.read()
 
-    lines = unix_content.split("\n")
+#     lines = unix_content.split("\n")
 
-    windows_content = ""
-    for line in lines:
-        windows_content += line + "\r\n"
+#     windows_content = ""
+#     for line in lines:
+#         windows_content += line + "\r\n"
 
-    with open(calendar_file, 'w') as open_file:
-        open_file.write(windows_content)
+#     with open(calendar_file, 'w') as open_file:
+#         open_file.write(windows_content)
 
 
-# def convert_line_endings():
-#     # replacement strings
-#     WINDOWS_LINE_ENDING = b'\r\n'
-#     UNIX_LINE_ENDING = b'\n'
+def convert_line_endings():
+    # replacement strings
+    WINDOWS_LINE_ENDING = b'\r\n'
+    UNIX_LINE_ENDING = b'\n'
 
-#     with open(calendar_file, 'rb') as open_file:
-#         content = open_file.read()
+    with open(calendar_file, 'rb') as open_file:
+        content = open_file.read()
 
-#     # Unix ➡ Windows
-#     content = content.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
+    # Unix ➡ Windows
+    content = content.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
 
-#     with open(calendar_file, 'wb') as open_file:
-#         open_file.write(content)
+    with open(calendar_file, 'wb') as open_file:
+        open_file.write(content)
 
 
 @aiocron.crontab('* * * * *')
 async def update_ics_file():
     generate_ics_file()
-    strip_empty_lines()
+    convert_line_endings()
 
 
 @aiocron.crontab('0 0 1 */2 *')
