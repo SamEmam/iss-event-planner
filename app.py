@@ -4,6 +4,7 @@ from datetime import date
 
 import json
 import os
+import io
 
 
 debug = False
@@ -151,8 +152,8 @@ def create_app() -> Flask:
     def calendar():
 
         #  Get the calendar data
-        with open(calendar_file, 'r') as calendar_data:
-            calendar_string = str(calendar_data.read())
+        with io.open(calendar_file, 'r', newline='\r\n') as calendar_data:
+            calendar_string = calendar_data.read()
 
         #  turn calendar data into a response
         response = app.make_response(calendar_string)
