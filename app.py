@@ -64,14 +64,14 @@ def create_app() -> Flask:
                 })
 
                 json.dump(data, open(data_file, 'w'))
-                return redirect(url_for('index'))
+                return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Delete':
                 input_index = int(request.form['input_index'])
                 del data[input_index]
 
                 json.dump(data, open(data_file, 'w'))
-                return redirect(url_for('index'))
+                return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Save':
                 input_index = int(request.form['input_index'])
@@ -86,7 +86,7 @@ def create_app() -> Flask:
                 data[input_index]['description'] = input_desc
 
                 json.dump(data, open(data_file, 'w'))
-                return redirect(url_for('index'))
+                return redirect(url_for('index', key=request.args.get('key')))
 
         return render_template(
             'index.html',

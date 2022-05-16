@@ -34,8 +34,8 @@
             </div>
             <p><textarea name="input_desc" autocomplete="off" style="width: 100%; overflow: hidden;background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);" onmouseover='this.style.height = this.scrollHeight + "px"' oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'>{{ event.description }}</textarea></p>
             <input type="hidden" name="input_index" value="{{ loop.index0 }}">
-            <input type="submit" name="input_button" value="Save" action="{{url_for('index')}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);">
-            <input type="submit" name="input_button" value="Delete" action="{{url_for('index')}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);" onclick="return confirm('Are you sure you want to delete this event?')">
+            <input type="submit" name="input_button" value="Save" action="{{url_for('index', key=appkey)}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);">
+            <input type="submit" name="input_button" value="Delete" action="{{url_for('index', key=appkey)}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);" onclick="return confirm('Are you sure you want to delete this event?')">
           </form>
           </div> <!-- cd-timeline-content -->
         </div> <!-- cd-timeline-block -->
@@ -62,7 +62,7 @@
             </div>
             <p><textarea name="input_desc" placeholder="Description.." autocomplete="off" style="width: 100%; overflow: hidden;background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea></p>
             <input type="hidden" name="input_index">
-            <input type="submit" name="input_button" value="Create event" action="{{url_for('index')}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);">
+            <input type="submit" name="input_button" value="Create event" action="{{url_for('index', key=appkey)}}" style="background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);">
           </form>
           </div> <!-- cd-timeline-content -->
         </div> <!-- cd-timeline-block -->
