@@ -1,0 +1,25 @@
+{
+    "event_rotation_index": 0,
+    "event_rotation": [
+        "Nicole & Sam",
+        "Marc",
+        "Mathias & Charlotte",
+        "Kris & Camilla",
+        "Obama & Michella",
+        "Jonas",
+        "Alex & Katrine",
+        "Christoffer & Caroline",
+        "Mathias Bech"
+    ],
+    "phone_numbers": {
+        "Nicole & Sam": "4522588025",
+        "Marc": "4522588025",
+        "Mathias & Charlotte": "4522588025",
+        "Kris & Camilla": "4522588025",
+        "Obama & Michella": "4522588025",
+        "Jonas": "4522588025",
+        "Alex & Katrine": "4522588025",
+        "Christoffer & Caroline": "4522588025",
+        "Mathias Bech": "4522588025"
+    }
+}

@@ -1,4 +1,5 @@
 ´´´
 docker build --tag event_planner .
 docker run -d --restart always -p 5001:5001 --name=event_planner -it --volume shared-data:/data event_planner
+docker stop event_planner  && docker rm event_planner  && docker build --tag event_planner . && docker run -d --restart always -p 80:5001 --name=event_planner -it --volume shared-data:/data event_planner
 ´´´
