@@ -152,14 +152,14 @@ def create_app() -> Flask:
 
         #  Get the calendar data
         calendar_data = open(calendar_file)
-        _calendar = str(calendar_data)
+        calendar_string = str(calendar_data)
         calendar_data.close
 
         #  turn calendar data into a response
-        response = app.make_response(_calendar, {'Content-Type': 'text/calendar'})
+        response = app.make_response(calendar_string)
         response.headers["Content-Disposition"] = "attachment; filename=calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
-        return response(mimetype='text/calendar')
+        return response
 
     @app.after_request
     def setCORS(response):
