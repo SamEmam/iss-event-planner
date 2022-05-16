@@ -151,10 +151,8 @@ def create_app() -> Flask:
     def calendar():
 
         #  Get the calendar data
-        calendar_data = open(calendar_file)
-        calendar_string = str(calendar_data.read())
-        calendar_string = convert_line_endings(calendar_string)
-        calendar_data.close
+        with open(calendar_file, 'r') as calendar_data:
+            calendar_string = str(calendar_data.read())
 
         #  turn calendar data into a response
         response = app.make_response(calendar_string)

@@ -10,7 +10,7 @@ import json
 import os
 
 
-debug = True
+debug = False
 
 ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
