@@ -1,5 +1,4 @@
 from dateutil.relativedelta import relativedelta
-from dateutil import parser
 from ics import Calendar, Event
 from datetime import date
 
@@ -10,7 +9,7 @@ import json
 import os
 
 
-debug = False
+debug = True
 
 ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
@@ -81,7 +80,7 @@ def create_ical_event(event_data):
     event.name = event_data['title']
     event.organizer = event_data['host']
     event.description = event_data['description'].replace('\n', '. ')
-    event.begin = parser.parse(event_data['date'])
+    event.begin = event_data['date']
     return event
 
 
