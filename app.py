@@ -151,13 +151,11 @@ def create_app() -> Flask:
     @app.route('/calendar/')
     def calendar():
 
-        #  Get the calendar data
+        # Get the calendar data
         with io.open(calendar_file, 'r', newline='\r\n') as calendar_data:
             calendar_string = calendar_data.read()
-            calendar_string.replace('DTSTART', 'DTSTART;VALUE=DATE').strip('T000000Z')
 
-
-        #  turn calendar data into a response
+        # turn calendar data into a response
         response = app.make_response(calendar_string)
         response.headers["Content-Disposition"] = "attachment; filename=calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
