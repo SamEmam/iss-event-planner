@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 from dateutil import parser
-from icalendar import Calendar, Event
+from ics import Calendar, Event
 from datetime import date
 
 import requests
@@ -78,11 +78,10 @@ def auto_generate_event():
 
 def create_ical_event(event_data):
     event = Event()
-    event.add('summary', event_data['title'])
-    event.add('organizer', event_data['host'])
-    event.add('description', event_data['description'])
-    event.add('dtstart', parser.parse(event_data['date']))
-    event.add('dtstamp', parser.parse(event_data['date']))
+    event.name = event_data['title']
+    event.organizer = event_data['host']
+    event.description = event_data['description']
+    event.begin = parser.parse(event_data['date'])
     return event
 
 
@@ -91,10 +90,10 @@ def generate_ics_file():
     cal = Calendar()
 
     for event_data in data:
-        cal.add_component(create_ical_event(event_data))
+        cal.events.add(create_ical_event(event_data))
 
-    with open(calendar_file, 'wb') as ics_file:
-        ics_file.write(cal.to_ical())
+    with open(calendar_file, 'w') as ics_file:
+        ics_file.writelines(cal)
 
 
 @aiocron.crontab('0 * * * *')
