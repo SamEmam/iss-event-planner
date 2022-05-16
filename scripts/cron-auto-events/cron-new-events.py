@@ -10,7 +10,7 @@ import json
 import os
 
 
-debug = False
+debug = True
 
 ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
@@ -22,9 +22,9 @@ settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 
 if debug:
-    data_file = "../../event_data.json"
-    settings_file = "../../event_settings.json"
-    calendar_file = "../../rumstationen.ics"
+    data_file = "event_data.json"
+    settings_file = "event_settings.json"
+    calendar_file = "rumstationen.ics"
 
 
 def get_title(today):
@@ -80,7 +80,7 @@ def create_ical_event(event_data):
     event = Event()
     event.name = event_data['title']
     event.organizer = event_data['host']
-    event.description = event_data['description']
+    event.description = event_data['description'].replace('\n', '. ')
     event.begin = parser.parse(event_data['date'])
     return event
 
@@ -96,9 +96,39 @@ def generate_ics_file():
         ics_file.writelines(cal)
 
 
-@aiocron.crontab('0 * * * *')
+def strip_empty_lines():
+    with open(calendar_file, 'r') as open_file:
+        unix_content = open_file.read()
+
+    lines = unix_content.split("\n")
+
+    windows_content = ""
+    for line in lines:
+        windows_content += line + "\r\n"
+
+    with open(calendar_file, 'w') as open_file:
+        open_file.write(windows_content)
+
+
+# def convert_line_endings():
+#     # replacement strings
+#     WINDOWS_LINE_ENDING = b'\r\n'
+#     UNIX_LINE_ENDING = b'\n'
+
+#     with open(calendar_file, 'rb') as open_file:
+#         content = open_file.read()
+
+#     # Unix ➡ Windows
+#     content = content.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
+
+#     with open(calendar_file, 'wb') as open_file:
+#         open_file.write(content)
+
+
+@aiocron.crontab('* * * * *')
 async def update_ics_file():
     generate_ics_file()
+    strip_empty_lines()
 
 
 @aiocron.crontab('0 0 1 */2 *')

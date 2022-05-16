@@ -6,20 +6,21 @@ DESCRIPTION:Marc inviterer til trip aften!
 ORGANIZER;CN=Marc:mailto:Marc
 DTSTART:20220503T000000Z
 SUMMARY:Rumrejse hos Marc
-UID:d0d2af12-2875-4018-bbcd-2a11ff66ba4e@d0d2.org
+UID:6644a555-e013-4811-bf87-5759fd70cf2c@6644.org
 END:VEVENT
 BEGIN:VEVENT
 DESCRIPTION:nicoleogsam.dk
 ORGANIZER;CN=Nicole og Sam:mailto:Nicole og Sam
 DTSTART:20220709T000000Z
 SUMMARY:Bryllup
-UID:f8f9d134-f8d4-48f7-8982-3e472f832790@f8f9.org
+UID:ef5581a8-7caf-464f-8dd4-2450c7782a98@ef55.org
 END:VEVENT
 BEGIN:VEVENT
-DESCRIPTION:Eventyrløbet med trækvogn og øl\nMed enhjørninge tema
+DESCRIPTION:Eventyrløbet med trækvogn og øl. Med enhjørninge tema
 ORGANIZER;CN=Sam:mailto:Sam
 DTSTART:20220526T000000Z
 SUMMARY:Eventyr-DRUK-løbet
-UID:4dd3af4d-768e-495a-bdf6-3139d4406e2f@4dd3.org
+UID:1e5d2c5e-59c2-4555-90b6-88179d0892e0@1e5d.org
 END:VEVENT
 END:VCALENDAR
+
