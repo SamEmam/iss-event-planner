@@ -110,25 +110,25 @@ def generate_ics_file():
 #         open_file.write(windows_content)
 
 
-def convert_line_endings():
-    # replacement strings
-    WINDOWS_LINE_ENDING = b'\r\n'
-    UNIX_LINE_ENDING = b'\n'
+# def convert_line_endings():
+#     # replacement strings
+#     WINDOWS_LINE_ENDING = b'\r\n'
+#     UNIX_LINE_ENDING = b'\n'
 
-    with open(calendar_file, 'rb') as open_file:
-        content = open_file.read()
+#     with open(calendar_file, 'rb') as open_file:
+#         content = open_file.read()
 
-    # Unix ➡ Windows
-    content = content.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
+#     # Unix ➡ Windows
+#     content = content.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
 
-    with open(calendar_file, 'wb') as open_file:
-        open_file.write(content)
+#     with open(calendar_file, 'wb') as open_file:
+#         open_file.write(content)
 
 
 @aiocron.crontab('* * * * *')
 async def update_ics_file():
     generate_ics_file()
-    convert_line_endings()
+    # convert_line_endings()
 
 
 @aiocron.crontab('0 0 1 */2 *')
