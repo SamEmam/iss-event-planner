@@ -158,6 +158,7 @@ def create_app() -> Flask:
         #  turn calendar data into a response
         response = app.make_response(_calendar)
         response.headers["Content-Disposition"] = "attachment; filename=calendar.ics"
+        response.headers["Content-Type"] = "text/calendar"
         return response(mimetype='text/calendar')
 
     @app.after_request
