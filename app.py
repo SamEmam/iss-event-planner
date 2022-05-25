@@ -14,11 +14,13 @@ data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
+personal_calendar_file = os.path.join(SITE_ROOT, data_path, "personal.ics")
 
 if debug:
     data_file = "event_data.json"
     personal_data_file = "personal_event_data.json"
     calendar_file = "rumstationen.ics"
+    personal_calendar_file = "personal.ics"
 
 
 def config_app(app):
@@ -158,6 +160,19 @@ def create_app() -> Flask:
         # turn calendar data into a response
         response = app.make_response(calendar_string)
         response.headers["Content-Disposition"] = "attachment; filename=calendar.ics"
+        response.headers["Content-Type"] = "text/calendar"
+        return response
+
+    @app.route('/personal/calendar/')
+    def personal_calendar_ics():
+
+        # Get the calendar data
+        with io.open(personal_calendar_file, 'r', newline='\r\n') as calendar_data:
+            calendar_string = calendar_data.read()
+
+        # turn calendar data into a response
+        response = app.make_response(calendar_string)
+        response.headers["Content-Disposition"] = "attachment; filename=personal_calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
         return response
 

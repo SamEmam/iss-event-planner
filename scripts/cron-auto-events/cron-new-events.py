@@ -17,13 +17,17 @@ ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
+personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
+personal_calendar_file = os.path.join(SITE_ROOT, data_path, "personal.ics")
 
 if debug:
     data_file = "event_data.json"
+    personal_data_file = "personal_event_data.json"
     settings_file = "event_settings.json"
     calendar_file = "rumstationen.ics"
+    personal_calendar_file = "personal.ics"
 
 
 def get_title(today):
@@ -85,20 +89,21 @@ def create_ical_event(event_data):
     return event
 
 
-def generate_ics_file():
-    data = json.load(open(data_file, 'r'))
+def generate_ics_file(input_file, output_file):
+    data = json.load(open(input_file, 'r'))
     cal = Calendar()
 
     for event_data in data:
         cal.events.add(create_ical_event(event_data))
 
-    with open(calendar_file, 'w') as ics_file:
+    with open(output_file, 'w') as ics_file:
         ics_file.writelines(cal)
 
 
 @aiocron.crontab('0 * * * *')
 async def update_ics_file():
-    generate_ics_file()
+    generate_ics_file(data_file, calendar_file)
+    generate_ics_file(personal_data_file, personal_calendar_file)
 
 
 @aiocron.crontab('0 0 1 */2 *')
