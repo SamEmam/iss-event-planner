@@ -31,9 +31,9 @@ if debug:
 
 
 def get_title(today):
-    today_plus_2 = today + relativedelta(months=+2)
-    today_plus_3 = today + relativedelta(months=+3)
-    title = f"{today_plus_2.strftime('%b')} / {today_plus_3.strftime('%b')}"
+    this_month = today
+    next_month = today + relativedelta(months=+1)
+    title = f"{this_month.strftime('%b')} / {next_month.strftime('%b')}"
     return title
 
 
@@ -66,7 +66,7 @@ def auto_generate_event():
     data.append({
         "title": title,
         "host": next_host,
-        "date": (today + relativedelta(months=+2)).isoformat(),
+        "date": (today + relativedelta(months=+1)).isoformat(),
         "description": "Autogenereret begivenhed.",
         "type": "scheduled",
         "creation_date": today.isoformat()
