@@ -7,6 +7,9 @@ AUTH_DISABLED = os.getenv("AUTH_DISABLED")
 
 auth_key_dict = {
     "marc1234": ['all'],
+    "markmedc": ['all'],
+    "Markmedc": ['all'],
+    "Carkmedc": ['all'],
     "carkmedc": ['all']
 }
 
