@@ -8,7 +8,7 @@ import io
 import requests
 
 
-debug = False
+debug = True
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
