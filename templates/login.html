@@ -1,29 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="panel">
-    <div class="panel-header">
-      <h3 class="title">Login</h3>
-  
-      <div class="calendar-views">
-        <span>Den Internationale Rumstation</span>
-      </div>
-    </div>
-  
-    <div class="panel-body">
-      <div class="w3-container" style="padding: 2em; ">
-        <div class="w3-card-4" style="width:100%;background-color: #333C42;">
-          <!-- <header class="w3-container w3-light-grey">
-            <h3>Login</h3>
-          </header> -->
-          <form method="post">
-            <div class="w3-container">
-                <input name="appkey" placeholder="password.." style="margin-top: 1em;margin-bottom: 1em; background-color: #2B343A; border: 0; color:rgba(255, 255, 255, 0.7);width: 100%;">
+
+
+<!-- Contact Section-->
+
+<body style="background-image: url({{image_of_the_day}}); background-repeat:
+    no-repeat; background-attachment: fixed; background-size: cover; background-position: center;">
+    <section class="page-section" id="contact">
+        <div class="container">
+            <!-- Contact Section Heading-->
+            <h2 class="page-section-subheading text-center text-uppercase mb-2"
+                style="font-size: 1.6em; color:gray; mix-blend-mode: color-dodge;">Den Internationale</h2>
+            <!-- <h1 class="page-section-heading text-center text-uppercase text-secondary mb-0"
+            style="font-size: 4em; text-shadow: 2px 2px gray;">Rumstation</h1> -->
+            <h1 class="page-section-heading text-center text-uppercase mb-1"
+                style="font-size: 4em; color:gray; mix-blend-mode: color-dodge;">Rumstation</h1>
+            <!-- <h1 class="page-section-heading text-center text-uppercase text-secondary mb-0"
+            style="font-size: 4em; background: linear-gradient(to right, #4568DC 0%, #B06AB3  100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 100%;padding: .2em;">Rumstation</h1> -->
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line" style=" color:gray; mix-blend-mode: color-dodge;"></div>
+                <!-- <div class="divider-custom-icon"><i class="fas fa-star"></i></div> -->
+                <!-- <div class="divider-custom-line"></div> -->
             </div>
-            <button class="w3-button w3-block w3-dark-grey">Login</button>
-          </form>
+            <!-- Contact Section Form-->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <form id="contactForm" method="post">
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="appkey" name="appkey" type="password"
+                                placeholder="Enter the password..." data-sb-validations="required"
+                                style="background: rgba(255,255,255,0.4); border-radius: 0.5em;" />
+                            <label for="appkey" style="mix-blend-mode: color-dodge;">Password</label>
+                            <div class="invalid-feedback" data-sb-feedback="appkey:required">A password is required.
+                            </div>
+                        </div>
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Login successful!</div>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3">Login failed!</div>
+                        </div>
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary btn-xl" id="submitButton" type="submit"
+                            style="background-image: linear-gradient(to right, #4568DC 0%, #B06AB3  100%); border:0em;">Login</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-</div>
+    </section>
+</body>
 {% endblock %}

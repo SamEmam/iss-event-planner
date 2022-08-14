@@ -37,14 +37,15 @@ def get_title(today):
     return title
 
 
-def notify_host(phone_number, host, months):
-    json_body = {
-        "value1": phone_number,
-        "value2": host,
-        "value3": months
-    }
-    r = requests.post(ifttt_url, json=json_body)
-    print("IFTTT request status:", r.status_code)
+def notify_host(phone_numbers, host, months):
+    for number in phone_numbers:
+        json_body = {
+            "value1": number,
+            "value2": host,
+            "value3": months
+        }
+        r = requests.post(ifttt_url, json=json_body)
+        print(f"IFTTT request status: {r.status_code}\njson_body: {json_body}")
 
 
 def auto_generate_event():
@@ -66,14 +67,14 @@ def auto_generate_event():
     data.append({
         "title": title,
         "host": next_host,
-        "date": (today + relativedelta(months=+1)).isoformat(),
+        "start_date": (today + relativedelta(months=+1)).isoformat(),
         "description": "Autogenereret begivenhed.",
         "type": "scheduled",
         "creation_date": today.isoformat()
     })
 
-    phone_number = settings_data['phone_numbers'][next_host]
-    notify_host(phone_number, next_host, title)
+    phone_numbers = settings_data['phone_numbers'][next_host]
+    notify_host(phone_numbers, next_host, title)
 
     json.dump(data, open(data_file, 'w'))
     json.dump(settings_data, open(settings_file, 'w'))
@@ -84,8 +85,30 @@ def create_ical_event(event_data):
     event.name = event_data['title']
     event.organizer = event_data['host']
     event.description = event_data['description'].replace('\n', '. ')
-    event.begin = event_data['date']
-    event.make_all_day()
+
+    make_all_day = True
+
+    if event_data['start_time'] or event_data['end_time']:
+        make_all_day = False
+
+    if make_all_day:
+        event.make_all_day()
+        event.begin = event_data['start_date']
+
+        if event_data['end_date']:
+            event.end = event_data['end_date']
+
+    else:
+        if event_data['start_time']:
+            event.begin = f"{event_data['start_date']} {event_data['start_time']}:00"
+
+        if event_data['end_time']:
+            if event_data['end_date']:
+                event.end = f"{event_data['end_date']} {event_data['end_time']}:00"
+
+            else:
+                event.end = f"{event_data['start_date']} {event_data['end_time']}:00"
+
     return event
 
 
@@ -100,7 +123,7 @@ def generate_ics_file(input_file, output_file):
         ics_file.writelines(cal)
 
 
-@aiocron.crontab('0 * * * *')
+@aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
     generate_ics_file(data_file, calendar_file)
     generate_ics_file(personal_data_file, personal_calendar_file)

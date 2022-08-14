@@ -9,6 +9,8 @@ auth_key_dict = {
     "marc1234": ['all'],
     "markmedc": ['all'],
     "Markmedc": ['all'],
+    "marcmedc": ['all'],
+    "Marcmedc": ['all'],
     "Carkmedc": ['all'],
     "carkmedc": ['all']
 }

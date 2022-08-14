@@ -1,13 +1,14 @@
 from flask import request, Flask, render_template, redirect, url_for
 from appkey import require_appkey_factory
-from datetime import date
+from datetime import date, timedelta
 
 import json
 import os
 import io
+import requests
 
 
-debug = False
+debug = True
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
@@ -29,6 +30,23 @@ def config_app(app):
     app.config['AUTH_DISABLED'] = "0"
 
 
+def get_image_of_the_day():
+    start_date = (date.today() - timedelta(days=2)).isoformat()
+    end_date = date.today().isoformat()
+    data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&end_date={end_date}&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
+    if 'hdurl' in data[-1]:
+        return data[-1]['hdurl']
+    elif 'hdurl' in data[-2]:
+        return data[-2]['hdurl']
+    else:
+        return data[-3]['hdurl']
+
+
+def get_title_of_the_day():
+    data = requests.get(f'https://api.nasa.gov/planetary/apod?api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
+    return data['title']
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
 
@@ -42,14 +60,15 @@ def create_app() -> Flask:
         if request.method == 'POST':
             return redirect(url_for('index', key=request.form['appkey']))
 
-        return render_template('login.html')
+        return render_template('login.html',
+        image_of_the_day=get_image_of_the_day())
 
     @app.route('/home', methods=['GET', 'POST'])
     @require_appkey
     def index():
         data = json.load(open(data_file, 'r'))
         try:
-            data = sorted(data, key=lambda d: d['date'])
+            data = sorted(data, key=lambda d: d['start_date'])
         except:
             print("Unable to sort dict")
 
@@ -57,12 +76,18 @@ def create_app() -> Flask:
             if request.form['input_button'] == 'Create event':
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
-                input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
+                input_start_date = request.form['input_start_date']
+                input_end_date = request.form['input_end_date']
+                input_start_time = request.form['input_start_time']
+                input_end_time = request.form['input_end_time']
                 data.append({
                     "title": input_title,
                     "host": input_host,
-                    "date": input_date,
+                    "start_date": input_start_date,
+                    "end_date": input_end_date,
+                    "start_time": input_start_time,
+                    "end_time": input_end_time,
                     "description": input_desc,
                     "type": "custom",
                     "creation_date": date.today().isoformat()
@@ -82,12 +107,18 @@ def create_app() -> Flask:
                 input_index = int(request.form['input_index'])
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
-                input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
+                input_start_date = request.form['input_start_date']
+                input_end_date = request.form['input_end_date']
+                input_start_time = request.form['input_start_time']
+                input_end_time = request.form['input_end_time']
 
                 data[input_index]['title'] = input_title
                 data[input_index]['host'] = input_host
-                data[input_index]['date'] = input_date
+                data[input_index]['start_date'] = input_start_date
+                data[input_index]['end_date'] = input_end_date
+                data[input_index]['start_time'] = input_start_time
+                data[input_index]['end_time'] = input_end_time
                 data[input_index]['description'] = input_desc
 
                 json.dump(data, open(data_file, 'w'))
@@ -97,13 +128,14 @@ def create_app() -> Flask:
             'index.html',
             data=data,
             appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day()
         )
 
     @app.route('/personal', methods=['GET', 'POST'])
     def personal_calendar():
         data = json.load(open(personal_data_file, 'r'))
         try:
-            data = sorted(data, key=lambda d: d['date'])
+            data = sorted(data, key=lambda d: d['start_date'])
         except:
             print("Unable to sort dict")
 
@@ -111,13 +143,21 @@ def create_app() -> Flask:
             if request.form['input_button'] == 'Create event':
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
-                input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
+                input_start_date = request.form['input_start_date']
+                input_end_date = request.form['input_end_date']
+                input_start_time = request.form['input_start_time']
+                input_end_time = request.form['input_end_time']
                 data.append({
                     "title": input_title,
                     "host": input_host,
-                    "date": input_date,
-                    "description": input_desc
+                    "start_date": input_start_date,
+                    "end_date": input_end_date,
+                    "start_time": input_start_time,
+                    "end_time": input_end_time,
+                    "description": input_desc,
+                    "type": "custom",
+                    "creation_date": date.today().isoformat()
                 })
 
                 json.dump(data, open(personal_data_file, 'w'))
@@ -134,12 +174,18 @@ def create_app() -> Flask:
                 input_index = int(request.form['input_index'])
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
-                input_date = request.form['input_date']
                 input_desc = request.form['input_desc']
+                input_start_date = request.form['input_start_date']
+                input_end_date = request.form['input_end_date']
+                input_start_time = request.form['input_start_time']
+                input_end_time = request.form['input_end_time']
 
                 data[input_index]['title'] = input_title
                 data[input_index]['host'] = input_host
-                data[input_index]['date'] = input_date
+                data[input_index]['start_date'] = input_start_date
+                data[input_index]['end_date'] = input_end_date
+                data[input_index]['start_time'] = input_start_time
+                data[input_index]['end_time'] = input_end_time
                 data[input_index]['description'] = input_desc
 
                 json.dump(data, open(personal_data_file, 'w'))
@@ -147,7 +193,8 @@ def create_app() -> Flask:
 
         return render_template(
             'personal.html',
-            data=data
+            data=data,
+            nasa_title=get_title_of_the_day()
         )
 
     @app.route('/calendar/')
