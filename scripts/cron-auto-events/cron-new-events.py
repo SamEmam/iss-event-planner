@@ -88,22 +88,22 @@ def create_ical_event(event_data):
 
     make_all_day = True
 
-    if event_data['start_time'] or event_data['end_time']:
+    if 'start_time' in event_data and event_data['start_time'] or 'end_time' in event_data and event_data['end_time']:
         make_all_day = False
 
     if make_all_day:
         event.make_all_day()
         event.begin = event_data['start_date']
 
-        if event_data['end_date']:
+        if 'end_date' in event_data and event_data['end_date']:
             event.end = event_data['end_date']
 
     else:
-        if event_data['start_time']:
+        if 'start_time' in event_data and event_data['start_time']:
             event.begin = f"{event_data['start_date']} {event_data['start_time']}:00"
 
-        if event_data['end_time']:
-            if event_data['end_date']:
+        if 'end_time' in event_data and event_data['end_time']:
+            if 'end_date' in event_data and event_data['end_date']:
                 event.end = f"{event_data['end_date']} {event_data['end_time']}:00"
 
             else:
