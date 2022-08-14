@@ -12,7 +12,8 @@ auth_key_dict = {
     "marcmedc": ['all'],
     "Marcmedc": ['all'],
     "Carkmedc": ['all'],
-    "carkmedc": ['all']
+    "carkmedc": ['all'],
+    "carksutter": ['all'],
 }
 
 
