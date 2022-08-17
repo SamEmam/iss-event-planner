@@ -11306,6 +11306,111 @@ html {
   }
 }
 
+.page-section .page-section-heading-login {
+  font-size: 3.5rem;
+  line-height: 2.5rem;
+}
+.page-section .page-section-subheading-login {
+  font-size: 1.5rem;
+  line-height: 1rem;
+}
+
+.divider-custom .divider-custom-line-login {
+  width: 100%;
+  max-width: 25rem;
+  height: 0.25rem;
+  background-color: #2c3e50;
+  border-radius: 1rem;
+  border-color: #2c3e50;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+@media (min-width: 575.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 4.3rem;
+    line-height: 2.5rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 1.8rem;
+    line-height: 2rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 30rem !important;
+    height: 0.3rem;
+  }
+}
+@media (min-width: 767.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 5.5rem;
+    line-height: 3.5rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 2.3rem;
+    line-height: 2.2rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 38.5rem !important;
+    height: 0.35rem;
+  }
+}
+@media (min-width: 1199.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 6rem;
+    line-height: 4.5rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 2.5rem;
+    line-height: 2.2rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 42rem !important;
+    height: 0.4rem;
+  }
+}
+@media (min-width: 1399.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 6.5rem;
+    line-height: 5rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 2.7rem;
+    line-height: 2.2rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 45rem !important;
+    height: 0.43rem;
+  }
+}
+@media (min-width: 1699.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 6.5rem;
+    line-height: 5rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 2.7rem;
+    line-height: 2.2rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 45rem !important;
+    height: 0.43rem;
+  }
+}
+@media (min-width: 3099.98px) {
+  .page-section .page-section-heading-login {
+    font-size: 11rem;
+    line-height: 9rem;
+  }
+  .page-section .page-section-subheading-login {
+    font-size: 4.6rem;
+    line-height: 2.8rem;
+  }
+  .divider-custom .divider-custom-line-login {
+    max-width: 76.5rem !important;
+    height: 0.85rem;
+  }
+}
+
 .divider-custom {
   margin: 1.25rem 0 1.5rem;
   width: 100%;

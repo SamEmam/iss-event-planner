@@ -3,12 +3,15 @@ from appkey import require_appkey_factory
 from datetime import date, timedelta
 
 import json
+import platform
 import os
 import io
 import requests
 
 
 debug = False
+if 'Microsoft' in platform.release():
+    debug = True
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
@@ -31,8 +34,8 @@ def config_app(app):
 
 
 def get_image_of_the_day():
-    start_date = (date.today() - timedelta(days=2)).isoformat()
-    end_date = date.today().isoformat()
+    start_date = (date.today() - timedelta(days=3)).isoformat()
+    end_date = (date.today() - timedelta(days=1)).isoformat()
     data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&end_date={end_date}&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
     if 'hdurl' in data[-1]:
         return data[-1]['hdurl']

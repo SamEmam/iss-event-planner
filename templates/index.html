@@ -202,13 +202,14 @@
             <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p>
             <!-- About Section Button-->
             <div class="text-center mt-4 mb-5">
-                <button class="btn btn-xl btn-outline-light" id="calendar_link" onclick="navigator.clipboard.writeText('http://rumstationen.com/calendar')">
+                <button class="btn btn-xl btn-outline-light" id="calendar_link"
+                    onclick="navigator.clipboard.writeText('http://rumstationen.com/calendar')">
                     <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
                     http://rumstationen.com/calendar
                 </button>
             </div>
-            <p class="mb-0" style="text-align: center;">Kopier manuelt</p>
-            <p class="mb-0" style="text-align: center;">http://rumstationen.com/calendar</p>
+            <p class="lead mb-0" style="text-align: center;">Kopier manuelt</p>
+            <p class="lead mb-0" style="text-align: center;">http://rumstationen.com/calendar</p>
         </div>
     </section>
     <!-- Footer-->
@@ -225,7 +226,8 @@
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">rumstationen</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/groups/200164475315350"><i
+                    <a class="btn btn-outline-light btn-social mx-1"
+                        href="https://www.facebook.com/groups/200164475315350"><i
                             class="fab fa-fw fa-facebook-f"></i></a>
                     <!-- <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
@@ -244,7 +246,8 @@
     </footer>
     <!-- Copyright Section-->
     <div class="copyright py-4 text-center text-white">
-        <div class="container"><small>Rumstationen er en kunstigt skabt konstruktion, der har til formål at tillade vores familie at leve i rummet udenfor samfundets atmosfære.</small></div>
+        <div class="container"><small>Rumstationen er en kunstigt skabt konstruktion, der har til formål at tillade
+                vores familie at leve i rummet udenfor samfundets atmosfære.</small></div>
     </div>
     <!-- Portfolio Modals-->
     <!-- Portfolio Modal 1-->
@@ -270,8 +273,7 @@
                                                     <div class="form-floating mb-3">
                                                         <input class="form-control" id="input_title" name="input_title"
                                                             type="text" placeholder="Titlen på begivenheden..."
-                                                            value="{{ event.title }}"
-                                                            data-sb-validations="required" />
+                                                            value="{{ event.title }}" data-sb-validations="required" />
                                                         <label for="input_title">Titlen på begivenheden *</label>
                                                         <div class="invalid-feedback"
                                                             data-sb-feedback="input_title:required">A title is required.
@@ -361,7 +363,8 @@
                                                         action="{{url_for('index', key=appkey)}}">Opdater</button>
                                                     <button class="btn btn-secondary btn-xl" id="submitButton"
                                                         name="input_button" type="submit" value="Delete"
-                                                        action="{{url_for('index', key=appkey)}}" onclick="return confirm('Er du sikker på at du vil slette begivenheden &quot;{{ event.title }}&quot; ?')">Slet</button>
+                                                        action="{{url_for('index', key=appkey)}}"
+                                                        onclick="return confirm('Er du sikker på at du vil slette begivenheden &quot;{{ event.title }}&quot; ?')">Slet</button>
                                                 </form>
                                             </div>
                                         </div>
