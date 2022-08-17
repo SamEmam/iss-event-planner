@@ -37,11 +37,11 @@ def get_image_of_the_day():
     start_date = (date.today() - timedelta(days=3)).isoformat()
     data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
     if 'hdurl' in data[-1]:
-        return data[-1]['hdurl']
+        return data[-1]
     elif 'hdurl' in data[-2]:
-        return data[-2]['hdurl']
+        return data[-2]
     else:
-        return data[-3]['hdurl']
+        return data[-3]
 
 
 def get_title_of_the_day():
