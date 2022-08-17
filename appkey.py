@@ -5,7 +5,18 @@ from functools import wraps
 
 AUTH_DISABLED = os.getenv("AUTH_DISABLED")
 
+# print(hashlib.sha256(bytes(pwd, 'utf-8')).hexdigest()[:5])
 auth_key_dict = {
+    "9900f": ['all'],
+    "78fe0": ['all'],
+    "bb42e": ['all'],
+    "1b071": ['all'],
+    "87070": ['all'],
+    "67140": ['all'],
+    "1f881": ['all'],
+    "7a8c3": ['all'],
+}
+auth_key_dict_old = {
     "marc1234": ['all'],
     "markmedc": ['all'],
     "Markmedc": ['all'],

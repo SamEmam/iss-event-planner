@@ -7,6 +7,7 @@ import platform
 import os
 import io
 import requests
+import hashlib
 
 
 debug = False
@@ -60,7 +61,8 @@ def create_app() -> Flask:
     def login():
 
         if request.method == 'POST':
-            return redirect(url_for('index', key=request.form['appkey']))
+            pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
+            return redirect(url_for('index', key=pwd))
 
         return render_template('login.html',
         image_of_the_day=get_image_of_the_day())
