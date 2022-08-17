@@ -35,8 +35,7 @@ def config_app(app):
 
 def get_image_of_the_day():
     start_date = (date.today() - timedelta(days=3)).isoformat()
-    end_date = (date.today() - timedelta(days=1)).isoformat()
-    data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&end_date={end_date}&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
+    data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
     if 'hdurl' in data[-1]:
         return data[-1]['hdurl']
     elif 'hdurl' in data[-2]:
