@@ -20,18 +20,23 @@ data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 personal_calendar_file = os.path.join(SITE_ROOT, data_path, "personal.ics")
+albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
+thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
 
 if debug:
     data_file = "event_data.json"
+    albums_file = "albums_data.json"
     personal_data_file = "personal_event_data.json"
     calendar_file = "rumstationen.ics"
     personal_calendar_file = "personal.ics"
+    thumbnails_folder = "./static/thumbnails"
 
 
 def config_app(app):
     app.config["DEBUG"] = debug
     app.config['SECRET_KEY'] = "marc1234"
     app.config['AUTH_DISABLED'] = "0"
+    app.config['UPLOAD_FOLDER'] = thumbnails_folder
 
 
 def get_image_of_the_day():
@@ -71,6 +76,7 @@ def create_app() -> Flask:
     @require_appkey
     def index():
         data = json.load(open(data_file, 'r'))
+        albums = json.load(open(albums_file, 'r'))
         try:
             data = sorted(data, key=lambda d: d['start_date'])
         except:
@@ -128,9 +134,26 @@ def create_app() -> Flask:
                 json.dump(data, open(data_file, 'w'))
                 return redirect(url_for('index', key=request.args.get('key')))
 
+            elif request.form['input_button'] == 'Add album':
+                album_title = request.form['album_title']
+                album_link = request.form['album_link']
+                album_thumbnail = request.files['album_thumbnail']
+                album_thumbnail.save(f"{thumbnails_folder}/{album_thumbnail.filename}")
+                print(album_title, album_link, album_thumbnail.filename)
+                albums.append({
+                    "title": album_title,
+                    "link": album_link,
+                    "thumbnail": album_thumbnail.filename
+                })
+
+                json.dump(albums, open(albums_file, 'w'))
+                return redirect(url_for('index', key=request.args.get('key')))
+
         return render_template(
             'index.html',
             data=data,
+            albums=albums,
+            thumbnails_folder=thumbnails_folder.strip('.'),
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )

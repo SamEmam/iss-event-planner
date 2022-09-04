@@ -16,17 +16,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#create">Opret
-                            ny begivenhed</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                            href="#events">Begivenheder</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                            href="#calendar">Kalender</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="#create">Opret begivenhed</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="#events">Begivenheder</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="#add_album">Tilføj Billeder</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="#pictures">Billeder</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="#calendar">Kalender</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!-- Masthead-->
+    <!-- OPRET NY BEGIVENHED-->
     <header class="masthead bg-primary text-white text-center" id="create">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
@@ -42,7 +46,7 @@
                 Tidspunkt og slut dato udfyldes automatisk</p>
         </div>
         <div class="container">
-            <!-- Contact Section Form-->
+            <!-- Event Section Form-->
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-7">
                     <!-- * * * * * * * * * * * * * * *-->
@@ -130,7 +134,7 @@
             </div>
         </div>
     </header>
-    <!-- Portfolio Section-->
+    <!-- BEGIVENHEDER-->
     <section class="page-section portfolio" id="events">
         <div class="container">
             <!-- Portfolio Section Heading-->
@@ -181,6 +185,111 @@
                         </div>
                         {% endif %}
                     </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- TILFØJ GOOGLE ALBUM -->
+    <section class="page-section bg-primary text-white text-center" id="add_album">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
+            <!-- Masthead Heading-->
+            <!-- <h1 class="masthead-subheading text-uppercase mb-0" style="font-size: 2em;">Opret ny begivenhed</h1> -->
+            <h2 class="page-section-heading text-center text-uppercase mb-0" style="font-size: 2em;">Tilføj Google Photos Album</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Dit Google Photos album skal være Shared</p>
+        </div>
+        <div class="container">
+            <!-- Album Section Form-->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <!-- * * SB Forms Contact Form * *-->
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <form id="contactForm" method="post" enctype="multipart/form-data">
+                        <!-- album_title input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="album_title" name="album_title" type="text"
+                                placeholder="Titlen på albummet..." data-sb-validations="required"
+                                style="background-color: #4267B2; color:white;" />
+                            <label for="album_title" style="color: white;">Titlen på albummet *</label>
+                            <div class="invalid-feedback" data-sb-feedback="album_title:required">A title is required.
+                            </div>
+                        </div>
+                        <!-- album_link input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="album_link" name="album_link" type="text"
+                                placeholder="Link til album..."
+                                style="background-color: #4267B2; color:white;" />
+                            <label for="album_link" style="color: white;">Link til album *</label>
+                            <div class="invalid-feedback" data-sb-feedback="album_link:required">A link is required.
+                            </div>
+                        </div>
+                        <!-- album_thumbnail input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control file-input" id="album_thumbnail" name="album_thumbnail" type="file"
+                                placeholder="Thumbnail..." accept="image/*"
+                                style="background-color: #4267B2; color:white;" />
+                            <label for="album_thumbnail" style="color: white;">Thumbnail *</label>
+                            <div class="invalid-feedback" data-sb-feedback="album_thumbnail:required">A thumbnail is required.
+                            </div>
+                        </div>
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Album tilføjet succesfuldt!</div>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3">Fejl ved tilføjelse af album!</div>
+                        </div>
+                        <!-- Submit Button-->
+                        <input type="hidden" name="album_index">
+                        <button class="btn btn-secondary btn-xl" id="submitButton" name="input_button" type="submit"
+                            value="Add album" action="{{url_for('index', key=appkey)}}">Tilføj</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- BILLEDER -->
+    <section class="page-section portfolio" id="pictures">
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Billeder</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Grid Items-->
+            <div class="row justify-content-center">
+                {% for album in albums %}
+                <!-- Portfolio Item 1-->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <a href="{{album.link}}" target="_blank"><div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#album{{ loop.index0 }}"
+                        style="background-color: rgb(49,51,53);color: white;">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <div style="background-color: #4267B2; width: 100%;">
+                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ album.title }}</h2>
+                        </div>
+                        <img class="img-fluid" src="{{thumbnails_folder}}/{{ album.thumbnail }}" alt="..." />
+                    </div>
+                </a>
                 </div>
                 {% endfor %}
             </div>
