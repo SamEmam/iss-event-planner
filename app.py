@@ -1,4 +1,4 @@
-from flask import request, Flask, render_template, redirect, url_for
+from flask import request, Flask, render_template, redirect, url_for, send_from_directory
 from appkey import require_appkey_factory
 from datetime import date, timedelta
 
@@ -249,6 +249,10 @@ def create_app() -> Flask:
         response.headers["Content-Disposition"] = "attachment; filename=personal_calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
         return response
+
+    @app.route('/uploads/<path:filename>')
+    def fetch_thumbnail(filename):
+        return send_from_directory(thumbnails_folder, filename, as_attachment=True)
 
     @app.after_request
     def setCORS(response):
