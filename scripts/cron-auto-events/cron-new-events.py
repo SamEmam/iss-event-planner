@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 from ics import Calendar, Event
-from datetime import date
+from datetime import date, datetime
+from pytz import timezone
 
 import requests
 import platform
@@ -90,6 +91,7 @@ def create_ical_event(event_data):
     event.description = event_data['description'].replace('\n', '. ')
 
     make_all_day = True
+    tz = timezone('Europe/Copenhagen')
 
     if 'start_time' in event_data and event_data['start_time'] or 'end_time' in event_data and event_data['end_time']:
         make_all_day = False
@@ -103,14 +105,20 @@ def create_ical_event(event_data):
 
     else:
         if 'start_time' in event_data and event_data['start_time']:
-            event.begin = f"{event_data['start_date']} {event_data['start_time']}:00"
+            start_datetime_string = f"{event_data['start_date']} {event_data['start_time']}"
+            start_datetime = tz.localize(datetime.strptime(start_datetime_string, '%Y-%m-%d %H:%M'))
+            event.begin = start_datetime
 
         if 'end_time' in event_data and event_data['end_time']:
             if 'end_date' in event_data and event_data['end_date']:
-                event.end = f"{event_data['end_date']} {event_data['end_time']}:00"
+                end_datetime_string = f"{event_data['end_date']} {event_data['end_time']}"
+                end_datetime = tz.localize(datetime.strptime(end_datetime_string, '%Y-%m-%d %H:%M'))
+                event.end = end_datetime
 
             else:
-                event.end = f"{event_data['start_date']} {event_data['end_time']}:00"
+                end_datetime_string = f"{event_data['start_date']} {event_data['end_time']}"
+                end_datetime = tz.localize(datetime.strptime(end_datetime_string, '%Y-%m-%d %H:%M'))
+                event.end = end_datetime
 
     return event
 
