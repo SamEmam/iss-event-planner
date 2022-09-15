@@ -4,4 +4,3 @@ jsonpointer==2.0
 jsonschema==3.2.0
 Flask
 requests
-pytz
