@@ -51,7 +51,7 @@ def get_image_of_the_day():
 
 
 def get_title_of_the_day():
-    data = requests.get(f'https://api.nasa.gov/planetary/apod?api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
+    data = requests.get('https://api.nasa.gov/planetary/apod?api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
     return data['title']
 
 
@@ -69,8 +69,9 @@ def create_app() -> Flask:
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
             return redirect(url_for('index', key=pwd))
 
-        return render_template('login.html',
-        image_of_the_day=get_image_of_the_day())
+        return render_template(
+            'login.html',
+            image_of_the_day=get_image_of_the_day())
 
     @app.route('/home', methods=['GET', 'POST'])
     @require_appkey
@@ -79,8 +80,12 @@ def create_app() -> Flask:
         albums = json.load(open(albums_file, 'r'))
         try:
             data = sorted(data, key=lambda d: d['start_date'])
-        except:
-            print("Unable to sort dict")
+        except Exception:
+            print("Unable to sort data dict")
+        try:
+            albums = sorted(albums, key=lambda d: d['date'])
+        except Exception:
+            print("Unable to sort albums dict")
 
         if request.method == 'POST':
             if request.form['input_button'] == 'Create event':
@@ -137,12 +142,14 @@ def create_app() -> Flask:
             elif request.form['input_button'] == 'Add album':
                 album_title = request.form['album_title']
                 album_link = request.form['album_link']
+                album_date = request.form['album_date']
                 album_thumbnail = request.files['album_thumbnail']
                 album_thumbnail.save(f"{thumbnails_folder}/{album_thumbnail.filename}")
                 print(album_title, album_link, album_thumbnail.filename)
                 albums.append({
                     "title": album_title,
                     "link": album_link,
+                    "date": album_date,
                     "thumbnail": album_thumbnail.filename
                 })
 
@@ -163,7 +170,7 @@ def create_app() -> Flask:
         data = json.load(open(personal_data_file, 'r'))
         try:
             data = sorted(data, key=lambda d: d['start_date'])
-        except:
+        except Exception:
             print("Unable to sort dict")
 
         if request.method == 'POST':
