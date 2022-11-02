@@ -83,7 +83,7 @@ def create_app() -> Flask:
         except Exception:
             print("Unable to sort data dict")
         try:
-            albums = sorted(albums, key=lambda d: d['date'])
+            albums = sorted(albums, key=lambda d: d['date'], reverse=True)
         except Exception:
             print("Unable to sort albums dict")
 
