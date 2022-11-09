@@ -55,6 +55,18 @@ def get_title_of_the_day():
     return data['title']
 
 
+def hide_old_events(data):
+
+    for index, event in enumerate(data):
+        if data[index]['start_date'] < (date.today() - timedelta(days=31)).isoformat():
+            data[index]['hidden'] = True
+            print("Hidding", event['title'])
+        else:
+            data[index]['hidden'] = False
+
+    return data
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
 
@@ -78,6 +90,9 @@ def create_app() -> Flask:
     def index():
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
+
+        data = hide_old_events(data)
+
         try:
             data = sorted(data, key=lambda d: d['start_date'])
         except Exception:
