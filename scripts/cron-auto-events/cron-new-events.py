@@ -18,20 +18,23 @@ if 'Microsoft' in platform.release():
 ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
 
+strawpoll_id = "bVg8o6jP1nY"
+strawpoll_key = "5b5ac418-a0dd-11ed-8edb-cb45d087e0d2"
+
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
-personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
+padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
-personal_calendar_file = os.path.join(SITE_ROOT, data_path, "personal.ics")
+padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
 
 if debug:
     data_file = "event_data.json"
-    personal_data_file = "personal_event_data.json"
+    padel_data_file = "padel_event_data.json"
     settings_file = "event_settings.json"
     calendar_file = "rumstationen.ics"
-    personal_calendar_file = "personal.ics"
+    padel_calendar_file = "padel.ics"
 
 
 def get_title(today):
@@ -69,10 +72,10 @@ def auto_generate_event():
     title = get_title(today)
 
     data.append({
-        "title": title,
+        "title": next_host,
         "host": next_host,
         "start_date": (today + relativedelta(months=+1)).isoformat(),
-        "description": "Autogenereret begivenhed.",
+        "description": f"Autogenereret begivenhed for {title}.",
         "type": "scheduled",
         "creation_date": today.isoformat()
     })
@@ -122,22 +125,71 @@ def create_ical_event(event_data):
 
     return event
 
+def create_ical_event_padel(event_data):
+    event = Event()
+    event.name = f"Padel Tennis ({event_data['participants']})"
 
-def generate_ics_file(input_file, output_file):
+    tz = timezone('Europe/Copenhagen')
+
+    start_datetime = tz.localize(datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M'))
+    event.begin = start_datetime
+
+    end_datetime = tz.localize(datetime.strptime(event_data['end_date'], '%Y-%m-%d %H:%M'))
+    event.end = end_datetime
+
+    return event
+
+def generate_ics_file(input_file, output_file, is_normal):
     data = json.load(open(input_file, 'r'))
     cal = Calendar()
 
-    for event_data in data:
-        cal.events.add(create_ical_event(event_data))
+    if is_normal:
+        for event_data in data:
+            cal.events.add(create_ical_event(event_data))
+    else:
+        for event_data in data:
+            cal.events.add(create_ical_event_padel(event_data))
 
     with open(output_file, 'w') as ics_file:
         ics_file.writelines(cal)
 
 
+def fetch_strawpoll_data():
+    url = f"https://api.strawpoll.com/v3/polls/{strawpoll_id}/results"
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-API-Key": strawpoll_key
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    strawpoll_data = response.json()
+
+    return strawpoll_data
+
+def interpret_strawpoll_data(strawpoll_data):
+    strawpoll_events = []
+    for event in strawpoll_data['poll_options']:
+        start_date = datetime.fromtimestamp(event['start_time'])
+        end_date = datetime.fromtimestamp(event['start_time'])
+        participants = event['vote_count']
+        title = start_date.strftime('%A d. %-d. %b')
+        strawpoll_events.append({
+            "title": title,
+            "start_date": start_date.strftime('%Y-%m-%d %H:%M'),
+            "end_date": end_date.strftime('%Y-%m-%d %H:%M'),
+            "participants": participants
+        })
+    json.dump(strawpoll_events, open(padel_data_file, 'w'))
+
+
+interpret_strawpoll_data(fetch_strawpoll_data())
+
 @aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
-    generate_ics_file(data_file, calendar_file)
-    generate_ics_file(personal_data_file, personal_calendar_file)
+    generate_ics_file(data_file, calendar_file, True)
+    interpret_strawpoll_data(fetch_strawpoll_data())
+    generate_ics_file(padel_data_file, padel_calendar_file, False)
 
 
 @aiocron.crontab('0 0 1 */2 *')

@@ -17,18 +17,18 @@ if 'Microsoft' in platform.release():
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
-personal_data_file = os.path.join(SITE_ROOT, data_path, "personal_event_data.json")
+padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
-personal_calendar_file = os.path.join(SITE_ROOT, data_path, "personal.ics")
+padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
 albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
 thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
 
 if debug:
     data_file = "event_data.json"
     albums_file = "albums_data.json"
-    personal_data_file = "personal_event_data.json"
+    padel_data_file = "padel_event_data.json"
     calendar_file = "rumstationen.ics"
-    personal_calendar_file = "personal.ics"
+    padel_calendar_file = "padel.ics"
     thumbnails_folder = "./static/thumbnails"
 
 
@@ -55,10 +55,10 @@ def get_title_of_the_day():
     return data['title']
 
 
-def hide_old_events(data):
+def hide_old_events(data, days):
 
     for index, event in enumerate(data):
-        if data[index]['start_date'] < (date.today() - timedelta(days=31)).isoformat():
+        if data[index]['start_date'] < (date.today() - timedelta(days=days)).isoformat():
             data[index]['hidden'] = True
             print("Hidding", event['title'])
         else:
@@ -91,7 +91,7 @@ def create_app() -> Flask:
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
 
-        data = hide_old_events(data)
+        data = hide_old_events(data, 31)
 
         try:
             data = sorted(data, key=lambda d: d['start_date'])
@@ -180,68 +180,19 @@ def create_app() -> Flask:
             nasa_title=get_title_of_the_day()
         )
 
-    @app.route('/personal', methods=['GET', 'POST'])
-    def personal_calendar():
-        data = json.load(open(personal_data_file, 'r'))
+    @app.route('/padel', methods=['GET'])
+    def padel_calendar():
+        data = json.load(open(padel_data_file, 'r'))
+
+        data = hide_old_events(data, 1)
+
         try:
-            data = sorted(data, key=lambda d: d['start_date'])
+            data = sorted(data, key=lambda d: d['date'])
         except Exception:
             print("Unable to sort dict")
 
-        if request.method == 'POST':
-            if request.form['input_button'] == 'Create event':
-                input_title = request.form['input_title']
-                input_host = request.form['input_host']
-                input_desc = request.form['input_desc']
-                input_start_date = request.form['input_start_date']
-                input_end_date = request.form['input_end_date']
-                input_start_time = request.form['input_start_time']
-                input_end_time = request.form['input_end_time']
-                data.append({
-                    "title": input_title,
-                    "host": input_host,
-                    "start_date": input_start_date,
-                    "end_date": input_end_date,
-                    "start_time": input_start_time,
-                    "end_time": input_end_time,
-                    "description": input_desc,
-                    "type": "custom",
-                    "creation_date": date.today().isoformat()
-                })
-
-                json.dump(data, open(personal_data_file, 'w'))
-                return redirect(url_for('personal_calendar'))
-
-            elif request.form['input_button'] == 'Delete':
-                input_index = int(request.form['input_index'])
-                del data[input_index]
-
-                json.dump(data, open(personal_data_file, 'w'))
-                return redirect(url_for('personal_calendar'))
-
-            elif request.form['input_button'] == 'Save':
-                input_index = int(request.form['input_index'])
-                input_title = request.form['input_title']
-                input_host = request.form['input_host']
-                input_desc = request.form['input_desc']
-                input_start_date = request.form['input_start_date']
-                input_end_date = request.form['input_end_date']
-                input_start_time = request.form['input_start_time']
-                input_end_time = request.form['input_end_time']
-
-                data[input_index]['title'] = input_title
-                data[input_index]['host'] = input_host
-                data[input_index]['start_date'] = input_start_date
-                data[input_index]['end_date'] = input_end_date
-                data[input_index]['start_time'] = input_start_time
-                data[input_index]['end_time'] = input_end_time
-                data[input_index]['description'] = input_desc
-
-                json.dump(data, open(personal_data_file, 'w'))
-                return redirect(url_for('personal_calendar'))
-
         return render_template(
-            'personal.html',
+            'padel.html',
             data=data,
             nasa_title=get_title_of_the_day()
         )
@@ -259,16 +210,16 @@ def create_app() -> Flask:
         response.headers["Content-Type"] = "text/calendar"
         return response
 
-    @app.route('/personal/calendar/')
-    def personal_calendar_ics():
+    @app.route('/padel/calendar/')
+    def padel_calendar_ics():
 
         # Get the calendar data
-        with io.open(personal_calendar_file, 'r', newline='\r\n') as calendar_data:
+        with io.open(padel_calendar_file, 'r', newline='\r\n') as calendar_data:
             calendar_string = calendar_data.read()
 
         # turn calendar data into a response
         response = app.make_response(calendar_string)
-        response.headers["Content-Disposition"] = "attachment; filename=personal_calendar.ics"
+        response.headers["Content-Disposition"] = "attachment; filename=padel_calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
         return response
 

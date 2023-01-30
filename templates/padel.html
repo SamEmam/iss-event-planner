@@ -1,0 +1,142 @@
+{% extends 'padel_base.html' %}
+
+{% block content %}
+
+<body style="background-image: url({{image_of_the_day}}); background-repeat:
+    no-repeat; background-attachment: fixed; background-size: cover; background-position: center;">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">Padel Tennis</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                            href="#events">Begivenheder</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                            href="#calendar">Kalender</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center" id="events">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">Begivenheder</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Indlæst fra <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></p>
+        </div>
+    </header>
+    <!-- Portfolio Section-->
+    <section class="page-section portfolio" id="events">
+        <div class="container">
+            <!-- Portfolio Grid Items-->
+            <div class="row justify-content-center">
+                {% for event in data %}
+                {% if not event.hidden %}
+                <!-- Portfolio Item 1-->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#event{{ loop.index0 }}"
+                        style="background-color: rgb(49,51,53); color: white;">
+                        <div
+                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i
+                                    class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <div style="background-color: #db2f2f; width: 100%;">
+                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ event.title }}</h2>
+                        </div>
+                        <div class="row center" style="text-align: center; padding-top: 0.5em;">
+                            {% set start_date_split = event.start_date.split(' ') %}
+                            {% set end_date_split = event.end_date.split(' ') %}
+                            <div style="width: 50%; padding-left: 2.5em; text-align: left;">
+                                <p>{{ start_date_split[0] }}</p>
+                            </div>
+                            <div style="width: 50%; padding-right: 2.5em; text-align: right;">
+                                <p>{{ start_date_split[1] }}-{{ end_date_split[1] }}</p>
+                            </div>
+                            <div style="width: 100%;">
+                                <p>{{ event.participants }} spillere</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- About Section-->
+    <section class="page-section bg-primary text-white mb-0" id="calendar">
+        <div class="container">
+            <!-- About Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-white">Kalender</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- About Section Content-->
+            <p class="lead mb-0" style="text-align: center;">Padel Tennis begivenheder kan meget nemt tilføjes til din
+                kalender på din mobil eller computer.</p>
+            <p class="lead mb-3" style="text-align: center;">Du skal blot abonnerer på denne url i din kalender app.</p>
+            <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p>
+            <!-- About Section Button-->
+            <div class="text-center mt-4">
+                <button class="btn btn-xl btn-outline-light" id="calendar_link" onclick="navigator.clipboard.writeText('http://rumstationen.com/padel/calendar')">
+                    <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
+                    http://rumstationen.com/padel/calendar
+                </button>
+            </div>
+            <p></p>
+            <p class="lead mb-0" style="text-align: center;">..eller kopier manuelt</p>
+            <p class="lead mb-0" style="text-align: center;">http://rumstationen.com/padel/calendar</p>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Padel Tennis</h4>
+                    <p class="lead mb-0">
+                        <a href="https://matchpadel.dk/">Match Padel</a>
+                    </p>
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Strawpoll</h4>
+                    <!-- <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/groups/200164475315350"><i
+                            class="fab fa-fw fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
+                            class="fab fa-fw fa-linkedin-in"></i></a> -->
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://strawpoll.com/padeltennis"><i class="fab fa-fw fa-dribbble"></i></a>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="text-uppercase mb-4">Fejl ?</h4>
+                    <p class="lead mb-0">
+                        Sig det til mig!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Copyright Section-->
+    <div class="copyright py-4 text-center text-white">
+        <div class="container"><small>Padel Tennis er awesome.</small></div>
+    </div>
+    {% endblock %}
