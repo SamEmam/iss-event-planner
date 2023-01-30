@@ -169,9 +169,10 @@ def fetch_strawpoll_data():
 
 def interpret_strawpoll_data(strawpoll_data):
     strawpoll_events = []
+    tz = timezone('Europe/Copenhagen')
     for event in strawpoll_data['poll_options']:
-        start_date = datetime.fromtimestamp(event['start_time'])
-        end_date = datetime.fromtimestamp(event['end_time'])
+        start_date = datetime.fromtimestamp(event['start_time'], tz)
+        end_date = datetime.fromtimestamp(event['end_time'], tz)
         participants = event['vote_count']
         title = start_date.strftime('%A %b %-d')
         strawpoll_events.append({
