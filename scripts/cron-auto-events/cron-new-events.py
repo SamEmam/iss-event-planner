@@ -171,7 +171,7 @@ def interpret_strawpoll_data(strawpoll_data):
     strawpoll_events = []
     for event in strawpoll_data['poll_options']:
         start_date = datetime.fromtimestamp(event['start_time'])
-        end_date = datetime.fromtimestamp(event['start_time'])
+        end_date = datetime.fromtimestamp(event['end_time'])
         participants = event['vote_count']
         title = start_date.strftime('%A %b %-d')
         strawpoll_events.append({
