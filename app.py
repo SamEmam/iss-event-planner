@@ -227,15 +227,15 @@ def create_app() -> Flask:
     def fetch_thumbnail(filename):
         return send_from_directory(thumbnails_folder, filename, as_attachment=True)
 
-    @app.route("/tools/api")
+    @app.route("/api")
     def redirect_api():
         return redirect('http://rumstationen.com:5000', code=301)
 
-    @app.route("/tools/grafana")
+    @app.route("/grafana")
     def redirect_grafana():
         return redirect('http://rumstationen.com:3000', code=301)
 
-    @app.route("/tools/influx")
+    @app.route("/influx")
     def redirect_influx():
         return redirect('http://rumstationen.com:8086', code=301)
 
