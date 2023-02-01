@@ -227,6 +227,18 @@ def create_app() -> Flask:
     def fetch_thumbnail(filename):
         return send_from_directory(thumbnails_folder, filename, as_attachment=True)
 
+    @app.route("/tools/api")
+    def redirect_api():
+        return redirect('http://rumstationen.com:5000', code=301)
+
+    @app.route("/tools/grafana")
+    def redirect_grafana():
+        return redirect('http://rumstationen.com:3000', code=301)
+
+    @app.route("/tools/influx")
+    def redirect_influx():
+        return redirect('http://rumstationen.com:8086', code=301)
+
     @app.after_request
     def setCORS(response):
         response.headers["Access-Control-Allow-Origin"] = "*"
