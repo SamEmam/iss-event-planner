@@ -68,7 +68,24 @@
                                 <p>{{ start_date_split[1] }}-{{ end_date_split[1] }}</p>
                             </div>
                             <div style="width: 100%;">
-                                <p>{{ event.participants }} spillere</p>
+                                <p>{% for player in event.participants %}
+                                    <span id="{{ player }}">- {{ player }} -</span>
+                                    <script>
+                                    function stringToColor(str) {
+                                        var hash = 0;
+                                        for (var i = 0; i < str.length; i++) {
+                                            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                                        }
+                                        var color_code = '#';
+                                        for (var i = 0; i < 3; i++) {
+                                            var value = (hash >> (i * 8)) & 0xFF;
+                                            color_code += ('00' + value.toString(16)).substr(-2);
+                                        }
+                                        return color_code;
+                                    }
+                                    document.getElementById('{{ player }}').style.color = stringToColor('{{ player }}')</script>
+                                    {% endfor %}
+                                </p>
                             </div>
                         </div>
                     </div>

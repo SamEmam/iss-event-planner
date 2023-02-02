@@ -127,7 +127,7 @@ def create_ical_event(event_data):
 
 def create_ical_event_padel(event_data):
     event = Event()
-    event.name = f"Padel Tennis ({event_data['participants']})"
+    event.name = f"Padel Tennis ({event_data['votes']})"
 
     tz = timezone('Europe/Copenhagen')
 
@@ -169,16 +169,32 @@ def fetch_strawpoll_data():
 
 def interpret_strawpoll_data(strawpoll_data):
     strawpoll_events = []
+    strawpoll_participants = []
+    for participant in strawpoll_data['poll_participants']:
+        name = participant['name']
+        print(name)
+        for i in range(len(participant['poll_votes'])):
+            if participant['poll_votes'][i] == 1:
+                try:
+                    strawpoll_participants[i].append(name)
+                except Exception:
+                    strawpoll_participants.append([name])
+            else:
+                print(len(strawpoll_participants), i)
+                if len(strawpoll_participants) <= i:
+                    strawpoll_participants.append([])
     tz = timezone('Europe/Copenhagen')
-    for event in strawpoll_data['poll_options']:
+    for event, participants in zip(strawpoll_data['poll_options'], strawpoll_participants):
         start_date = datetime.fromtimestamp(event['start_time'], tz)
         end_date = datetime.fromtimestamp(event['end_time'], tz)
-        participants = event['vote_count']
+        votes = event['vote_count']
         title = start_date.strftime('%A %b %-d')
+        participants = participants
         strawpoll_events.append({
             "title": title,
             "start_date": start_date.strftime('%Y-%m-%d %H:%M'),
             "end_date": end_date.strftime('%Y-%m-%d %H:%M'),
+            "votes": votes,
             "participants": participants
         })
     json.dump(strawpoll_events, open(padel_data_file, 'w'))

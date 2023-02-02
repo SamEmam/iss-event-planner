@@ -186,11 +186,6 @@ def create_app() -> Flask:
 
         data = hide_old_events(data, 1)
 
-        try:
-            data = sorted(data, key=lambda d: d['date'])
-        except Exception:
-            print("Unable to sort dict")
-
         return render_template(
             'padel.html',
             data=data,
