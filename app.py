@@ -222,6 +222,16 @@ def create_app() -> Flask:
     def fetch_thumbnail(filename):
         return send_from_directory(thumbnails_folder, filename, as_attachment=True)
 
+    @app.context_processor
+    def name_to_color_processor():
+        def name_to_color(name):
+            color_code = '#'
+            sha = hashlib.sha256()
+            sha.update(name.encode())
+            color_code += sha.hexdigest()[0:6]
+            return color_code
+        return dict(name_to_color=name_to_color)
+
     @app.route("/api")
     def redirect_api():
         return redirect('http://rumstationen.com:5000', code=301)
