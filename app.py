@@ -225,11 +225,9 @@ def create_app() -> Flask:
     @app.context_processor
     def name_to_color_processor():
         def name_to_color(name):
-            color_code = '#'
             sha = hashlib.sha256()
             sha.update(name.encode())
-            color_code += sha.hexdigest()[0:6]
-            return color_code
+            return '#' + sha.hexdigest()[0:6]
         return dict(name_to_color=name_to_color)
 
     @app.route("/api")
