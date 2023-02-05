@@ -15,6 +15,8 @@ auth_key_dict = {
     "67140": ['all'],
     "1f881": ['all'],
     "7a8c3": ['all'],
+    "0da6e": ['all'],
+    "8b38d": ['all'],
 }
 auth_key_dict_old = {
     "marc1234": ['all'],
@@ -25,6 +27,8 @@ auth_key_dict_old = {
     "Carkmedc": ['all'],
     "carkmedc": ['all'],
     "carksutter": ['all'],
+    "padel": ['all'],
+    "dnd": ['all'],
 }
 
 

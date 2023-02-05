@@ -16,7 +16,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded active"
+                        href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
+                    <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="#create">Opret begivenhed</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="#events">Begivenheder</a></li>
@@ -25,7 +31,7 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="#pictures">Billeder</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="#calendar">Kalender</a></li>
+                        href="#calendar">Kalender</a></li> -->
                 </ul>
             </div>
         </div>
@@ -319,17 +325,18 @@
             <p class="lead mb-0" style="text-align: center;">De fælles begivenheder kan meget nemt tilføjes til din
                 kalender på din mobil eller computer.</p>
             <p class="lead mb-3" style="text-align: center;">Du skal blot abonnerer på denne url i din kalender app.</p>
-            <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p>
+            <!-- <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p> -->
             <!-- About Section Button-->
             <div class="text-center mt-4 mb-5">
                 <button class="btn btn-xl btn-outline-light" id="calendar_link"
-                    onclick="navigator.clipboard.writeText('rumstationen.com/calendar')">
+                    onclick="navigator.clipboard.writeText('https://rumstationen.com/calendar')">
                     <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
-                    rumstationen.com/calendar
+                    https://rumstationen.com/calendar
                 </button>
             </div>
+            <p></p>
             <p class="lead mb-0" style="text-align: center;">Kopier manuelt</p>
-            <p class="lead mb-0" style="text-align: center;">rumstationen.com/calendar</p>
+            <p class="lead mb-0" style="text-align: center;">https://rumstationen.com/calendar</p>
         </div>
     </section>
     <!-- Footer-->

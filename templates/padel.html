@@ -16,10 +16,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded active"
+                        href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
+                    <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                             href="#events">Begivenheder</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                            href="#calendar">Kalender</a></li>
+                            href="#calendar">Kalender</a></li> -->
                 </ul>
             </div>
         </div>
@@ -30,13 +36,13 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">Begivenheder</h1>
+            <h1 class="masthead-heading text-uppercase mb-0">Tilmeld dig her: <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></h1>
             <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
+            <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
-            </div>
+            </div> -->
             <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Indlæst fra <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></p>
+            <!-- <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Indlæst fra <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></p> -->
         </div>
     </header>
     <!-- Portfolio Section-->
@@ -94,17 +100,18 @@
             <p class="lead mb-0" style="text-align: center;">Padel Tennis begivenheder kan meget nemt tilføjes til din
                 kalender på din mobil eller computer.</p>
             <p class="lead mb-3" style="text-align: center;">Du skal blot abonnerer på denne url i din kalender app.</p>
-            <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p>
+            <!-- <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p> -->
             <!-- About Section Button-->
             <div class="text-center mt-4">
-                <button class="btn btn-xl btn-outline-light" id="calendar_link" onclick="navigator.clipboard.writeText('rumstationen.com/padel/calendar')">
+                <button class="btn btn-xl btn-outline-light" id="calendar_link"
+                    onclick="navigator.clipboard.writeText('https://rumstationen.com/padel/calendar')">
                     <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
-                    rumstationen.com/padel/calendar
+                    https://rumstationen.com/padel/calendar
                 </button>
             </div>
             <p></p>
-            <p class="lead mb-0" style="text-align: center;">..eller kopier manuelt</p>
-            <p class="lead mb-0" style="text-align: center;">rumstationen.com/padel/calendar</p>
+            <p class="lead mb-0" style="text-align: center;">Kopier manuelt</p>
+            <p class="lead mb-0" style="text-align: center;">https://rumstationen.com/padel/calendar</p>
         </div>
     </section>
     <!-- Footer-->

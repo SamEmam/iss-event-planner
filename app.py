@@ -22,14 +22,18 @@ calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
 albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
 thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
+dnd_data_file = "dnd_data.json"
+dnd_thumbnails_folder = "./static/thumbnails"
 
 if debug:
     data_file = "event_data.json"
     albums_file = "albums_data.json"
-    padel_data_file = "padel_event_data.json"
     calendar_file = "rumstationen.ics"
-    padel_calendar_file = "padel.ics"
     thumbnails_folder = "./static/thumbnails"
+    padel_data_file = "padel_event_data.json"
+    padel_calendar_file = "padel.ics"
+    dnd_data_file = "dnd_data.json"
+    dnd_thumbnails_folder = "./static/thumbnails"
 
 
 def config_app(app):
@@ -79,7 +83,12 @@ def create_app() -> Flask:
 
         if request.method == 'POST':
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
-            return redirect(url_for('index', key=pwd))
+            if pwd == "0da6e":
+                return redirect(url_for('padel', key=pwd))
+            elif pwd == "8b38d":
+                return redirect(url_for('dnd', key=pwd))
+            else:
+                return redirect(url_for('index', key=pwd))
 
         return render_template(
             'login.html',
@@ -181,7 +190,8 @@ def create_app() -> Flask:
         )
 
     @app.route('/padel', methods=['GET'])
-    def padel_calendar():
+    @require_appkey
+    def padel():
         data = json.load(open(padel_data_file, 'r'))
 
         data = hide_old_events(data, 1)
@@ -189,6 +199,19 @@ def create_app() -> Flask:
         return render_template(
             'padel.html',
             data=data,
+            appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day()
+        )
+
+    @app.route('/dnd', methods=['GET'])
+    @require_appkey
+    def dnd():
+        data = json.load(open(dnd_data_file, 'r'))
+
+        return render_template(
+            'dnd.html',
+            data=data,
+            appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )
 
