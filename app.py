@@ -1,6 +1,8 @@
 from flask import request, Flask, render_template, redirect, url_for, send_from_directory
 from appkey import require_appkey_factory
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+from influxdb_client.client.write_api import SYNCHRONOUS
+from influxdb_client import InfluxDBClient, Point, WritePrecision
 
 import json
 import platform
@@ -9,6 +11,15 @@ import io
 import requests
 import hashlib
 
+
+token = "CA5cFs30OQdVs-ggNoVqlrZfLHYFtoRGUPsg-xbvt_C-8gqJA2G3KHxIMQw0q7mfoLz8aFaeM68S_KOhbCHu6A=="
+org = "emamorg"
+bucket = "rumstationen"
+url = "http://18.198.184.123:8086"
+
+client = InfluxDBClient(url=url, token=token)
+
+write_api = client.write_api(write_options=SYNCHRONOUS)
 
 debug = False
 if 'Microsoft' in platform.release():
@@ -71,6 +82,11 @@ def hide_old_events(data, days):
     return data
 
 
+def write_data_point(tag_key, tag_value, field_key, field_value):
+    data_point = Point("rumstationen").tag(tag_key, tag_value).field(field_key, field_value).time(datetime.utcnow(), WritePrecision.NS)
+    write_api.write(bucket, org, data_point)
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
 
@@ -80,14 +96,17 @@ def create_app() -> Flask:
 
     @app.route('/', methods=['GET', 'POST'])
     def login():
-
+        write_data_point("route", "login", "ip", request.remote_addr)
         if request.method == 'POST':
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
             if pwd == "0da6e":
+                write_data_point("route", "login/padel", "ip", request.remote_addr)
                 return redirect(url_for('padel', key=pwd))
             elif pwd == "8b38d":
+                write_data_point("route", "login/dnd", "ip", request.remote_addr)
                 return redirect(url_for('dnd', key=pwd))
             else:
+                write_data_point("route", "login/index", "ip", request.remote_addr)
                 return redirect(url_for('index', key=pwd))
 
         return render_template(
@@ -97,6 +116,7 @@ def create_app() -> Flask:
     @app.route('/home', methods=['GET', 'POST'])
     @require_appkey
     def index():
+        write_data_point("route", "home", "ip", request.remote_addr)
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
 
@@ -113,6 +133,7 @@ def create_app() -> Flask:
 
         if request.method == 'POST':
             if request.form['input_button'] == 'Create event':
+                write_data_point("route", "home/create", "ip", request.remote_addr)
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
                 input_desc = request.form['input_desc']
@@ -136,6 +157,7 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Delete':
+                write_data_point("route", "home/delete", "ip", request.remote_addr)
                 input_index = int(request.form['input_index'])
                 del data[input_index]
 
@@ -143,6 +165,7 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Save':
+                write_data_point("route", "home/update", "ip", request.remote_addr)
                 input_index = int(request.form['input_index'])
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
@@ -164,6 +187,7 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Add album':
+                write_data_point("route", "home/album", "ip", request.remote_addr)
                 album_title = request.form['album_title']
                 album_link = request.form['album_link']
                 album_date = request.form['album_date']
@@ -192,6 +216,7 @@ def create_app() -> Flask:
     @app.route('/padel', methods=['GET'])
     @require_appkey
     def padel():
+        write_data_point("route", "padel", "ip", request.remote_addr)
         data = json.load(open(padel_data_file, 'r'))
 
         data = hide_old_events(data, 1)
@@ -206,6 +231,7 @@ def create_app() -> Flask:
     @app.route('/dnd', methods=['GET'])
     @require_appkey
     def dnd():
+        write_data_point("route", "dnd", "ip", request.remote_addr)
         data = json.load(open(dnd_data_file, 'r'))
 
         return render_template(
@@ -217,6 +243,7 @@ def create_app() -> Flask:
 
     @app.route('/calendar/')
     def calendar():
+        write_data_point("route", "calendar", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -230,6 +257,7 @@ def create_app() -> Flask:
 
     @app.route('/padel/calendar/')
     def padel_calendar_ics():
+        write_data_point("route", "calendar/padel", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(padel_calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -255,14 +283,17 @@ def create_app() -> Flask:
 
     @app.route("/api")
     def redirect_api():
+        write_data_point("route", "api", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:5000', code=301)
 
     @app.route("/grafana")
     def redirect_grafana():
+        write_data_point("route", "grafana", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:3000', code=301)
 
     @app.route("/influx")
     def redirect_influx():
+        write_data_point("route", "influx", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:8086', code=301)
 
     @app.after_request
