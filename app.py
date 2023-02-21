@@ -31,6 +31,7 @@ data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
+birthday_calendar_file = os.path.join(SITE_ROOT, data_path, "birthday.ics")
 albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
 thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
 dnd_data_file = "dnd_data.json"
@@ -45,6 +46,7 @@ if debug:
     padel_calendar_file = "padel.ics"
     dnd_data_file = "dnd_data.json"
     dnd_thumbnails_folder = "./static/thumbnails"
+    birthday_calendar_file = "birthday.ics"
 
 
 def config_app(app):
@@ -97,6 +99,7 @@ def create_app() -> Flask:
     @app.route('/', methods=['GET', 'POST'])
     def login():
         write_data_point("route", "login", "ip", request.remote_addr)
+        print(request.headers.get("X-Remote-User"))
         if request.method == 'POST':
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
             if pwd == "0da6e":
@@ -266,6 +269,20 @@ def create_app() -> Flask:
         # turn calendar data into a response
         response = app.make_response(calendar_string)
         response.headers["Content-Disposition"] = "attachment; filename=padel_calendar.ics"
+        response.headers["Content-Type"] = "text/calendar"
+        return response
+
+    @app.route('/birthday/calendar/')
+    def birthday_calendar_ics():
+        write_data_point("route", "calendar/birthday", "ip", request.remote_addr)
+
+        # Get the calendar data
+        with io.open(birthday_calendar_file, 'r', newline='\r\n') as calendar_data:
+            calendar_string = calendar_data.read()
+
+        # turn calendar data into a response
+        response = app.make_response(calendar_string)
+        response.headers["Content-Disposition"] = "attachment; filename=birthday_calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
         return response
 
