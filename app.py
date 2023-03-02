@@ -1,4 +1,4 @@
-from flask import request, Flask, render_template, redirect, url_for, send_from_directory
+from flask import request, Flask, render_template, redirect, url_for, send_from_directory, make_response
 from appkey import require_appkey_factory
 from datetime import date, timedelta, datetime
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -80,7 +80,6 @@ def hide_old_events(data, days):
     for index, event in enumerate(data):
         if data[index]['start_date'] < (date.today() - timedelta(days=days)).isoformat():
             data[index]['hidden'] = True
-            print("Hidding", event['title'])
         else:
             data[index]['hidden'] = False
 
@@ -198,7 +197,6 @@ def create_app() -> Flask:
                 album_date = request.form['album_date']
                 album_thumbnail = request.files['album_thumbnail']
                 album_thumbnail.save(f"{thumbnails_folder}/{album_thumbnail.filename}")
-                print(album_title, album_link, album_thumbnail.filename)
                 albums.append({
                     "title": album_title,
                     "link": album_link,
@@ -208,9 +206,6 @@ def create_app() -> Flask:
 
                 json.dump(albums, open(albums_file, 'w'))
                 return redirect(url_for('index', key=request.args.get('key')))
-
-        print("rotation index", settings['event_rotation_index'])
-        print("List of members", list(settings['phone_numbers'].keys()))
 
         return render_template(
             'index.html',
@@ -330,6 +325,14 @@ def create_app() -> Flask:
             month = f"[{first_month}/{second_month} {cur_year}]"
             return month
         return dict(get_event_host=get_event_host)
+    
+
+    @app.route("/<theme>/<page>/set-theme")
+    @require_appkey
+    def set_theme(theme="light", page="index"):
+        res = make_response(redirect(url_for(page, key=request.args.get('key'))))
+        res.set_cookie("theme", theme)
+        return res
 
     @app.route("/api")
     def redirect_api():

@@ -16,10 +16,14 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
+    {% if request.cookies.get("theme") == "dark" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dnd_darkmode.css') }}" />
+    {% else %}
     <link rel="stylesheet" href="{{ url_for('static', filename='dnd.css') }}" />
+    {% endif %}
 </head>
 
-<body id="page-top">
+<body id="page-top" style="{% if request.cookies.get('theme') == 'dark' %}background-color:#212529{% endif %}">
     {% block content %}{% endblock %}
 
 

@@ -22,6 +22,13 @@
                         href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
+                    {% if request.cookies.get("theme") == "dark" %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('set_theme', page='padel', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
+                    {% else %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('set_theme', page='padel', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
+                    {% endif %}
                     <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                             href="#events">Begivenheder</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
@@ -61,7 +68,7 @@
                             <div class="portfolio-item-caption-content text-center text-white"><i
                                     class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <div style="background-color: #db2f2f; width: 100%;">
+                        <div class="bg-primary" style="width: 100%;">
                             <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ event.title }}</h2>
                         </div>
                         <div class="row center" style="text-align: center; padding-top: 0.5em;">
