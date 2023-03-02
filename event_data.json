@@ -2,35 +2,35 @@
     {
         "title": "Rumrejse hos Marc",
         "host": "Marc",
-        "start_date": "2022-05-03",
+        "start_date": "2023-05-03",
         "description": "Marc inviterer til trip aften!",
         "type": "custom"
     },
     {
         "title": "Eventyr-DRUK-l\u00f8bet",
         "host": "Sam",
-        "start_date": "2022-05-26",
+        "start_date": "2023-05-26",
         "description": "Eventyrl\u00f8bet med tr\u00e6kvogn og \u00f8l\nMed enhj\u00f8rninge tema",
         "type": "custom"
     },
     {
         "title": "Bryllup",
         "host": "Nicole og Sam",
-        "start_date": "2022-07-09",
+        "start_date": "2023-07-09",
         "description": "nicoleogsam.dk",
         "type": "custom"
     },
     {
         "title": "Test1",
         "host": "Nicole og Sam",
-        "start_date": "2022-11-09",
+        "start_date": "2023-11-09",
         "description": "nicoleogsam.dk",
         "type": "custom"
     },
     {
         "title": "Test2",
         "host": "Nicole og Sam",
-        "start_date": "2022-10-12",
+        "start_date": "2023-10-12",
         "description": "nicoleogsam.dk",
         "type": "custom"
     }

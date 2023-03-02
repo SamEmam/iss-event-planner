@@ -197,6 +197,11 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="row justify-content-center">
+            {% for i in range((event_rot_members|length) + 1) %}
+                <tag class="tags tag_{{ i }} text-center">{{ get_event_host(event_rot_index, i, event_rot_members) }}</tag>
+            {% endfor %}
+        </div>
     </section>
     <!-- TILFØJ GOOGLE ALBUM -->
     <section class="page-section bg-primary text-white text-center" id="add_album">

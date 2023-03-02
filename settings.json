@@ -1,5 +1,5 @@
 {
-    "event_rotation_index": 2,
+    "event_rotation_index": 5,
     "event_rotation": [
         "Nicole & Sam",
         "Marc",
@@ -9,17 +9,42 @@
         "Jonas",
         "Alex & Katrine",
         "Christoffer & Caroline",
-        "Mathias Bech"
+        "Bech & Mette"
     ],
     "phone_numbers": {
-        "Nicole & Sam": ["4522588025", "4552402272"],
-        "Marc": ["4521837553"],
-        "Mathias & Charlotte": ["4527977408", "4560160167"],
-        "Kris & Camilla": ["4593881708", "4523980447"],
-        "Obama & Michella": ["4561991584", "4527824578"],
-        "Jonas": ["4528189599"],
-        "Alex & Katrine": ["4529708808", "4521933233"],
-        "Christoffer & Caroline": ["4527799929", "4531690813"],
-        "Mathias Bech": ["4540280882"]
+        "Nicole & Sam": [
+            "4522588025",
+            "4552402272"
+        ],
+        "Marc": [
+            "4521837553"
+        ],
+        "Mathias & Charlotte": [
+            "4527977408",
+            "4560160167"
+        ],
+        "Kris & Camilla": [
+            "4593881708",
+            "4523980447"
+        ],
+        "Obama & Michella": [
+            "4561991584",
+            "4527824578"
+        ],
+        "Jonas": [
+            "4528189599"
+        ],
+        "Alex & Katrine": [
+            "4529708808",
+            "4521933233"
+        ],
+        "Christoffer & Caroline": [
+            "4527799929",
+            "4531690813"
+        ],
+        "Bech & Mette": [
+            "4540280882",
+            "53355442"
+        ]
     }
 }

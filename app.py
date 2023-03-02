@@ -10,6 +10,7 @@ import os
 import io
 import requests
 import hashlib
+import calendar
 
 
 token = "CA5cFs30OQdVs-ggNoVqlrZfLHYFtoRGUPsg-xbvt_C-8gqJA2G3KHxIMQw0q7mfoLz8aFaeM68S_KOhbCHu6A=="
@@ -28,6 +29,7 @@ if 'Microsoft' in platform.release():
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
+settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
@@ -39,6 +41,7 @@ dnd_thumbnails_folder = "./static/thumbnails"
 
 if debug:
     data_file = "event_data.json"
+    settings_file = "settings.json"
     albums_file = "albums_data.json"
     calendar_file = "rumstationen.ics"
     thumbnails_folder = "./static/thumbnails"
@@ -99,7 +102,6 @@ def create_app() -> Flask:
     @app.route('/', methods=['GET', 'POST'])
     def login():
         write_data_point("route", "login", "ip", request.remote_addr)
-        print(request.headers.get("X-Remote-User"))
         if request.method == 'POST':
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
             if pwd == "0da6e":
@@ -111,7 +113,6 @@ def create_app() -> Flask:
             else:
                 write_data_point("route", "login/index", "ip", request.remote_addr)
                 return redirect(url_for('index', key=pwd))
-
         return render_template(
             'login.html',
             image_of_the_day=get_image_of_the_day())
@@ -122,6 +123,7 @@ def create_app() -> Flask:
         write_data_point("route", "home", "ip", request.remote_addr)
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
+        settings = json.load(open(settings_file, 'r'))
 
         data = hide_old_events(data, 31)
 
@@ -207,9 +209,14 @@ def create_app() -> Flask:
                 json.dump(albums, open(albums_file, 'w'))
                 return redirect(url_for('index', key=request.args.get('key')))
 
+        print("rotation index", settings['event_rotation_index'])
+        print("List of members", list(settings['phone_numbers'].keys()))
+
         return render_template(
             'index.html',
             data=data,
+            event_rot_index=settings['event_rotation_index'],
+            event_rot_members=list(settings['phone_numbers'].keys()),
             albums=albums,
             thumbnails_folder=thumbnails_folder.strip('.'),
             appkey=request.args.get('key'),
@@ -245,7 +252,7 @@ def create_app() -> Flask:
         )
 
     @app.route('/calendar/')
-    def calendar():
+    def calendar_ics():
         write_data_point("route", "calendar", "ip", request.remote_addr)
 
         # Get the calendar data
@@ -297,6 +304,32 @@ def create_app() -> Flask:
             sha.update(name.encode())
             return '#' + sha.hexdigest()[0:6]
         return dict(name_to_color=name_to_color)
+
+    @app.context_processor
+    def event_settings_processor():
+        def get_event_host(rotation_index, loop_index, members):
+            member_index = (int(rotation_index) + int(loop_index)) % len(members)
+            responsible = members[member_index]
+            month = get_event_month(loop_index)
+            event_host = f"{month} {responsible}"
+            return event_host
+
+        def get_event_month(loop_index):
+            today = datetime.today()
+            cur_month = today.month
+            cur_year = today.year
+
+            index_sum = cur_month + (loop_index * 2)
+            if index_sum > 12:
+                cur_year += 1
+
+            start_month_index = index_sum % 12
+            first_month = calendar.month_abbr[start_month_index]
+            second_month = calendar.month_abbr[start_month_index + 1]
+
+            month = f"[{first_month}/{second_month} {cur_year}]"
+            return month
+        return dict(get_event_host=get_event_host)
 
     @app.route("/api")
     def redirect_api():
