@@ -309,10 +309,10 @@ def create_app() -> Flask:
     def event_settings_processor():
         def get_event_host(rotation_index, loop_index, members):
             member_index = (int(rotation_index) + int(loop_index)) % len(members)
-            responsible = members[member_index]
+            event_host = members[member_index]
             month = get_event_month(loop_index)
-            event_host = f"{month} {responsible}"
-            return event_host
+
+            return {"event_host":event_host, "month":month}
 
         def get_event_month(loop_index):
             today = datetime.today()
