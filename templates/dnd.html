@@ -3,7 +3,7 @@
 {% block content %}
 
 <body style="background-image: url({{image_of_the_day}}); background-repeat:
-    no-repeat; background-attachment: fixed; background-size: cover; background-position: center;">
+    no-repeat; background-attachment: fixed; background-size: cover; background-position: center; {% if request.cookies.get('theme') == 'dark' %}background-color:#212529;{% endif %}">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
