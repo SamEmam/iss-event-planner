@@ -1,17 +1,22 @@
 [
     {
+        "name": "Iris The Outcast",
+        "link": "https://ddb.ac/characters/93861557",
+        "thumbnail": "iris_the_outcast.png"
+    },
+    {
+        "name": "Reimruk Axebeard",
+        "link": "https://ddb.ac/characters/95729573",
+        "thumbnail": "reimruk_axebeard.png"
+    },
+    {
+        "name": "Theren Naïlo",
+        "link": "https://ddb.ac/characters/95717602",
+        "thumbnail": "theren_nailo.png"
+    },
+    {
         "name": "Kepeshkmolik Mithras",
-        "link": "https://ddb.ac/characters/92257199/bKZ3mY",
+        "link": "https://ddb.ac/characters/92257199",
         "thumbnail": "Mithras.png"
-    },
-    {
-        "name": "Baldor The Young",
-        "link": "https://ddb.ac/characters/92257199/bKZ3mY",
-        "thumbnail": "Baldor.png"
-    },
-    {
-        "name": "Qhiijar The Redeemed",
-        "link": "https://ddb.ac/characters/92257199/bKZ3mY",
-        "thumbnail": "Qhiijar.png"
     }
 ]
