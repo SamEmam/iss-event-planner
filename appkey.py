@@ -1,6 +1,6 @@
 import os
 
-from flask import abort, request
+from flask import abort, request, redirect, url_for
 from functools import wraps
 
 AUTH_DISABLED = os.getenv("AUTH_DISABLED")
@@ -51,7 +51,7 @@ def require_appkey_factory(app):
             if allowed:
                 return view_function(*args, **kwargs)
             else:
-                abort(401)
+                return redirect(url_for('login', access="denied"))
         return decorated_function
 
     return require_appkey
