@@ -23,7 +23,7 @@ strawpoll_id_padel = "bVg8o6jP1nY"
 strawpoll_id_dnd = "w4nWrWaeYyA"
 strawpoll_key = "5b5ac418-a0dd-11ed-8edb-cb45d087e0d2"
 
-ical_enum = Enum(normal=0, padel=1, dnd=2)
+normal_enum, padel_enum, dnd_enum = range(0, 3)
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
@@ -163,13 +163,13 @@ def generate_ics_file(input_file, output_file, type):
     data = json.load(open(input_file, 'r'))
     cal = Calendar()
 
-    if type == ical_enum.normal:
+    if type == normal_enum:
         for event_data in data:
             cal.events.add(create_ical_event(event_data))
-    elif type == ical_enum.padel:
+    elif type == padel_enum:
         for event_data in data:
             cal.events.add(create_ical_event_padel(event_data))
-    elif type == ical_enum.dnd:
+    elif type == dnd_enum:
         for event_data in data:
             cal.events.add(create_ical_event_dnd(event_data))
     else:
@@ -234,11 +234,11 @@ interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_d
 
 @aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
-    generate_ics_file(data_file, calendar_file, ical_enum.normal)
+    generate_ics_file(data_file, calendar_file, normal_enum)
     interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
-    generate_ics_file(padel_data_file, padel_calendar_file, ical_enum.padel)
+    generate_ics_file(padel_data_file, padel_calendar_file, padel_enum)
     interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
-    generate_ics_file(dnd_strawpoll_file, dnd_calendar_file, ical_enum.dnd)
+    generate_ics_file(dnd_strawpoll_file, dnd_calendar_file, dnd_enum)
 
 
 @aiocron.crontab('0 0 1 */2 *')
