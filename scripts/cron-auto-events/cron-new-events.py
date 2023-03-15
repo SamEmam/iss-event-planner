@@ -153,7 +153,7 @@ def create_ical_event_dnd(event_data):
 
     tz = timezone('Europe/Copenhagen')
 
-    date = tz.localize(datetime.strptime(event_data['date'], '%Y-%m-%d %H:%M'))
+    date = tz.localize(datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M'))
     event.begin = date
     event.make_all_day()
 

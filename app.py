@@ -280,6 +280,20 @@ def create_app() -> Flask:
         response.headers["Content-Type"] = "text/calendar"
         return response
 
+    @app.route('/dnd/calendar/')
+    def dnd_calendar_ics():
+        write_data_point("route", "calendar/dnd", "ip", request.remote_addr)
+
+        # Get the calendar data
+        with io.open(dnd_calendar_file, 'r', newline='\r\n') as calendar_data:
+            calendar_string = calendar_data.read()
+
+        # turn calendar data into a response
+        response = app.make_response(calendar_string)
+        response.headers["Content-Disposition"] = "attachment; filename=dnd_calendar.ics"
+        response.headers["Content-Type"] = "text/calendar"
+        return response
+
     @app.route('/birthday/calendar/')
     def birthday_calendar_ics():
         write_data_point("route", "calendar/birthday", "ip", request.remote_addr)
