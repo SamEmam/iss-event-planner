@@ -151,9 +151,7 @@ def create_ical_event_dnd(event_data):
     event = Event()
     event.name = f"Dungeons & Dragons ({event_data['votes']})"
 
-    tz = timezone('Europe/Copenhagen')
-
-    date = tz.localize(datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M'))
+    date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
     event.begin = date
     event.make_all_day()
 
