@@ -43,11 +43,78 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">Characters</h1>
+            <h1 class="masthead-heading text-uppercase mb-0"><a style="color: white;" href="https://strawpoll.com/w4nWrWaeYyA">DnD Strawpoll</a></h1>
             <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
+            <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
+            </div> -->
+            <!-- Masthead Subheading-->
+            <!-- <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Indlæst fra <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></p> -->
+        </div>
+    </header>
+    <!-- Portfolio Section-->
+    <section class="page-section portfolio" id="events">
+        <div class="container">
+            <!-- Portfolio Grid Items-->
+            <div class="row justify-content-center">
+                {% for event in data %}
+                {% if not event.hidden %}
+                <!-- Portfolio Item 1-->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#event{{ loop.index0 }}"
+                        style="background-color: rgb(49,51,53); color: white;">
+                        <div
+                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i
+                                    class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <div class="bg-primary" style="width: 100%;">
+                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ event.title }}</h2>
+                        </div>
+                        <div class="row center" style="text-align: center; padding-top: 0.5em;">
+                            {% set start_date_split = event.start_date.split(' ') %}
+                            {% set end_date_split = event.end_date.split(' ') %}
+                            <div style="width: 50%; padding-left: 2.5em; text-align: left;">
+                                <p>{{ start_date_split[0] }}</p>
+                            </div>
+                            {% if event.votes > 4 %}
+                            <div style="width: 50%; padding-right: 2.5em; text-align: right; color: lightgreen;">
+                                <p>Votes: {{ event.votes }}</p>
+                            </div>
+                            {% elif event.votes < 4 %}
+                            <div style="width: 50%; padding-right: 2.5em; text-align: right; color: lightcoral;">
+                                <p>Votes: {{ event.votes }}</p>
+                            </div>
+                            {% else %}
+                            <div style="width: 50%; padding-right: 2.5em; text-align: right; color: orange">
+                                <p>Votes: {{ event.votes }}</p>
+                            </div>
+                            {% endif %}
+                            <div style="width: 100%;">
+                                <p>{% for player in event.participants %}
+                                    <span style="color: {{ name_to_color(player) }}">&nbsp;{{ player }}&nbsp;</span>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
             </div>
+        </div>
+    </section>
+    <header class=" bg-primary text-white text-center" id="{{url_for('dnd', key=appkey)}}">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
+            <!-- Masthead Heading-->
+            <p class="mb-5"></p>
+            <h1 class="masthead-heading text-uppercase mb-5" style="font-size: 4em;">Characters</h1>
+            <!-- Icon Divider-->
+            <!-- <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div> -->
             <!-- Masthead Subheading-->
             <!-- <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Indlæst fra <a style="color: white;" href="https://strawpoll.com/padeltennis">strawpoll.com</a></p> -->
         </div>
@@ -63,9 +130,9 @@
             </div> -->
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
-                {% for character in data %}
+                {% for character in char_data %}
                 <!-- Portfolio Item 1-->
-                <div class="col-md-6 col-lg-4 mb-5">
+                <div class="col-md-3 col-lg-3 mb-5">
                     <a href="{{character.link}}" target="_blank" style="text-decoration: none"><div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#character{{ loop.index0 }}"
                         style="background-color: rgb(49,51,53);color: white;">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -74,7 +141,7 @@
                         <div style="background-color: #105800; width: 100%;">
                             <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ character.name }}</h2>
                         </div>
-                        <img class="img-fluid" src="{{ url_for('static', filename=character.thumbnail) }}" alt="..." style="max-height: 20rem; width:100%; height: 100%; object-fit: cover;" />
+                        <img class="img-fluid" src="{{ url_for('static', filename=character.thumbnail) }}" alt="..." style="width:100%; height: 100%; object-fit: cover;" />
                     </div>
                 </a>
                 </div>
@@ -83,18 +150,32 @@
         </div>
     </section>
     <!-- About Section-->
-    <!-- <section class="page-section bg-primary text-white mb-0" id="{{url_for('dnd', key=appkey)}}">
-        <div class="container"> -->
+    <section class="page-section bg-primary text-white mb-0" id="calendar">
+        <div class="container">
             <!-- About Section Heading-->
-            <!-- <h2 class="page-section-heading text-center text-uppercase text-white">References</h2> -->
+            <h2 class="page-section-heading text-center text-uppercase text-white">Kalender</h2>
             <!-- Icon Divider-->
-            <!-- <div class="divider-custom divider-light">
+            <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
             </div>
-
-
+            <!-- About Section Content-->
+            <p class="lead mb-0" style="text-align: center;">Dungeons & Dragons begivenheder kan meget nemt tilføjes til din
+                kalender på din mobil eller computer.</p>
+            <p class="lead mb-3" style="text-align: center;">Du skal blot abonnerer på denne url i din kalender app.</p>
+            <!-- <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p> -->
+            <!-- About Section Button-->
+            <div class="text-center mt-4">
+                <button class="btn btn-xl btn-outline-light" id="calendar_link"
+                    onclick="navigator.clipboard.writeText('https://rumstationen.com/dnd/calendar')">
+                    <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
+                    https://rumstationen.com/dnd/calendar
+                </button>
+            </div>
+            <p></p>
+            <p class="lead mb-0" style="text-align: center;">Kopier manuelt</p>
+            <p class="lead mb-0" style="text-align: center;">https://rumstationen.com/dnd/calendar</p>
         </div>
-    </section> -->
+    </section>
     <!-- Footer-->
     <footer class="footer text-center">
         <div class="container">

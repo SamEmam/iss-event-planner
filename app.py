@@ -38,6 +38,8 @@ albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
 thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
 dnd_data_file = "dnd_data.json"
 dnd_thumbnails_folder = "./static/thumbnails"
+dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
+dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 
 if debug:
     data_file = "event_data.json"
@@ -50,6 +52,8 @@ if debug:
     dnd_data_file = "dnd_data.json"
     dnd_thumbnails_folder = "./static/thumbnails"
     birthday_calendar_file = "birthday.ics"
+    dnd_strawpoll_file = "dnd_strawpoll_data.json"
+    dnd_calendar_file = "dnd.ics"
 
 
 def config_app(app):
@@ -237,11 +241,13 @@ def create_app() -> Flask:
     @require_appkey
     def dnd():
         write_data_point("route", "dnd", "ip", request.remote_addr)
-        data = json.load(open(dnd_data_file, 'r'))
+        char_data = json.load(open(dnd_data_file, 'r'))
+        data = json.load(open(dnd_strawpoll_file, 'r'))
 
         return render_template(
             'dnd.html',
             data=data,
+            char_data=char_data,
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )

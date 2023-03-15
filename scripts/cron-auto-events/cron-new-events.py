@@ -2,6 +2,7 @@ from dateutil.relativedelta import relativedelta
 from ics import Calendar, Event
 from datetime import date, datetime
 from pytz import timezone
+from enum import Enum
 
 import requests
 import platform
@@ -18,8 +19,11 @@ if 'Microsoft' in platform.release():
 ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
 
-strawpoll_id = "bVg8o6jP1nY"
+strawpoll_id_padel = "bVg8o6jP1nY"
+strawpoll_id_dnd = "w4nWrWaeYyA"
 strawpoll_key = "5b5ac418-a0dd-11ed-8edb-cb45d087e0d2"
+
+ical_enum = Enum(normal=0, padel=1, dnd=2)
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
@@ -28,6 +32,8 @@ padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
+dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
+dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 
 if debug:
     data_file = "event_data.json"
@@ -35,6 +41,8 @@ if debug:
     settings_file = "event_settings.json"
     calendar_file = "rumstationen.ics"
     padel_calendar_file = "padel.ics"
+    dnd_strawpoll_file = "dnd_strawpoll_data.json"
+    dnd_calendar_file = "dnd.ics"
 
 
 def get_title(today):
@@ -139,22 +147,39 @@ def create_ical_event_padel(event_data):
 
     return event
 
-def generate_ics_file(input_file, output_file, is_normal):
+def create_ical_event_dnd(event_data):
+    event = Event()
+    event.name = f"Dungeons & Dragons ({event_data['votes']})"
+
+    tz = timezone('Europe/Copenhagen')
+
+    date = tz.localize(datetime.strptime(event_data['date'], '%Y-%m-%d %H:%M'))
+    event.begin = date
+    event.make_all_day()
+
+    return event
+
+def generate_ics_file(input_file, output_file, type):
     data = json.load(open(input_file, 'r'))
     cal = Calendar()
 
-    if is_normal:
+    if type == ical_enum.normal:
         for event_data in data:
             cal.events.add(create_ical_event(event_data))
-    else:
+    elif type == ical_enum.padel:
         for event_data in data:
             cal.events.add(create_ical_event_padel(event_data))
+    elif type == ical_enum.dnd:
+        for event_data in data:
+            cal.events.add(create_ical_event_dnd(event_data))
+    else:
+        return
 
     with open(output_file, 'w') as ics_file:
         ics_file.writelines(cal)
 
 
-def fetch_strawpoll_data():
+def fetch_strawpoll_data(strawpoll_id):
     url = f"https://api.strawpoll.com/v3/polls/{strawpoll_id}/results"
 
     headers = {
@@ -167,7 +192,7 @@ def fetch_strawpoll_data():
 
     return strawpoll_data
 
-def interpret_strawpoll_data(strawpoll_data):
+def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
     strawpoll_events = []
     strawpoll_participants = []
     for participant in strawpoll_data['poll_participants']:
@@ -185,8 +210,12 @@ def interpret_strawpoll_data(strawpoll_data):
                     strawpoll_participants.append([])
     tz = timezone('Europe/Copenhagen')
     for event, participants in zip(strawpoll_data['poll_options'], strawpoll_participants):
-        start_date = datetime.fromtimestamp(event['start_time'], tz)
-        end_date = datetime.fromtimestamp(event['end_time'], tz)
+        try:
+            start_date = datetime.fromtimestamp(event['start_time'], tz)
+            end_date = datetime.fromtimestamp(event['end_time'], tz)
+        except Exception:
+            start_date = datetime.strptime(event["date"], '%Y-%m-%d')
+            end_date = datetime.strptime(event["date"], '%Y-%m-%d')
         votes = event['vote_count']
         title = start_date.strftime('%A %b %-d')
         participants = participants
@@ -197,16 +226,19 @@ def interpret_strawpoll_data(strawpoll_data):
             "votes": votes,
             "participants": participants
         })
-    json.dump(strawpoll_events, open(padel_data_file, 'w'))
+    json.dump(strawpoll_events, open(strawpoll_data_file, 'w'))
 
 
-interpret_strawpoll_data(fetch_strawpoll_data())
+interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
+interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
 
 @aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
-    generate_ics_file(data_file, calendar_file, True)
-    interpret_strawpoll_data(fetch_strawpoll_data())
-    generate_ics_file(padel_data_file, padel_calendar_file, False)
+    generate_ics_file(data_file, calendar_file, ical_enum.normal)
+    interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
+    generate_ics_file(padel_data_file, padel_calendar_file, ical_enum.padel)
+    interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
+    generate_ics_file(dnd_strawpoll_file, dnd_calendar_file, ical_enum.dnd)
 
 
 @aiocron.crontab('0 0 1 */2 *')
