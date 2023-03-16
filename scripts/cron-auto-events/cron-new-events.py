@@ -169,7 +169,8 @@ def generate_ics_file(input_file, output_file, type):
             cal.events.add(create_ical_event_padel(event_data))
     elif type == dnd_enum:
         for event_data in data:
-            cal.events.add(create_ical_event_dnd(event_data))
+            if event_data['votes'] > 3:
+                cal.events.add(create_ical_event_dnd(event_data))
     else:
         return
 
