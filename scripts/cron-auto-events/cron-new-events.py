@@ -20,7 +20,7 @@ ifttt_key = "owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe"
 ifttt_url = f"https://maker.ifttt.com/trigger/new_event/with/key/{ifttt_key}"
 
 strawpoll_id_padel = "bVg8o6jP1nY"
-strawpoll_id_dnd = "w4nWrWaeYyA"
+strawpoll_id_dnd = "QrgebPRrXZp"
 strawpoll_key = "5b5ac418-a0dd-11ed-8edb-cb45d087e0d2"
 
 normal_enum, padel_enum, dnd_enum = range(0, 3)
