@@ -149,7 +149,10 @@ def create_ical_event_padel(event_data):
 
 def create_ical_event_dnd(event_data):
     event = Event()
-    event.name = f"Dungeons & Dragons ({event_data['votes']}+{event_data['votes_indeterminate']})"
+    if event_data['votes_indeterminate'] > 0:
+        event.name = f"Dungeons & Dragons ({event_data['votes']}+{event_data['votes_indeterminate']})"
+    else:
+        event.name = f"Dungeons & Dragons ({event_data['votes']})"
 
     date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
     event.begin = date
