@@ -315,6 +315,15 @@ def create_app() -> Flask:
     @app.context_processor
     def name_to_color_processor():
         def name_to_color(name):
+            dnd_name_color_dict = {
+                "Mithras": "#e84141",
+                "Theren": "#62b53a",
+                "Reimruk": "#e5623e",
+                "Iris": "#c361ff",
+                "Bob2": "#3a70e2",
+            }
+            if name in dnd_name_color_dict.keys():
+                return dnd_name_color_dict[name]
             sha = hashlib.sha256()
             sha.update(name.encode())
             return '#' + sha.hexdigest()[0:6]

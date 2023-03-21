@@ -149,7 +149,7 @@ def create_ical_event_padel(event_data):
 
 def create_ical_event_dnd(event_data):
     event = Event()
-    event.name = f"Dungeons & Dragons ({event_data['votes']})"
+    event.name = f"Dungeons & Dragons ({event_data['votes']}+{event_data['votes_indeterminate']})"
 
     date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
     event.begin = date
@@ -169,7 +169,7 @@ def generate_ics_file(input_file, output_file, type):
             cal.events.add(create_ical_event_padel(event_data))
     elif type == dnd_enum:
         for event_data in data:
-            if event_data['votes'] > 3:
+            if (event_data['votes'] + event_data['votes_indeterminate']) > 3:
                 cal.events.add(create_ical_event_dnd(event_data))
     else:
         return
@@ -194,9 +194,9 @@ def fetch_strawpoll_data(strawpoll_id):
 def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
     strawpoll_events = []
     strawpoll_participants = []
+    strawpoll_indeterminates = []
     for participant in strawpoll_data['poll_participants']:
         name = participant['name']
-        print(name)
         for i in range(len(participant['poll_votes'])):
             if participant['poll_votes'][i] == 1:
                 try:
@@ -204,11 +204,19 @@ def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
                 except Exception:
                     strawpoll_participants.append([name])
             else:
-                print(len(strawpoll_participants), i)
                 if len(strawpoll_participants) <= i:
                     strawpoll_participants.append([])
+            if participant['poll_votes'][i] == 2:
+                try:
+                    strawpoll_indeterminates[i].append(name)
+                except Exception:
+                    strawpoll_indeterminates.append([name])
+            else:
+                if len(strawpoll_indeterminates) <= i:
+                    strawpoll_indeterminates.append([])
+
     tz = timezone('Europe/Copenhagen')
-    for event, participants in zip(strawpoll_data['poll_options'], strawpoll_participants):
+    for event, participants, indeterminates in zip(strawpoll_data['poll_options'], strawpoll_participants, strawpoll_indeterminates):
         try:
             start_date = datetime.fromtimestamp(event['start_time'], tz)
             end_date = datetime.fromtimestamp(event['end_time'], tz)
@@ -216,14 +224,16 @@ def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
             start_date = datetime.strptime(event["date"], '%Y-%m-%d')
             end_date = datetime.strptime(event["date"], '%Y-%m-%d')
         votes = event['vote_count']
+        votes_indeterminate = event['vote_count_indeterminate']
         title = start_date.strftime('%A %b %-d')
-        participants = participants
         strawpoll_events.append({
             "title": title,
             "start_date": start_date.strftime('%Y-%m-%d %H:%M'),
             "end_date": end_date.strftime('%Y-%m-%d %H:%M'),
             "votes": votes,
-            "participants": participants
+            "votes_indeterminate": votes_indeterminate,
+            "participants": participants,
+            "indeterminate": indeterminates
         })
     json.dump(strawpoll_events, open(strawpoll_data_file, 'w'))
 
