@@ -336,7 +336,7 @@ def create_app() -> Flask:
             event_host = members[member_index]
             month = get_event_month(loop_index)
 
-            return {"event_host":event_host, "month":month}
+            return {"event_host": event_host, "month": month}
 
         def get_event_month(loop_index):
             today = datetime.today()
@@ -354,13 +354,12 @@ def create_app() -> Flask:
             month = f"[{first_month}/{second_month} {cur_year}]"
             return month
         return dict(get_event_host=get_event_host)
-    
 
     @app.route("/<theme>/<page>/set-theme")
     @require_appkey
     def set_theme(theme="light", page="index"):
         res = make_response(redirect(url_for(page, key=request.args.get('key'))))
-        res.set_cookie("theme", theme)
+        res.set_cookie("theme", value=theme, domain="rumstationen.com")
         return res
 
     @app.route("/api")
