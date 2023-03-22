@@ -359,7 +359,7 @@ def create_app() -> Flask:
     @require_appkey
     def set_theme(theme="light", page="index"):
         res = make_response(redirect(url_for(page, key=request.args.get('key'))))
-        res.set_cookie("theme", value=theme)
+        res.set_cookie("theme", value=theme, max_age=(60 * 60 * 24 * 365 * 2))
         return res
 
     @app.route("/api")
