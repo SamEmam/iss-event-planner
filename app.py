@@ -1,4 +1,4 @@
-from flask import request, Flask, render_template, redirect, url_for, send_from_directory, make_response
+from flask import request, Flask, render_template, redirect, url_for, send_from_directory, make_response, session
 from appkey import require_appkey_factory
 from datetime import date, timedelta, datetime
 from influxdb_client.client.write_api import SYNCHRONOUS
@@ -359,7 +359,7 @@ def create_app() -> Flask:
     @require_appkey
     def set_theme(theme="light", page="index"):
         res = make_response(redirect(url_for(page, key=request.args.get('key'))))
-        res.set_cookie("theme", value=theme, domain="rumstationen.com")
+        res.set_cookie("theme", value=theme)
         return res
 
     @app.route("/api")
@@ -376,6 +376,10 @@ def create_app() -> Flask:
     def redirect_influx():
         write_data_point("route", "influx", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:8086', code=301)
+
+    @app.before_request
+    def make_session_permanent():
+        session.permanent = True
 
     @app.after_request
     def setCORS(response):
