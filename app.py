@@ -230,9 +230,16 @@ def create_app() -> Flask:
 
         data = hide_old_events(data, 1)
 
+        pwd = request.args.get('key')
+        if pwd == "0da6e":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
         return render_template(
             'padel.html',
             data=data,
+            lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )
@@ -244,10 +251,17 @@ def create_app() -> Flask:
         char_data = json.load(open(dnd_data_file, 'r'))
         data = json.load(open(dnd_strawpoll_file, 'r'))
 
+        pwd = request.args.get('key')
+        if pwd == "8b38d":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
         return render_template(
             'dnd.html',
             data=data,
             char_data=char_data,
+            lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )
