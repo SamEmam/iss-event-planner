@@ -11620,3 +11620,12 @@ html {
 
 
 
+.dnd-character-name {
+  min-height: 1.5em !important;
+}
+
+@media (768px <= width <= 2063px) {
+  .dnd-character-name {
+    min-height: 3.5em !important;
+  }
+}
