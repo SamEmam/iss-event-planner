@@ -78,14 +78,14 @@
             <div class="row justify-content-center">
                 {% for character in char_data %}
                 <!-- Portfolio Item 1-->
-                <div class="col-md-3 col-lg-3 mb-5">
+                <div class="col-md-2 col-lg-2 mb-5">
                     <a href="{{character.link}}" target="_blank" style="text-decoration: none"><div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#character{{ loop.index0 }}"
                         style="background-color: rgb(49,51,53);color: white;" onmouseover="hover('{{ character.name }}', '{{ character.alt_thumbnail }}')" onmouseout="unhover('{{ character.name }}', '{{ character.thumbnail }}')">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
                         <div style="background-color: #105800; width: 100%;">
-                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ character.name }}</h2>
+                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ character.name | safe }}</h2>
                         </div>
                         <script>
                             function hover(character_name, image_str) {

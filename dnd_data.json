@@ -12,7 +12,7 @@
         "alt_thumbnail": "reimruk_alt.png"
     },
     {
-        "name": "Theren Naïlo",
+        "name": "Theren Naïlo &#160;",
         "link": "https://ddb.ac/characters/95717602",
         "thumbnail": "theren_nailo.png",
         "alt_thumbnail": "theren_alt_2.png"
@@ -22,5 +22,11 @@
         "link": "https://ddb.ac/characters/92257199",
         "thumbnail": "kepeshkmolik_mithras.png",
         "alt_thumbnail": "mithras_alt.png"
+    },
+    {
+        "name": "Benedict The Wanderer",
+        "link": "https://ddb.ac/characters/92257199",
+        "thumbnail": "benedict.png",
+        "alt_thumbnail": "benedict_alt.png"
     }
 ]
