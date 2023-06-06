@@ -374,10 +374,9 @@ def create_app() -> Flask:
             if index_sum > 12:
                 cur_year += 1
 
-            if index_sum == 12:
-                start_month_index = index_sum
-            else:
-                start_month_index = index_sum % 12
+            start_month_index = index_sum % 12
+            if start_month_index == 0:
+                start_month_index = 12
 
             month_offset = ((start_month_index) % 2) - 1
             first_month = calendar.month_abbr[start_month_index + month_offset]
