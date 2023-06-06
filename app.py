@@ -375,8 +375,9 @@ def create_app() -> Flask:
                 cur_year += 1
 
             start_month_index = index_sum % 12
-            first_month = calendar.month_abbr[start_month_index]
-            second_month = calendar.month_abbr[start_month_index + 1]
+            month_offset = (start_month_index % 2) - 1
+            first_month = calendar.month_abbr[start_month_index - month_offset]
+            second_month = calendar.month_abbr[start_month_index + 1 - month_offset]
 
             month = f"[{first_month}/{second_month} {cur_year}]"
             return month
