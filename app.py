@@ -17,6 +17,7 @@ token = "CA5cFs30OQdVs-ggNoVqlrZfLHYFtoRGUPsg-xbvt_C-8gqJA2G3KHxIMQw0q7mfoLz8aFa
 org = "emamorg"
 bucket = "rumstationen"
 url = "http://18.198.184.123:8086"
+apod_key = "gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ"
 
 client = InfluxDBClient(url=url, token=token)
 
@@ -65,18 +66,30 @@ def config_app(app):
 
 def get_image_of_the_day():
     start_date = (date.today() - timedelta(days=3)).isoformat()
-    data = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
-    if 'hdurl' in data[-1]:
-        return data[-1]
-    elif 'hdurl' in data[-2]:
-        return data[-2]
+    response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}')
+    if response.status_code == 200:
+        data = response.json()
+        if 'hdurl' in data[-1]:
+            return data[-1]
+        elif 'hdurl' in data[-2]:
+            return data[-2]
+        else:
+            return data[-3]
     else:
-        return data[-3]
+        data = {
+            'hdurl': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_2346.jpg',
+            'url': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_1080.jpg'
+        }
+        return data
 
 
 def get_title_of_the_day():
-    data = requests.get('https://api.nasa.gov/planetary/apod?api_key=gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ').json()
-    return data['title']
+    response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={apod_key}')
+    if response.status_code == 200:
+        data = response.json()
+        return data['title']
+    else:
+        return 'Nasa APOD API is Unavailable'
 
 
 def hide_old_events(data, days):
