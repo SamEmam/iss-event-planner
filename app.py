@@ -74,7 +74,7 @@ def get_image_of_the_day():
     start_date = (date.today() - timedelta(days=3)).isoformat()
     response_ok = False
     try:
-        response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}', timeout=5)
+        response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}', timeout=2)
         if response.status_code == 200:
             response_ok = True
     except Exception:
@@ -100,7 +100,7 @@ def get_image_of_the_day():
 def get_title_of_the_day():
     response_ok = False
     try:
-        response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={apod_key}')
+        response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={apod_key}', timeout=1)
         if response.status_code == 200:
             response_ok = True
     except Exception:
