@@ -31,12 +31,15 @@ SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
-padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
-padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
 birthday_calendar_file = os.path.join(SITE_ROOT, data_path, "birthday.ics")
+
+padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
+padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
+
 albums_file = os.path.join(SITE_ROOT, data_path, "albums_data.json")
 thumbnails_folder = os.path.join(SITE_ROOT, data_path, "event_thumbnails")
+
 dnd_data_file = "dnd_data.json"
 dnd_thumbnails_folder = "./static/thumbnails"
 dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
@@ -45,14 +48,17 @@ dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 if debug:
     data_file = "event_data.json"
     settings_file = "settings.json"
-    albums_file = "albums_data.json"
     calendar_file = "rumstationen.ics"
-    thumbnails_folder = "./static/thumbnails"
+    birthday_calendar_file = "birthday.ics"
+
     padel_data_file = "padel_event_data.json"
     padel_calendar_file = "padel.ics"
+
+    albums_file = "albums_data.json"
+    thumbnails_folder = "./static/thumbnails"
+
     dnd_data_file = "dnd_data.json"
     dnd_thumbnails_folder = "./static/thumbnails"
-    birthday_calendar_file = "birthday.ics"
     dnd_strawpoll_file = "dnd_strawpoll_data.json"
     dnd_calendar_file = "dnd.ics"
 
@@ -66,8 +72,15 @@ def config_app(app):
 
 def get_image_of_the_day():
     start_date = (date.today() - timedelta(days=3)).isoformat()
-    response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}')
-    if response.status_code == 200:
+    response_ok = False
+    try:
+        response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}', timeout=5)
+        if response.status_code == 200:
+            response_ok = True
+    except Exception:
+        print("Nasa APOD is down", datetime.today())
+
+    if response_ok:
         data = response.json()
         if 'hdurl' in data[-1]:
             return data[-1]
@@ -78,18 +91,26 @@ def get_image_of_the_day():
     else:
         data = {
             'hdurl': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_2346.jpg',
-            'url': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_1080.jpg'
+            'url': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_1080.jpg',
+            'title': 'Astronomy Picture Of the Day'
         }
         return data
 
 
 def get_title_of_the_day():
-    response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={apod_key}')
-    if response.status_code == 200:
+    response_ok = False
+    try:
+        response = requests.get(f'https://api.nasa.gov/planetary/apod?api_key={apod_key}')
+        if response.status_code == 200:
+            response_ok = True
+    except Exception:
+        print("Nasa APOD is down", datetime.today())
+
+    if response_ok:
         data = response.json()
         return data['title']
     else:
-        return 'Nasa APOD API is Unavailable'
+        return 'Astronomy Picture Of the Day'
 
 
 def hide_old_events(data, days):
