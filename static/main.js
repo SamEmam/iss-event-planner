@@ -52,3 +52,16 @@ window.addEventListener('DOMContentLoaded', event => {
   });
 
 });
+
+
+function setHueScene(scene) {
+    var ifttt_url = 'https://maker.ifttt.com/trigger/' + scene + '/with/key/owX5X_TKMGHZ_KOsFHPoEQlookfgtsSDsspQ1kMlcoe'
+    console.log('setting scene to %s', scene)
+    fetch(ifttt_url, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+}

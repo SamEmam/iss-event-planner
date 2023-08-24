@@ -300,6 +300,24 @@ def create_app() -> Flask:
             nasa_title=get_title_of_the_day()
         )
 
+    @app.route('/dungeonmaster', methods=['GET'])
+    @require_appkey
+    def dungeon_master():
+        write_data_point("route", "dungeonmaster", "ip", request.remote_addr)
+
+        pwd = request.args.get('key')
+        if pwd == "8b38d":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
+        return render_template(
+            'dungeon_master.html',
+            lock_user_to_site=lock_user_to_site,
+            appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day()
+        )
+
     @app.route('/calendar/')
     def calendar_ics():
         write_data_point("route", "calendar", "ip", request.remote_addr)

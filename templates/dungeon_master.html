@@ -1,0 +1,50 @@
+{% extends 'dungeon_master_base.html' %}
+
+{% block content %}
+<ul class="cards">
+    <li class="cards__item">
+        <div class="card">
+            <a href="https://open.spotify.com/playlist/4N1a1qsIy87k9nXU1MnvuL?si=c7ed77bcefd14b4d" target="_blank" style="text-decoration:none"
+                onclick="setHueScene('dnd_explore')">
+            <div class="card__image card__image--flowers" style="background-image: url(https://cdn.discordapp.com/attachments/1126781736370589756/1144206657765781614/bg3_explore.png);"></div>
+            <div class="card__content">
+                <div class="card__title" style="text-align: center; color: rgba(29,185,84,1)">Explore Scene</div>
+            </div>
+        </a>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <a href="https://open.spotify.com/playlist/0wiShj2NsMpFdg05qpYeTM?si=c5f2a1ac1e274d60" target="_blank" style="text-decoration:none"
+                onclick="setHueScene('dnd_city')">
+                <div class="card__image card__image--flowers" style="background-image: url(https://cdn.discordapp.com/attachments/1126781736370589756/1144206658071973928/bg3_city.png);"></div>
+            <div class="card__content">
+                <div class="card__title" style="text-align: center; color: rgba(29,185,84,1)">City Scene</div>
+            </div>
+        </a>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <a href="https://open.spotify.com/playlist/1KwWNzsDkk8M18bqvY065p?si=1e50ce58c3044fe9" target="_blank" style="text-decoration:none"
+                onclick="setHueScene('dnd_dungeon')">
+                <div class="card__image card__image--flowers" style="background-image: url(https://cdn.discordapp.com/attachments/1126781736370589756/1144206657447006299/bg3_dungeon.png);"></div>
+            <div class="card__content">
+                <div class="card__title" style="text-align: center; color: rgba(29,185,84,1)">Dungeon Scene</div>
+            </div>
+        </a>
+        </div>
+    </li>
+    <li class="cards__item">
+        <div class="card">
+            <a href="https://open.spotify.com/playlist/2rdNglmRm2W2g7BgX7TSfe?si=95f0c028fd804478" target="_blank" style="text-decoration:none"
+                onclick="setHueScene('dnd_combat')">
+                <div class="card__image card__image--flowers" style="background-image: url(https://cdn.discordapp.com/attachments/1126781736370589756/1144206658394927104/bg3_combat.png);"></div>
+            <div class="card__content">
+                <div class="card__title" style="text-align: center; color: rgba(29,185,84,1)">Combat Scene</div>
+            </div>
+        </a>
+        </div>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,197 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background-color: #f0f0f0;
+}
+body {
+  color: #999999;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  padding: 1rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -moz-font-feature-settings: "liga" on;
+}
+img {
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+.btn {
+  background-color: white;
+  border: 1px solid #cccccc;
+  color: #696969;
+  padding: 0.5rem;
+  text-transform: lowercase;
+}
+.btn--block {
+  display: block;
+  width: 100%;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cards__item {
+  display: flex;
+  padding: 1rem;
+  width: 100%;
+}
+@media (min-width: 40rem) {
+  .cards__item {
+    width: 50%;
+  }
+}
+@media (min-width: 56rem) {
+  .cards__item {
+    width: 33.3333%;
+  }
+  h1.pagetitle {
+    font-size: 5vw !important;
+  }
+}
+@media (min-width: 81rem) {
+  .cards__item {
+    width: 25%;
+  }
+}
+/* @media (min-width: 110rem) {
+  .cards__item {
+    width: 16.6666%;
+  }
+} */
+.card {
+  background-color: rgba(25,20,20,1);
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  border-style: none;
+}
+.card:hover .card__image {
+  filter: contrast(100%);
+}
+.card__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+}
+.card__image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(70%);
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+}
+.card__image::before {
+  content: "";
+  display: block;
+  padding-top: 85%;
+}
+@media (min-width: 40rem) {
+  .card__image::before {
+    padding-top: 100%;
+  }
+}
+.card__image--flowers {
+  background-image: url(https://unsplash.it/800/600?image=82);
+}
+.card__image--river {
+  background-image: url(https://unsplash.it/800/600?image=11);
+}
+.card__image--record {
+  background-image: url(https://unsplash.it/800/600?image=39);
+}
+.card__image--fence {
+  background-image: url(https://unsplash.it/800/600?image=59);
+}
+.card__title {
+  color: #696969;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  /* text-transform: uppercase; */
+  font-family: 'Gotham';
+}
+.card__text {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+
+
+
+
+
+
+html, body {
+  width: auto;
+  min-height: 100vh !important;
+}
+
+body {
+  background-image: url(https://cdn.discordapp.com/attachments/1126781736370589756/1144269201364750477/image_1.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background: linear-gradient(to right, 
+    #228B22 20%,
+    #4169E1 30%,
+    #4169E1 45%,
+    #4A146C 55%,
+    #4A146C 70%,
+    #7A0B0B 80%,
+    #7A0B0B 100%
+  ); */
+    /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+    /* background-size: 400% 400%; */
+    /* animation: gradient 15s ease infinite; */
+}
+
+/* @keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} */
+
+
+
+
+
+h1.pagetitle {
+  color: white;
+  font-family: 'Folkard';
+  font-size: 7vw;
+}
+@font-face {
+  font-family: 'Folkard';
+  src: url('folkard.ttf');
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('GothamBold.ttf');
+}
