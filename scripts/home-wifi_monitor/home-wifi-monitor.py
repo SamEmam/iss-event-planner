@@ -47,7 +47,7 @@ def run_afh_check():
             }
             r = requests.post(ifttt_url_online, json=json_body)
 
-            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {now}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {now}\n")
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
     else:
@@ -60,7 +60,7 @@ def run_afh_check():
                 "value3": home_monitor_data['awayFromHome']
             }
             r = requests.post(ifttt_url_offline, json=json_body)
-            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {now}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {now}\n")
 
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
