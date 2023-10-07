@@ -1,4 +1,5 @@
 from datetime import datetime
+from pytz import timezone
 import requests
 import platform
 import asyncio
@@ -22,6 +23,7 @@ data_file = os.path.join(SITE_ROOT, data_path, "home_wifi_monitor_data.json")
 if debug:
     data_file = "home_wifi_monitor_data.json"
 
+tz = timezone('Europe/Copenhagen')
 
 # Check if all devices are offline
 # then trigger ifttt_url_offline
@@ -31,6 +33,8 @@ if debug:
 
 def run_afh_check():
     home_monitor_data = json.load(open(data_file))
+
+    now = datetime.now(tz).strftime('%m/%d/%Y, %H:%M:%S')
 
     if home_monitor_data['awayFromHome']:
         if home_monitor_data['Android'] == 'online' or home_monitor_data['iPhone-2'] == 'online':
@@ -43,7 +47,7 @@ def run_afh_check():
             }
             r = requests.post(ifttt_url_online, json=json_body)
 
-            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {datetime.now().strftime('%m/%d/%Y, %H:%M:%S')}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {now}\n")
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
     else:
@@ -56,7 +60,7 @@ def run_afh_check():
                 "value3": home_monitor_data['awayFromHome']
             }
             r = requests.post(ifttt_url_online, json=json_body)
-            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {datetime.now().strftime('%m/%d/%Y, %H:%M:%S')}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {now}\n")
 
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
