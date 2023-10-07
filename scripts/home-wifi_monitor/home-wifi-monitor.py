@@ -32,14 +32,14 @@ def run_afh_check():
     home_monitor_data = json.load(open(data_file))
     print(home_monitor_data)
 
-    if home_monitor_data[0]['awayFromHome']:
-        if home_monitor_data[0]['Android'] == 'online' or home_monitor_data[0]['iPhone-2'] == 'online':
-            home_monitor_data[0]['awayFromHome'] = False
+    if home_monitor_data['awayFromHome']:
+        if home_monitor_data['Android'] == 'online' or home_monitor_data['iPhone-2'] == 'online':
+            home_monitor_data['awayFromHome'] = False
 
             json_body = {
-                "value1": home_monitor_data[0]['Android'],
-                "value2": home_monitor_data[0]['iPhone-2'],
-                "value3": home_monitor_data[0]['awayFromHome']
+                "value1": home_monitor_data['Android'],
+                "value2": home_monitor_data['iPhone-2'],
+                "value3": home_monitor_data['awayFromHome']
             }
             r = requests.post(ifttt_url_online, json=json_body)
 
@@ -47,13 +47,13 @@ def run_afh_check():
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
     else:
-        if home_monitor_data[0]['Android'] == 'offline' and home_monitor_data[0]['iPhone-2'] == 'offline':
-            home_monitor_data[0]['awayFromHome'] = True
+        if home_monitor_data['Android'] == 'offline' and home_monitor_data['iPhone-2'] == 'offline':
+            home_monitor_data['awayFromHome'] = True
 
             json_body = {
-                "value1": home_monitor_data[0]['Android'],
-                "value2": home_monitor_data[0]['iPhone-2'],
-                "value3": home_monitor_data[0]['awayFromHome']
+                "value1": home_monitor_data['Android'],
+                "value2": home_monitor_data['iPhone-2'],
+                "value3": home_monitor_data['awayFromHome']
             }
             r = requests.post(ifttt_url_online, json=json_body)
             print(f"IFTTT request status: {r.status_code}\njson_body: {json_body}")
