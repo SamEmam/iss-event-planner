@@ -31,7 +31,6 @@ if debug:
 
 def run_afh_check():
     home_monitor_data = json.load(open(data_file))
-    print(home_monitor_data)
 
     if home_monitor_data['awayFromHome']:
         if home_monitor_data['Android'] == 'online' or home_monitor_data['iPhone-2'] == 'online':
