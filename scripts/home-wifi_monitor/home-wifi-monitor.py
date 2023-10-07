@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import requests
 import platform
 import asyncio
@@ -43,7 +43,7 @@ def run_afh_check():
             }
             r = requests.post(ifttt_url_online, json=json_body)
 
-            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {datetime.datetime.now}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: Away From Home | Datetime: {datetime.now.strftime('%m/%d/%Y, %H:%M:%S')}\n")
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
     else:
@@ -56,7 +56,7 @@ def run_afh_check():
                 "value3": home_monitor_data['awayFromHome']
             }
             r = requests.post(ifttt_url_online, json=json_body)
-            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {datetime.datetime.now}\n")
+            print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {datetime.now.strftime('%m/%d/%Y, %H:%M:%S')}\n")
 
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
