@@ -155,14 +155,9 @@ def create_ical_event_dnd(event_data):
     # else:
     #     event.name = f"Dungeons & Dragons ({event_data['votes']})"
 
-    start_date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
-    event.begin = start_date
-
-    if 'end_date' in event_data and event_data['end_date']:
-        end_date = datetime.strptime(event_data['end_date'], '%Y-%m-%d %H:%M')
-        event.end = end_date
-    else:
-        event.make_all_day()
+    date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
+    event.begin = date
+    event.make_all_day()
 
     return event
 
