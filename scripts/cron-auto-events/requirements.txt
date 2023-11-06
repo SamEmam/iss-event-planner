@@ -7,3 +7,4 @@ asyncio-dgram==1.2.0
 requests==2.25.1
 ics==0.7
 pytz
+numpy
