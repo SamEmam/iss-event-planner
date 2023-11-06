@@ -2,7 +2,7 @@ from dateutil.relativedelta import relativedelta
 from ics import Calendar, Event
 from datetime import date, datetime
 from pytz import timezone
-from enum import Enum
+import numpy as np
 
 import requests
 import platform
@@ -149,14 +149,18 @@ def create_ical_event_padel(event_data):
 
 def create_ical_event_dnd(event_data):
     event = Event()
-    if event_data['votes_indeterminate'] > 0:
-        event.name = f"Dungeons & Dragons ({event_data['votes']}+{event_data['votes_indeterminate']})"
-    else:
-        event.name = f"Dungeons & Dragons ({event_data['votes']})"
+    event.name = "Dungeons & Dragons"
+    # if event_data['votes_indeterminate'] > 0:
+    #     event.name = f"Dungeons & Dragons ({event_data['votes']}+{event_data['votes_indeterminate']})"
+    # else:
+    #     event.name = f"Dungeons & Dragons ({event_data['votes']})"
 
-    date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
-    event.begin = date
-    event.make_all_day()
+    start_date = datetime.strptime(event_data['start_date'], '%Y-%m-%d %H:%M')
+    event.begin = start_date
+
+    if 'end_date' in event_data and event_data['end_date']:
+        end_date = datetime.strptime(event_data['end_date'], '%Y-%m-%d %H:%M')
+        event.end = end_date
 
     return event
 
@@ -193,6 +197,41 @@ def fetch_strawpoll_data(strawpoll_id):
     strawpoll_data = response.json()
 
     return strawpoll_data
+
+
+def update_dnd_strawpoll_data(new_date):
+
+    url = f"https://api.strawpoll.com/v3/polls/{strawpoll_id_dnd}"
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-API-Key": strawpoll_key
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    payload = response.json()
+
+    new_date_poll_option = {
+        "date": new_date,
+        "type": "date",
+    }
+
+    payload['poll_options'].append(new_date_poll_option)
+
+    response = requests.put(url, json=payload, headers=headers)
+
+
+def auto_generate_dnd_events():
+    in_3_months = datetime.today() + relativedelta(months=2)
+
+    year_month = in_3_months.strftime('%Y-%m')
+    first_thursday = np.busday_offset(year_month, 0, roll='forward', weekmask='Thu')
+    third_sunday = np.busday_offset(year_month, 2, roll='forward', weekmask='Sun')
+
+    update_dnd_strawpoll_data(np.datetime_as_string(first_thursday, unit ='m'))
+    update_dnd_strawpoll_data(np.datetime_as_string(third_sunday, unit ='m'))
+
 
 def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
     strawpoll_events = []
@@ -256,5 +295,9 @@ async def update_ics_file():
 @aiocron.crontab('0 0 1 */2 *')
 async def create_new_event():
     auto_generate_event()
+
+@aiocron.crontab('0 0 1 * *')
+async def create_new_dnd_event():
+    auto_generate_dnd_events()
 
 asyncio.get_event_loop().run_forever()
