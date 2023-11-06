@@ -1,0 +1,5 @@
+{
+    "container_name": "cron-event-planner",
+    "cleanup": "y",
+    "mount_volume": "y"
+}
