@@ -161,6 +161,8 @@ def create_ical_event_dnd(event_data):
     if 'end_date' in event_data and event_data['end_date']:
         end_date = datetime.strptime(event_data['end_date'], '%Y-%m-%d %H:%M')
         event.end = end_date
+    else:
+        event.make_all_day()
 
     return event
 
