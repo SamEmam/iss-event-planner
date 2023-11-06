@@ -127,7 +127,7 @@
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
                 {% for event in data %}
-                {% if not event.hidden and (event.votes + event.votes_indeterminate) > 3 %}
+                {% if not event.hidden %}
                 <!-- Portfolio Item 1-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#event{{ loop.index0 }}"
