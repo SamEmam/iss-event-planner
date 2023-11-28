@@ -24,7 +24,7 @@ client = InfluxDBClient(url=url, token=token)
 write_api = client.write_api(write_options=SYNCHRONOUS)
 
 debug = False
-if 'Microsoft' in platform.release():
+if 'microsoft' in platform.release().lower():
     debug = True
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -45,6 +45,8 @@ dnd_thumbnails_folder = "./static/thumbnails"
 dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
 dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 
+hof_file = "hof_data.json"
+
 if debug:
     data_file = "event_data.json"
     settings_file = "settings.json"
@@ -62,9 +64,11 @@ if debug:
     dnd_strawpoll_file = "dnd_strawpoll_data.json"
     dnd_calendar_file = "dnd.ics"
 
+    hof_file = "hof_data.json"
+
 
 def config_app(app):
-    app.config["DEBUG"] = debug
+    app.config["DEBUG"] = False
     app.config['SECRET_KEY'] = "marc1234"
     app.config['AUTH_DISABLED'] = "0"
     app.config['UPLOAD_FOLDER'] = thumbnails_folder
@@ -295,6 +299,26 @@ def create_app() -> Flask:
             'dnd.html',
             data=data,
             char_data=char_data,
+            lock_user_to_site=lock_user_to_site,
+            appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day()
+        )
+
+    @app.route('/hof', methods=['GET'])
+    @require_appkey
+    def hof():
+        write_data_point("route", "hof", "ip", request.remote_addr)
+        data = json.load(open(hof_file, 'r'))
+
+        pwd = request.args.get('key')
+        if pwd == "8b38d":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
+        return render_template(
+            'hof.html',
+            data=data,
             lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
