@@ -16,14 +16,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    {% if not lock_user_to_site %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
-                    {% endif %}
                     {% if request.cookies.get("theme") == "dark" %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('set_theme', page='hof', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
@@ -45,7 +43,7 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">The Superior Man</h1>
+            <h1 class="masthead-heading text-uppercase mb-0" style="color: var(--bs-primary-bg-text-color)">The Superior Man</h1>
             <!-- Icon Divider-->
             <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -63,55 +61,25 @@
                 <!-- Portfolio Item 1-->
                 <div class="col-md-2 col-lg-2 mb-5">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#item{{ loop.index0 }}"
-                        style="background-color: rgb(49,51,53);color: white;">
+                        style="background-color: rgb(var(--bs-secondary-rgb));color: white;">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <div style="background-color: #105800; width: 100%;">
-                            <h2 class="dnd-character-name" style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ item.winner }}</h2>
+                        <div style="background-color: var(--bs-primary); width: 100%;">
+                            <h1 class="hof-winner-name" style="padding-top: 0.5em; text-align: center; font-size: 2em; color: var(--bs-gray-900)">{{ item.event }}</h1>
+                            <h1 class="hof-winner-name" style="padding-bottom: 0.5em; text-align: center; font-size: 1em; color: var(--bs-gray-900)">{{ item.date }}</h1>
+                        </div>
+                        <div style="position: relative;">
+                            <img class="img-fluid" src="{{ url_for('static', filename=item.image) }}" alt="{{ item.winner }}" style="width:100%; height: 100%; object-fit: cover;" />
+                            <h2 class="text-center" style="padding-bottom: 0.1em; color: white; position: absolute; top: 0%; left: 50%; transform: translate(-50%, -0%); font-size: 1.6em; width: 110%; background-color: rgba(0,0,0,0.6)">{{ item.winner }}</h2>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="form-floating mb-3" style="width: 50%;">
-                            <img id="{{ item.winner }}" class="img-fluid" src="{{ url_for('static', filename=item.image) }}"   alt="{{ item.winner }}" style="width:100%; height: 100%; object-fit: cover;" />
-                        </div>
-                        <div class="form-floating mb-3" style="width: 50%;">
-                            <p style="color: white;">{{ item.event }}</p>
-                            <p style="color: white;">{{ item.date }}</p>
-                            <p style="color: white;">Winner: {{ item.winner }}</p>
-                        </div>
-                    </div>
-                </a>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
     <section class="page-section bg-primary text-white mb-0" id="calendar">
-        <div class="container">
-            <!-- About Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-white">Kalender</h2>
-            <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-            </div>
-            <!-- About Section Content-->
-            <p class="lead mb-0" style="text-align: center;">Dungeons & Dragons begivenheder kan meget nemt tilføjes til din
-                kalender på din mobil eller computer.</p>
-            <p class="lead mb-3" style="text-align: center;">Du skal blot abonnerer på denne url i din kalender app.</p>
-            <!-- <p class="lead mb-3" style="text-align: center;">Klik for at kopiere!</p> -->
-            <!-- About Section Button-->
-            <div class="text-center mt-4">
-                <button class="btn btn-xl btn-outline-light" id="calendar_link"
-                    onclick="navigator.clipboard.writeText('https://rumstationen.com/dnd/calendar')">
-                    <i class="fas fa-clipboard me-2" aria-hidden="true"></i>
-                    https://rumstationen.com/dnd/calendar
-                </button>
-            </div>
-            <p></p>
-            <p class="lead mb-0" style="text-align: center;">Kopier manuelt</p>
-            <p class="lead mb-0" style="text-align: center;">https://rumstationen.com/dnd/calendar</p>
-        </div>
     </section>
     <!-- Footer-->
     <footer class="footer text-center">
@@ -119,18 +87,13 @@
             <div class="row">
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Midjourney</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.midjourney.com/"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <h4 class="text-uppercase mb-4">Urban Dictionary</h4>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.urbandictionary.com/define.php?term=superiority"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">D&D Beyond</h4>
-                    <!-- <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/groups/200164475315350"><i
-                            class="fab fa-fw fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
-                            class="fab fa-fw fa-linkedin-in"></i></a> -->
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.dndbeyond.com/"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <h4 class="text-uppercase mb-4">Trofæet</h4>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://photos.app.goo.gl/4NgmjUAyfKzHHUvB6"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">

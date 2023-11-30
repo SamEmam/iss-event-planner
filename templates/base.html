@@ -17,10 +17,11 @@
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     {% if request.cookies.get("theme") == "dark" %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main_darkmode.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='home_darkmode.css') }}" />
     {% else %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" />
     {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 </head>
 
 <body id="page-top">

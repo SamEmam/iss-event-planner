@@ -17,10 +17,11 @@
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     {% if request.cookies.get("theme") == "dark" %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='dnd_darkmode.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='hof_darkmode.css') }}" />
     {% else %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='dnd.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='hof.css') }}" />
     {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 </head>
 
 <body id="page-top">

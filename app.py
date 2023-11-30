@@ -68,7 +68,7 @@ if debug:
 
 
 def config_app(app):
-    app.config["DEBUG"] = False
+    app.config["DEBUG"] = debug
     app.config['SECRET_KEY'] = "marc1234"
     app.config['AUTH_DISABLED'] = "0"
     app.config['UPLOAD_FOLDER'] = thumbnails_folder
@@ -310,16 +310,9 @@ def create_app() -> Flask:
         write_data_point("route", "hof", "ip", request.remote_addr)
         data = json.load(open(hof_file, 'r'))
 
-        pwd = request.args.get('key')
-        if pwd == "8b38d":
-            lock_user_to_site = True
-        else:
-            lock_user_to_site = False
-
         return render_template(
             'hof.html',
             data=data,
-            lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
             nasa_title=get_title_of_the_day()
         )
