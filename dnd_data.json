@@ -2,31 +2,31 @@
     {
         "name": "Iris The Outcast",
         "link": "https://ddb.ac/characters/93861557",
-        "thumbnail": "iris_the_outcast.png",
-        "alt_thumbnail": "iris_alt.png"
+        "thumbnail": "dnd_images/iris_the_outcast.png",
+        "alt_thumbnail": "dnd_images/iris_alt.png"
     },
     {
         "name": "Reimruk Axebeard",
         "link": "https://ddb.ac/characters/95729573",
-        "thumbnail": "reimruk_axebeard.png",
-        "alt_thumbnail": "reimruk_alt.png"
+        "thumbnail": "dnd_images/reimruk_axebeard.png",
+        "alt_thumbnail": "dnd_images/reimruk_alt.png"
     },
     {
         "name": "Theren Naïlo",
         "link": "https://ddb.ac/characters/95717602",
-        "thumbnail": "theren_nailo.png",
-        "alt_thumbnail": "theren_alt_2.png"
+        "thumbnail": "dnd_images/theren_nailo.png",
+        "alt_thumbnail": "dnd_images/theren_alt_2.png"
     },
     {
         "name": "Kepeshkmolik Mithras",
         "link": "https://ddb.ac/characters/92257199",
-        "thumbnail": "kepeshkmolik_mithras.png",
-        "alt_thumbnail": "mithras_alt.png"
+        "thumbnail": "dnd_images/kepeshkmolik_mithras.png",
+        "alt_thumbnail": "dnd_images/mithras_alt.png"
     },
     {
         "name": "Benedict The Wanderer",
         "link": "https://ddb.ac/characters/96108724",
-        "thumbnail": "benedict.png",
-        "alt_thumbnail": "benedict_alt.png"
+        "thumbnail": "dnd_images/benedict.png",
+        "alt_thumbnail": "dnd_images/benedict_alt.png"
     }
 ]
