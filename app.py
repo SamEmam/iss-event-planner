@@ -166,7 +166,7 @@ def create_app() -> Flask:
         albums = json.load(open(albums_file, 'r'))
         settings = json.load(open(settings_file, 'r'))
 
-        data = hide_old_events(data, 31)
+        data = hide_old_events(data, 16)
 
         try:
             data = sorted(data, key=lambda d: d['start_date'])
