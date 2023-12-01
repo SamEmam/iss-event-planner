@@ -55,3 +55,9 @@
     --bs-body-color: #212529;
     --bs-body-bg: #fff;
 }
+
+@media (width <= 768px) {
+    .superior-man {
+        word-spacing: 100vw;
+    }
+}
