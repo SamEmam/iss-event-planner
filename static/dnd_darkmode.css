@@ -71,8 +71,14 @@
   min-height: 1.5em !important;
 }
 
-@media (768px <= width <= 2063px) {
+@media (768px <= width < 1400px) {
   .dnd-character-name {
     min-height: 3.5em !important;
+  }
+}
+
+@media (768px <= width < 992px) {
+  .dnd-character-name {
+    font-size: 1em !important;
   }
 }

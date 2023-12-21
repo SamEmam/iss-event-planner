@@ -1,9 +1,27 @@
 [
     {
-        "name": "Iris The Outcast",
-        "link": "https://ddb.ac/characters/93861557",
-        "thumbnail": "dnd_images/iris_the_outcast.png",
-        "alt_thumbnail": "dnd_images/iris_alt.png"
+        "name": "Durin Stoneforge",
+        "link": "https://ddb.ac/characters/111643416",
+        "thumbnail": "dnd_images/durin.png",
+        "alt_thumbnail": "dnd_images/durin.png"
+    },
+    {
+        "name": "Eljor Earthshaper",
+        "link": "https://ddb.ac/characters/111706865",
+        "thumbnail": "dnd_images/eljor.png",
+        "alt_thumbnail": "dnd_images/eljor.png"
+    },
+    {
+        "name": "Pete The Clipper",
+        "link": "https://ddb.ac/characters/111309660",
+        "thumbnail": "dnd_images/pete.png",
+        "alt_thumbnail": "dnd_images/pete_alt.png"
+    },
+    {
+        "name": "Phlox",
+        "link": "https://ddb.ac/characters/110691129",
+        "thumbnail": "dnd_images/phlox.png",
+        "alt_thumbnail": "dnd_images/phlox.png"
     },
     {
         "name": "Reimruk Axebeard",
@@ -12,21 +30,15 @@
         "alt_thumbnail": "dnd_images/reimruk_alt.png"
     },
     {
-        "name": "Theren Naïlo",
-        "link": "https://ddb.ac/characters/95717602",
-        "thumbnail": "dnd_images/theren_nailo.png",
-        "alt_thumbnail": "dnd_images/theren_alt_2.png"
+        "name": "Rock Boulderstone",
+        "link": "https://ddb.ac/characters/109835381",
+        "thumbnail": "dnd_images/rock.png",
+        "alt_thumbnail": "dnd_images/rock_alt.png"
     },
     {
-        "name": "Kepeshkmolik Mithras",
-        "link": "https://ddb.ac/characters/92257199",
-        "thumbnail": "dnd_images/kepeshkmolik_mithras.png",
-        "alt_thumbnail": "dnd_images/mithras_alt.png"
-    },
-    {
-        "name": "Benedict The Wanderer",
-        "link": "https://ddb.ac/characters/96108724",
-        "thumbnail": "dnd_images/benedict.png",
-        "alt_thumbnail": "dnd_images/benedict_alt.png"
+        "name": "Stabbo Twinblade",
+        "link": "https://ddb.ac/characters/111099678",
+        "thumbnail": "dnd_images/stabbo.jpeg",
+        "alt_thumbnail": "dnd_images/stabbo.jpeg"
     }
 ]
