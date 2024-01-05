@@ -151,6 +151,9 @@ def create_app() -> Flask:
             elif pwd == "8b38d":
                 write_data_point("route", "login/dnd", "ip", request.remote_addr)
                 return redirect(url_for('dnd', key=pwd))
+            elif pwd == "99706":
+                write_data_point("route", "login/minecraft", "ip", request.remote_addr)
+                return redirect(url_for('minecraft', key=pwd))
             else:
                 write_data_point("route", "login/index", "ip", request.remote_addr)
                 return redirect(url_for('index', key=pwd))
