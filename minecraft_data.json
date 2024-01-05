@@ -1,0 +1,51 @@
+[
+    {
+        "step": "Step 1",
+        "title": "Click to go get CurseForge",
+        "description": "Download and install CurseForge",
+        "link": "https://www.curseforge.com/download/app",
+        "image": "minecraft/step1.png"
+    },
+    {
+        "step": "Step 2",
+        "title": "Select Minecraft",
+        "description": "Open CurseForge and install Minecraft",
+        "link": false,
+        "image": "minecraft/step2.png"
+    },
+    {
+        "step": "Step 3",
+        "title": "Click To Download",
+        "description": "Save this Custom Minecraft Profile for step 5",
+        "link": "http://localhost:5001/minecraft/profile",
+        "image": "minecraft/step3.png"
+    },
+    {
+        "step": "Step 4",
+        "title": "Create Custom Profile",
+        "description": "Click on Create Custom Profile in CurseForge",
+        "link": false,
+        "image": "minecraft/step4.png"
+    },
+    {
+        "step": "Step 5",
+        "title": "Import Minecraft Profile",
+        "description": "Click on import",
+        "link": false,
+        "image": "minecraft/step5.png"
+    },
+    {
+        "step": "Step 6",
+        "title": "Launch Minecraft",
+        "description": "Click on Ohana to launch",
+        "link": false,
+        "image": "minecraft/step6.png"
+    },
+    {
+        "step": "Step 7",
+        "title": "Join The Server",
+        "description": "ohana.serverminer.com:27175",
+        "link": false,
+        "image": "minecraft/step7.png"
+    }
+]

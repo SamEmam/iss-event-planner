@@ -1,0 +1,14 @@
+{
+    "padel_tennis": {
+        "enabled": false
+    },
+    "dnd": {
+        "enabled": true
+    },
+    "hof": {
+        "enabled": true
+    },
+    "minecraft": {
+        "enabled": true
+    }
+}

@@ -7,16 +7,17 @@ AUTH_DISABLED = os.getenv("AUTH_DISABLED")
 
 # print(hashlib.sha256(bytes(pwd, 'utf-8')).hexdigest()[:5])
 auth_key_dict = {
-    "9900f": ['all'],
-    "78fe0": ['all'],
-    "bb42e": ['all'],
-    "1b071": ['all'],
-    "87070": ['all'],
-    "67140": ['all'],
-    "1f881": ['all'],
-    "7a8c3": ['all'],
-    "0da6e": ['all'],
-    "8b38d": ['all'],
+    "9900f": ['all'], # marc1234
+    "78fe0": ['all'], # markmedc
+    "bb42e": ['all'], # Markmedc
+    "1b071": ['all'], # marcmedc
+    "87070": ['all'], # Marcmedc
+    "67140": ['all'], # Carkmedc
+    "1f881": ['all'], # carkmedc
+    "7a8c3": ['all'], # carksutter
+    "0da6e": ['all'], # padel
+    "8b38d": ['all'], # dnd
+    "99706": ['all'], # minecraft
 }
 auth_key_dict_old = {
     "marc1234": ['all'],
@@ -29,6 +30,7 @@ auth_key_dict_old = {
     "carksutter": ['all'],
     "padel": ['all'],
     "dnd": ['all'],
+    "minecraft": ['all']
 }
 
 

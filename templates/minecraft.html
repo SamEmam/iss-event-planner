@@ -1,4 +1,4 @@
-{% extends 'hof_base.html' %}
+{% extends 'minecraft_base.html' %}
 
 {% block content %}
 
@@ -7,7 +7,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="#page-top">Hall of Fame</a>
+            <a class="navbar-brand" href="#page-top">Minecraft</a>
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -16,6 +16,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
+                    {% if not lock_user_to_site %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
 
@@ -29,17 +30,18 @@
                         href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
                     {% endif %}
 
-                    {% if flask_settings.minecraft.enabled %}
+                    {% if flask_settings.hof.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
+                        href="{{url_for('hof', key=appkey)}}">Hall of Fame</a></li>
                     {% endif %}
 
+                    {% endif %}
                     {% if request.cookies.get("theme") == "dark" %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='hof', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
+                        href="{{url_for('set_theme', page='minecraft', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
                     {% else %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='hof', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
+                        href="{{url_for('set_theme', page='minecraft', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
                     {% endif %}
                     <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                             href="#events">Begivenheder</a></li>
@@ -55,7 +57,8 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0 superior-man" style="color: var(--bs-primary-bg-text-color)">The Superior Man</h1>
+            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1.2em; padding-bottom: 0.2em;">Minecraft Server: ohana.serverminer.com:27175</p>
+            <h1 class="masthead-heading text-uppercase mb-0" style="color: var(--bs-primary-bg-text-color)">How to join</h1>
             <!-- Icon Divider-->
             <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -66,26 +69,45 @@
     </header>
     <!-- Portfolio Section-->
     <section class="page-section portfolio" id="events">
-        <div class="">
+        <div class="container">
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
-                {% for item in data %}
+                {% for step in minecraft_data %}
                 <!-- Portfolio Item 1-->
-                <div class="col-md-2 col-lg-2 mb-5">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#item{{ loop.index0 }}"
-                        style="background-color: rgb(var(--bs-secondary-rgb));color: white;">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                <div class="col-md-6 col-lg-4 mb-5">
+                    {% if step.link %}
+                    <a href="{{step.link}}" target="_blank" style="text-decoration: none">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal"
+                            style="background-color: rgb(var(--bs-secondary-rgb)); color: white;">
+                            <div
+                                class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i
+                                        class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <div class="bg-primary" style="width: 100%;">
+                                <h2 style="padding-top: 0.5em; text-align: center; font-size: 1.25em;">{{ step.step }}</h2>
+                                <h2 style="padding-bottom: 0.5em; text-align: center; font-size: 1.5em;">{{ step.title }}</h2>
+                            </div>
+                            <h2 style="text-align: center; font-size: 0.8em">{{ step.description }}</h2>
+                            <img class="img-fluid" src="{{ url_for('static', filename=step.image) }}" style="width:100%; height: 100%; object-fit: cover;" />
                         </div>
-                        <div style="background-color: var(--bs-primary); width: 100%;">
-                            <h1 class="hof-winner-name" style="padding-top: 0.5em; text-align: center; font-size: 2em; color: var(--bs-gray-900)">{{ item.event }}</h1>
-                            <h1 class="hof-winner-name" style="padding-bottom: 0.5em; text-align: center; font-size: 1em; color: var(--bs-gray-900)">{{ item.date }}</h1>
+                    </a>
+                    {% else %}
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal"
+                        style="background-color: rgb(var(--bs-secondary-rgb)); color: white;">
+                        <div
+                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i
+                                    class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <div style="position: relative;">
-                            <img class="img-fluid" src="{{ url_for('static', filename=item.image) }}" alt="{{ item.winner }}" style="width:100%; height: 100%; object-fit: cover;" />
-                            <h2 class="text-center" style="padding-bottom: 0.1em; color: white; position: absolute; top: 0%; left: 50%; transform: translate(-50%, -0%); font-size: 1.6em; width: 110%; background-color: rgba(0,0,0,0.6)">{{ item.winner }}</h2>
+                        <div class="bg-primary" style="width: 100%;">
+                            <h2 style="padding-top: 0.5em; text-align: center; font-size: 1.25em;">{{ step.step }}</h2>
+                            <h2 style="padding-bottom: 0.5em; text-align: center; font-size: 1.5em;">{{ step.title }}</h2>
                         </div>
+                        <h2 style="text-align: center; font-size: 0.8em">{{ step.description }}</h2>
+                        <img class="img-fluid" src="{{ url_for('static', filename=step.image) }}" style="width:100%; height: 100%; object-fit: cover;" />
                     </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -99,13 +121,13 @@
             <div class="row">
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Urban Dictionary</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.urbandictionary.com/define.php?term=superiority"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <h4 class="text-uppercase mb-4">Discord Server</h4>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://discord.gg/bKTxUy9a"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4">Trofæet</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://photos.app.goo.gl/4NgmjUAyfKzHHUvB6"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <h4 class="text-uppercase mb-4">Live Server World Map</h4>
+                    <a class="btn btn-outline-light btn-social mx-1" href="http://ohana.serverminer.com:19970/?worldname=ohana&mapname=surface&zoom=2"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">

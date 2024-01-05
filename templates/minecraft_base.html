@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Hall of Fame</title>
+    <title>Minecraft</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='hof-fav.png') }}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='minecraft-fav.png') }}" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -17,9 +17,9 @@
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     {% if request.cookies.get("theme") == "dark" %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='hof_darkmode.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='minecraft_darkmode.css') }}" />
     {% else %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='hof.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='minecraft.css') }}" />
     {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}" />
 </head>

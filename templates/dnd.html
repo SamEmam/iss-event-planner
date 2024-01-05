@@ -19,10 +19,22 @@
                     {% if not lock_user_to_site %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
+
+                    {% if flask_settings.padel_tennis.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
+                    {% endif %}
+
+                    {% if flask_settings.hof.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="{{url_for('hof', key=appkey)}}">Hall of Fame</a></li>
+                    {% endif %}
+
+                    {% if flask_settings.minecraft.enabled %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
+                    {% endif %}
+
                     {% endif %}
                     {% if request.cookies.get("theme") == "dark" %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"

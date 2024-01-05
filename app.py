@@ -46,6 +46,8 @@ dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json
 dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 
 hof_file = "hof_data.json"
+flask_settings_file = "flask_settings.json"
+minecraft_file = "minecraft_data.json"
 
 if debug:
     data_file = "event_data.json"
@@ -63,8 +65,6 @@ if debug:
     dnd_thumbnails_folder = "./static/thumbnails"
     dnd_strawpoll_file = "dnd_strawpoll_data.json"
     dnd_calendar_file = "dnd.ics"
-
-    hof_file = "hof_data.json"
 
 
 def config_app(app):
@@ -161,6 +161,8 @@ def create_app() -> Flask:
     @app.route('/home', methods=['GET', 'POST'])
     @require_appkey
     def index():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+
         write_data_point("route", "home", "ip", request.remote_addr)
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
@@ -257,12 +259,17 @@ def create_app() -> Flask:
             albums=albums,
             thumbnails_folder=thumbnails_folder.strip('.'),
             appkey=request.args.get('key'),
-            nasa_title=get_title_of_the_day()
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
         )
 
     @app.route('/padel', methods=['GET'])
     @require_appkey
     def padel():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+        if not flask_settings['padel_tennis']['enabled']:
+            return redirect(url_for('index', key=request.args.get('key')))
+
         write_data_point("route", "padel", "ip", request.remote_addr)
         data = json.load(open(padel_data_file, 'r'))
 
@@ -279,12 +286,17 @@ def create_app() -> Flask:
             data=data,
             lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
-            nasa_title=get_title_of_the_day()
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
         )
 
     @app.route('/dnd', methods=['GET'])
     @require_appkey
     def dnd():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+        if not flask_settings['dnd']['enabled']:
+            return redirect(url_for('index', key=request.args.get('key')))
+
         write_data_point("route", "dnd", "ip", request.remote_addr)
         char_data = json.load(open(dnd_data_file, 'r'))
         data = json.load(open(dnd_strawpoll_file, 'r'))
@@ -301,12 +313,17 @@ def create_app() -> Flask:
             char_data=char_data,
             lock_user_to_site=lock_user_to_site,
             appkey=request.args.get('key'),
-            nasa_title=get_title_of_the_day()
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
         )
 
     @app.route('/hof', methods=['GET'])
     @require_appkey
     def hof():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+        if not flask_settings['hof']['enabled']:
+            return redirect(url_for('index', key=request.args.get('key')))
+
         write_data_point("route", "hof", "ip", request.remote_addr)
         data = json.load(open(hof_file, 'r'))
 
@@ -314,7 +331,34 @@ def create_app() -> Flask:
             'hof.html',
             data=data,
             appkey=request.args.get('key'),
-            nasa_title=get_title_of_the_day()
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
+        )
+
+    @app.route('/minecraft', methods=['GET'])
+    @require_appkey
+    def minecraft():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+        if not flask_settings['minecraft']['enabled']:
+            return redirect(url_for('index', key=request.args.get('key')))
+
+        write_data_point("route", "minecraft", "ip", request.remote_addr)
+
+        minecraft_data = json.load(open(minecraft_file, 'r'))
+
+        pwd = request.args.get('key')
+        if pwd == "99706":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
+        return render_template(
+            'minecraft.html',
+            minecraft_data=minecraft_data,
+            lock_user_to_site=lock_user_to_site,
+            appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
         )
 
     @app.route('/dungeonmaster', methods=['GET'])
@@ -394,6 +438,10 @@ def create_app() -> Flask:
     @app.route('/uploads/<path:filename>')
     def fetch_thumbnail(filename):
         return send_from_directory(thumbnails_folder, filename, as_attachment=True)
+
+    @app.route('/minecraft/profile')
+    def minecraft_profile():
+        return send_from_directory("./static/minecraft", "Ohana.zip", as_attachment=True)
 
     @app.context_processor
     def name_to_color_processor():
