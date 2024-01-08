@@ -36,8 +36,9 @@ def run_afh_check():
 
     now = datetime.now(tz).strftime('%m/%d/%Y, %H:%M:%S')
 
+    # At home
     if home_monitor_data['awayFromHome']:
-        if home_monitor_data['Android'] == 'online' or home_monitor_data['iPhone-2'] == 'online':
+        if home_monitor_data['Android-Sam'] == 'online' or home_monitor_data['iPhone-2'] == 'online':
             home_monitor_data['awayFromHome'] = False
 
             json_body = {
@@ -50,8 +51,9 @@ def run_afh_check():
             print(f"IFTTT request status: {r.status_code} | Status: At Home | Datetime: {now}\n")
             with open(data_file, 'w') as json_file:
                 json.dump(home_monitor_data, json_file)
+    # Away From Home
     else:
-        if home_monitor_data['Android'] == 'offline' and home_monitor_data['iPhone-2'] == 'offline':
+        if home_monitor_data['Android-Sam'] == 'offline' and home_monitor_data['iPhone-2'] == 'offline':
             home_monitor_data['awayFromHome'] = True
 
             json_body = {
