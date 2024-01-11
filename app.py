@@ -142,20 +142,15 @@ def create_app() -> Flask:
 
     @app.route('/', methods=['GET', 'POST'])
     def login():
-        write_data_point("route", "login", "ip", request.remote_addr)
         if request.method == 'POST':
             pwd = hashlib.sha256(bytes(request.form['appkey'], 'utf-8')).hexdigest()[:5]
             if pwd == "0da6e":
-                write_data_point("route", "login/padel", "ip", request.remote_addr)
                 return redirect(url_for('padel', key=pwd))
             elif pwd == "8b38d":
-                write_data_point("route", "login/dnd", "ip", request.remote_addr)
                 return redirect(url_for('dnd', key=pwd))
             elif pwd == "99706":
-                write_data_point("route", "login/minecraft", "ip", request.remote_addr)
                 return redirect(url_for('minecraft', key=pwd))
             else:
-                write_data_point("route", "login/index", "ip", request.remote_addr)
                 return redirect(url_for('index', key=pwd))
         return render_template(
             'login.html',
@@ -166,7 +161,6 @@ def create_app() -> Flask:
     def index():
         flask_settings = json.load(open(flask_settings_file, 'r'))
 
-        write_data_point("route", "home", "ip", request.remote_addr)
         data = json.load(open(data_file, 'r'))
         albums = json.load(open(albums_file, 'r'))
         settings = json.load(open(settings_file, 'r'))
@@ -184,7 +178,6 @@ def create_app() -> Flask:
 
         if request.method == 'POST':
             if request.form['input_button'] == 'Create event':
-                write_data_point("route", "home/create", "ip", request.remote_addr)
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
                 input_desc = request.form['input_desc']
@@ -208,7 +201,6 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Delete':
-                write_data_point("route", "home/delete", "ip", request.remote_addr)
                 input_index = int(request.form['input_index'])
                 del data[input_index]
 
@@ -216,7 +208,6 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Save':
-                write_data_point("route", "home/update", "ip", request.remote_addr)
                 input_index = int(request.form['input_index'])
                 input_title = request.form['input_title']
                 input_host = request.form['input_host']
@@ -238,7 +229,6 @@ def create_app() -> Flask:
                 return redirect(url_for('index', key=request.args.get('key')))
 
             elif request.form['input_button'] == 'Add album':
-                write_data_point("route", "home/album", "ip", request.remote_addr)
                 album_title = request.form['album_title']
                 album_link = request.form['album_link']
                 album_date = request.form['album_date']
@@ -271,9 +261,8 @@ def create_app() -> Flask:
     def padel():
         flask_settings = json.load(open(flask_settings_file, 'r'))
         if not flask_settings['padel_tennis']['enabled']:
-            return redirect(url_for('index', key=request.args.get('key')))
+            return redirect(url_for('login', access="denied"))
 
-        write_data_point("route", "padel", "ip", request.remote_addr)
         data = json.load(open(padel_data_file, 'r'))
 
         data = hide_old_events(data, 1)
@@ -298,9 +287,8 @@ def create_app() -> Flask:
     def dnd():
         flask_settings = json.load(open(flask_settings_file, 'r'))
         if not flask_settings['dnd']['enabled']:
-            return redirect(url_for('index', key=request.args.get('key')))
+            return redirect(url_for('login', access="denied"))
 
-        write_data_point("route", "dnd", "ip", request.remote_addr)
         char_data = json.load(open(dnd_data_file, 'r'))
         data = json.load(open(dnd_strawpoll_file, 'r'))
 
@@ -325,9 +313,8 @@ def create_app() -> Flask:
     def hof():
         flask_settings = json.load(open(flask_settings_file, 'r'))
         if not flask_settings['hof']['enabled']:
-            return redirect(url_for('index', key=request.args.get('key')))
+            return redirect(url_for('login', access="denied"))
 
-        write_data_point("route", "hof", "ip", request.remote_addr)
         data = json.load(open(hof_file, 'r'))
 
         return render_template(
@@ -343,9 +330,8 @@ def create_app() -> Flask:
     def minecraft():
         flask_settings = json.load(open(flask_settings_file, 'r'))
         if not flask_settings['minecraft']['enabled']:
-            return redirect(url_for('index', key=request.args.get('key')))
+            return redirect(url_for('login', access="denied"))
 
-        write_data_point("route", "minecraft", "ip", request.remote_addr)
 
         minecraft_data = json.load(open(minecraft_file, 'r'))
 
@@ -367,7 +353,6 @@ def create_app() -> Flask:
     @app.route('/dungeonmaster', methods=['GET'])
     @require_appkey
     def dungeon_master():
-        write_data_point("route", "dungeonmaster", "ip", request.remote_addr)
 
         pwd = request.args.get('key')
         if pwd == "8b38d":
@@ -384,7 +369,6 @@ def create_app() -> Flask:
 
     @app.route('/calendar/')
     def calendar_ics():
-        write_data_point("route", "calendar", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -398,7 +382,6 @@ def create_app() -> Flask:
 
     @app.route('/padel/calendar/')
     def padel_calendar_ics():
-        write_data_point("route", "calendar/padel", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(padel_calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -412,7 +395,6 @@ def create_app() -> Flask:
 
     @app.route('/dnd/calendar/')
     def dnd_calendar_ics():
-        write_data_point("route", "calendar/dnd", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(dnd_calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -426,7 +408,6 @@ def create_app() -> Flask:
 
     @app.route('/birthday/calendar/')
     def birthday_calendar_ics():
-        write_data_point("route", "calendar/birthday", "ip", request.remote_addr)
 
         # Get the calendar data
         with io.open(birthday_calendar_file, 'r', newline='\r\n') as calendar_data:
@@ -502,17 +483,14 @@ def create_app() -> Flask:
 
     @app.route("/api")
     def redirect_api():
-        write_data_point("route", "api", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:5000', code=301)
 
     @app.route("/grafana")
     def redirect_grafana():
-        write_data_point("route", "grafana", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:3000', code=301)
 
     @app.route("/influx")
     def redirect_influx():
-        write_data_point("route", "influx", "ip", request.remote_addr)
         return redirect('http://rumstationen.com:8086', code=301)
 
     @app.before_request
