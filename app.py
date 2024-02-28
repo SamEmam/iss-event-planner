@@ -292,6 +292,8 @@ def create_app() -> Flask:
         char_data = json.load(open(dnd_data_file, 'r'))
         data = json.load(open(dnd_strawpoll_file, 'r'))
 
+        data = hide_old_events(data, 1)
+
         pwd = request.args.get('key')
         if pwd == "8b38d":
             lock_user_to_site = True
