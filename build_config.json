@@ -1,5 +1,5 @@
 {
-    "custom_command": "docker stop event_planner && docker rm event_planner && docker build --tag event_planner . && docker run -d --restart always -p 80:5001 --name=event_planner -it --volume shared-data:/data event_planner",
+    "custom_command": "docker stop event_planner && docker rm event_planner && docker build --tag event_planner . && docker run -d --restart always -p 5001:5001 --network=nginx-self-hosted_default --name=event_planner -it --volume shared-data:/data event_planner",
     "container_name": "",
     "cleanup": "",
     "mount_volume": ""
