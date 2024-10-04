@@ -15,6 +15,7 @@ auth_key_dict = {
     "67140": ['all'], # Carkmedc
     "1f881": ['all'], # carkmedc
     "7a8c3": ['all'], # carksutter
+    "b62ee": ['all'], # jonas password
     "0da6e": ['all'], # padel
     "8b38d": ['all'], # dnd
     "99706": ['all'], # minecraft
