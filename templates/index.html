@@ -450,7 +450,7 @@
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">NASA Image of the day</h4>
                     <p class="lead mb-0">
-                        <a href="https://apod.nasa.gov/apod/astropix.html?" {% if request.cookies.get('theme') == 'dark' %}class="dark-link"{% endif %} >{{ nasa_title }}</a>
+                        <a href="https://apod.nasa.gov/apod/astropix.html?" class="{% if request.cookies.get('theme') == 'dark' %}dark-link{% endif %}" >{{ nasa_title }}</a>
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
