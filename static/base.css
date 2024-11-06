@@ -243,6 +243,12 @@ a {
   color: var(--bs-primary);
   text-decoration: underline;
 }
+.dark-link{
+  color: var(--bs-gray-600);
+}
+.dark-link:hover{
+  color: var(--bs-gray-200);
+}
 a:hover {
   color: #15967d;
 }
@@ -11424,8 +11430,8 @@ html {
 }
 .divider-custom .divider-custom-line {
   width: 100%;
-  max-width: 25rem;
-  height: 0.25rem;
+  max-width: 40rem;
+  height: 0.4rem;
   background-color: #2c3e50;
   border-radius: 1rem;
   border-color: #2c3e50;

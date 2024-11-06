@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<body style="background-image: url({{image_of_the_day}}); background-repeat:
+<body
+    style="background-image: url({{image_of_the_day}}); background-repeat:
     no-repeat; background-attachment: fixed; background-size: cover; background-position: center; {% if request.cookies.get('theme') == 'dark' %}background-color:#212529;{% endif %}">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -18,30 +19,32 @@
                 <ul class="navbar-nav ms-auto">
                     {% if flask_settings.padel_tennis.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
+                            href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
                     {% endif %}
 
                     {% if flask_settings.dnd.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
+                            href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
                     {% endif %}
 
                     {% if flask_settings.hof.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('hof', key=appkey)}}">Hall of Fame</a></li>
+                            href="{{url_for('hof', key=appkey)}}">Hall of Fame</a></li>
                     {% endif %}
 
                     {% if flask_settings.minecraft.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
+                            href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
                     {% endif %}
 
                     {% if request.cookies.get("theme") == "dark" %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='index', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
+                            href="{{url_for('set_theme', page='index', theme='light', key=appkey)}}"><i
+                                class="fas fa-sun"></i> light</a></li>
                     {% else %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='index', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
+                            href="{{url_for('set_theme', page='index', theme='dark', key=appkey)}}"><i
+                                class="fas fa-moon"></i> dark</a></li>
                     {% endif %}
                     <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="#create">Opret begivenhed</a></li>
@@ -63,43 +66,42 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-subheading text-uppercase mb-0" style="font-size: 2em;">Opret ny begivenhed</h1>
+            <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 5em;">Begivenheder</h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
+                <div class="divider-custom-line"style="max-width: 42em;"></div>
             </div>
             <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Felter med * skal udfyldes —
-                Tidspunkt og slut dato udfyldes automatisk</p>
-        </div>
-        <div class="container">
+            <!-- <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Felter med * skal udfyldes —
+                Tidspunkt og slut dato udfyldes automatisk</p> -->
+            <!-- </div>
+        <div class="container"> -->
             <!-- Event Section Form-->
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-xl-7">
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <form id="contactForm" method="post">
-                        <!-- input_title input-->
-                        <div class="form-floating mb-3">
+            <!-- <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7"> -->
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- * * SB Forms Contact Form * *-->
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- <form id="contactForm" method="post"> -->
+            <!-- input_title input-->
+            <!-- <div class="form-floating mb-3">
                             <input class="form-control bg-primary" id="input_title" name="input_title" type="text"
                                 placeholder="Titlen på begivenheden..." data-sb-validations="required"
                                 style="color:white;" />
                             <label for="input_title" style="color: white;">Titlen på begivenheden *</label>
                             <div class="invalid-feedback" data-sb-feedback="input_title:required">A title is required.
                             </div>
-                        </div>
-                        <!-- input_host input-->
-                        <div class="form-floating mb-3">
+                        </div> -->
+            <!-- input_host input-->
+            <!-- <div class="form-floating mb-3">
                             <input class="form-control bg-primary" id="input_host" name="input_host" type="text"
-                                placeholder="Vært for begivenheden..."
-                                style="color:white;" />
+                                placeholder="Vært for begivenheden..." style="color:white;" />
                             <label for="input_host" style="color: white;">Vært</label>
                         </div>
                         <div class="row">
                             <div class="form-floating mb-3" style="width: 50%;">
-                                <input class="form-control bg-primary" id="input_start_date" name="input_start_date" type="date"
-                                    placeholder="" data-sb-validations="required"
+                                <input class="form-control bg-primary" id="input_start_date" name="input_start_date"
+                                    type="date" placeholder="" data-sb-validations="required"
                                     style="color:white;color-scheme: dark;" />
                                 <label for="input_start_date" style="color: white;padding-left: 0.7em;">Start dato
                                     *</label>
@@ -108,69 +110,87 @@
                                 </div>
                             </div>
                             <div class="form-floating mb-3" style="width: 50%;">
-                                <input class="form-control bg-primary" id="input_start_time" name="input_start_time" type="time"
-                                    placeholder=""
-                                    style="color:white; color-scheme: dark;" />
+                                <input class="form-control bg-primary" id="input_start_time" name="input_start_time"
+                                    type="time" placeholder="" style="color:white; color-scheme: dark;" />
                                 <label for="input_start_time" style="color: white;padding-left: 0.7em;">Start
                                     tidspunkt</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-floating mb-3" style="width: 50%;">
-                                <input class="form-control bg-primary" id="input_end_date" name="input_end_date" type="date"
-                                    placeholder="" style="color:white;color-scheme: dark;" />
+                                <input class="form-control bg-primary" id="input_end_date" name="input_end_date"
+                                    type="date" placeholder="" style="color:white;color-scheme: dark;" />
                                 <label for="input_end_date" style="color: white;padding-left: 0.7em;">Slut dato</label>
                             </div>
                             <div class="form-floating mb-3" style="width: 50%;">
-                                <input class="form-control bg-primary" id="input_end_time" name="input_end_time" type="time"
-                                    placeholder=""
-                                    style="color:white; color-scheme: dark;" />
+                                <input class="form-control bg-primary" id="input_end_time" name="input_end_time"
+                                    type="time" placeholder="" style="color:white; color-scheme: dark;" />
                                 <label for="input_end_time" style="color: white;padding-left: 0.7em;">Slut
                                     tidspunkt</label>
                             </div>
-                        </div>
-                        <!-- Message input-->
-                        <div class="form-floating mb-3">
+                        </div> -->
+            <!-- Message input-->
+            <!-- <div class="form-floating mb-3">
                             <textarea class="form-control bg-primary" id="input_desc" name="input_desc" type="text"
                                 placeholder="Giv en beskrivelse af begivenheden..."
                                 style="height: 10rem;color:white;"></textarea>
                             <label for="input_desc" style="color: white;">Beskrivelse</label>
-                        </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
+                        </div> -->
+            <!-- Submit success message-->
+            <!---->
+            <!-- This is what your users will see when the form-->
+            <!-- has successfully submitted-->
+            <!-- <div class="d-none" id="submitSuccessMessage">
                             <div class="text-center mb-3">
                                 <div class="fw-bolder">Begivenheden blev oprettet succesfuldt!</div>
                             </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage">
+                        </div> -->
+            <!-- Submit error message-->
+            <!---->
+            <!-- This is what your users will see when there is-->
+            <!-- an error submitting the form-->
+            <!-- <div class="d-none" id="submitErrorMessage">
                             <div class="text-center text-danger mb-3">Fejl ved oprettelse af begivenhed!</div>
-                        </div>
-                        <!-- Submit Button-->
-                        <input type="hidden" name="input_index">
+                        </div> -->
+            <!-- Submit Button-->
+            <!-- <input type="hidden" name="input_index">
                         <button class="btn btn-secondary btn-xl" id="submitButton" name="input_button" type="submit"
                             value="Create event" action="{{url_for('index', key=appkey)}}">Opret</button>
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
     </header>
     <!-- BEGIVENHEDER-->
     <section class="page-section portfolio" id="events" style="overflow-x: hidden;">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">Begivenheder</h2>
+            <!-- <h2
+                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">
+                Begivenheder</h2> -->
             <!-- Icon Divider-->
-            <div class="divider-custom">
-                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}"></div>
-            </div>
+            <!-- <div class="divider-custom">
+                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}">
+                </div>
+            </div> -->
             <!-- Portfolio Grid Items-->
+            <div class="row justify-content-center">
+                <!-- Opret ny begivenhed -->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#new_event"
+                        style="background-color: rgb(49,51,53); color: white;">
+                        <div
+                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i
+                                    class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <div class="bg-secondary" style="width: 100%;">
+                            <h2 style="padding: 0.5em; padding-top: 1em; text-align: center; font-size: 1.5em;">OPRET
+                                BEGIVENHED</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row justify-content-center">
                 {% for event in data %}
                 {% if not event.hidden %}
@@ -216,8 +236,9 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+
             </div>
-            
+
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
                 <div class="col-md-6 col-lg-4 mb-0">
@@ -231,14 +252,15 @@
                         <div class="bg-primary" style="width: 100%;">
                             <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">Begivenheds Rotation</h2>
                         </div>
-                        
+
                         <div class="row center" style="text-align: center;">
                             {% for i in range((event_rot_members|length) + 1) %}
                             <div style="width: 50%; padding-left: 2.5em; text-align: left;">
                                 <p class="tags">{{ get_event_host(event_rot_index, i, event_rot_members).month }}</p>
                             </div>
                             <div style="width: 50%; padding-right: 2.5em; text-align: right;">
-                                <p class="tags">{{ get_event_host(event_rot_index, i, event_rot_members).event_host }}</p>
+                                <p class="tags">{{ get_event_host(event_rot_index, i, event_rot_members).event_host }}
+                                </p>
                             </div>
                             {% endfor %}
                         </div>
@@ -248,114 +270,146 @@
         </div>
     </section>
     <!-- TILFØJ GOOGLE ALBUM -->
-    <section class="page-section bg-primary text-white text-center" id="add_album">
+    <section class="masthead bg-primary text-white text-center" id="add_album" style="padding-top: calc(2rem + 74px);">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
             <!-- <h1 class="masthead-subheading text-uppercase mb-0" style="font-size: 2em;">Opret ny begivenhed</h1> -->
-            <h2 class="page-section-heading text-center text-uppercase mb-0" style="font-size: 2em;">Tilføj Google Photos Album</h2>
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 5em;">Billeder</h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
+                <div class="divider-custom-line"style="max-width: 26em;"></div>
             </div>
+            <!-- <h2 class="page-section-heading text-center text-uppercase mb-0" style="font-size: 2em;">Tilføj Google
+                Photos Album</h2> -->
+            <!-- Icon Divider-->
+            <!-- <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+            </div> -->
             <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Dit Google Photos album skal være Shared</p>
-        </div>
-        <div class="container">
+            <!-- <p class="masthead-subheading font-weight-light mb-0" style="font-size: 1em;">Dit Google Photos album skal
+                være Shared</p>
+        </div> -->
+            <!-- <div class="container"> -->
             <!-- Album Section Form-->
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-xl-7">
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <form id="contactForm" method="post" enctype="multipart/form-data">
-                        <!-- album_title input-->
-                        <div class="form-floating mb-3">
+            <!-- <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7"> -->
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- * * SB Forms Contact Form * *-->
+            <!-- * * * * * * * * * * * * * * *-->
+            <!-- <form id="contactForm" method="post" enctype="multipart/form-data"> -->
+            <!-- album_title input-->
+            <!-- <div class="form-floating mb-3">
                             <input class="form-control bg-primary" id="album_title" name="album_title" type="text"
                                 placeholder="Titlen på albummet..." data-sb-validations="required"
                                 style="color:white;" />
                             <label for="album_title" style="color: white;">Titlen på albummet *</label>
                             <div class="invalid-feedback" data-sb-feedback="album_title:required">A title is required.
                             </div>
-                        </div>
-                        <!-- album_link input-->
-                        <div class="form-floating mb-3">
+                        </div> -->
+            <!-- album_link input-->
+            <!-- <div class="form-floating mb-3">
                             <input class="form-control bg-primary" id="album_link" name="album_link" type="url"
-                                placeholder="Link til album..."
-                                style="color:white;" />
+                                placeholder="Link til album..." style="color:white;" />
                             <label for="album_link" style="color: white;">Link til album *</label>
                             <div class="invalid-feedback" data-sb-feedback="album_link:required">A link is required.
                             </div>
-                        </div>
-                        <!-- album_date input-->
-                        <div class="form-floating mb-3">
+                        </div> -->
+            <!-- album_date input-->
+            <!-- <div class="form-floating mb-3">
                             <input class="form-control bg-primary" id="album_date" name="album_date" type="date"
-                                placeholder="Dato for album..."
-                                style="color:white;" />
+                                placeholder="Dato for album..." style="color:white;" />
                             <label for="album_date" style="color: white;">Dato for album *</label>
                             <div class="invalid-feedback" data-sb-feedback="album_date:required">A date is required.
                             </div>
-                        </div>
-                        <!-- album_thumbnail input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control file-input bg-primary" id="album_thumbnail" name="album_thumbnail" type="file"
-                                placeholder="Thumbnail..." accept="image/*"
+                        </div> -->
+            <!-- album_thumbnail input-->
+            <!-- <div class="form-floating mb-3">
+                            <input class="form-control file-input bg-primary" id="album_thumbnail"
+                                name="album_thumbnail" type="file" placeholder="Thumbnail..." accept="image/*"
                                 style="color:white;" />
                             <label for="album_thumbnail" style="color: white;">Thumbnail *</label>
-                            <div class="invalid-feedback" data-sb-feedback="album_thumbnail:required">A thumbnail is required.
+                            <div class="invalid-feedback" data-sb-feedback="album_thumbnail:required">A thumbnail is
+                                required.
                             </div>
-                        </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
+                        </div> -->
+            <!-- Submit success message-->
+            <!---->
+            <!-- This is what your users will see when the form-->
+            <!-- has successfully submitted-->
+            <!-- <div class="d-none" id="submitSuccessMessage">
                             <div class="text-center mb-3">
                                 <div class="fw-bolder">Album tilføjet succesfuldt!</div>
                             </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage">
+                        </div> -->
+            <!-- Submit error message-->
+            <!---->
+            <!-- This is what your users will see when there is-->
+            <!-- an error submitting the form-->
+            <!-- <div class="d-none" id="submitErrorMessage">
                             <div class="text-center text-danger mb-3">Fejl ved tilføjelse af album!</div>
-                        </div>
-                        <!-- Submit Button-->
-                        <input type="hidden" name="album_index">
+                        </div> -->
+            <!-- Submit Button-->
+            <!-- <input type="hidden" name="album_index">
                         <button class="btn btn-secondary btn-xl" id="submitButton" name="input_button" type="submit"
                             value="Add album" action="{{url_for('index', key=appkey)}}">Tilføj</button>
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
     </section>
     <!-- BILLEDER -->
     <section class="page-section portfolio" id="pictures">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">Billeder</h2>
+            <!-- <h2
+                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">
+                Billeder</h2> -->
             <!-- Icon Divider-->
-            <div class="divider-custom">
-                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}"></div>
+            <!-- <div class="divider-custom">
+                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}">
+                </div>
+            </div> -->
+            <div class="row justify-content-center">
+                <!-- Opret ny begivenhed -->
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#new_album"
+                        style="background-color: rgb(49,51,53); color: white;">
+                        <div
+                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i
+                                    class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <div class="bg-secondary" style="width: 100%;">
+                            <h2 style="padding: 0.5em; padding-top: 1em; text-align: center; font-size: 1.5em;">TILFØJ
+                                ALBUM</h2>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
                 {% for album in albums %}
                 <!-- Portfolio Item 1-->
                 <div class="col-md-6 col-lg-4 mb-5">
-                    <a href="{{album.link}}" target="_blank"><div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#album{{ loop.index0 }}"
-                        style="background-color: rgb(49,51,53);color: white;">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    <a href="{{album.link}}" target="_blank">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal"
+                            data-bs-target="#album{{ loop.index0 }}"
+                            style="background-color: rgb(49,51,53);color: white;">
+                            <div
+                                class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i
+                                        class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <div class="bg-primary" style="width: 100%;">
+                                <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ album.title }}</h2>
+                            </div>
+                            <img class="img-fluid" src="{{ url_for('fetch_thumbnail', filename=album.thumbnail) }}"
+                                alt="..." style="max-height: 20rem; width: 100%; height: 20rem; object-fit: cover;" />
                         </div>
-                        <div class="bg-primary" style="width: 100%;">
-                            <h2 style="padding: 0.5em; text-align: center; font-size: 1.5em;">{{ album.title }}</h2>
-                        </div>
-                        <img class="img-fluid" src="{{ url_for('fetch_thumbnail', filename=album.thumbnail) }}" alt="..." style="max-height: 20rem; width: 100%; height: 20rem; object-fit: cover;" />
-                    </div>
-                </a>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -365,10 +419,10 @@
     <section class="page-section bg-primary text-white mb-0" id="calendar">
         <div class="container">
             <!-- About Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-white">Kalender</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-white" style="font-size: 5em;">Kalender</h2>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
+                <div class="divider-custom-line" style="max-width: 29em;"></div>
             </div>
             <!-- About Section Content-->
             <p class="lead mb-0" style="text-align: center;">De fælles begivenheder kan meget nemt tilføjes til din
@@ -396,7 +450,7 @@
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">NASA Image of the day</h4>
                     <p class="lead mb-0">
-                        <a href="https://apod.nasa.gov/apod/astropix.html?">{{ nasa_title }}</a>
+                        <a href="https://apod.nasa.gov/apod/astropix.html?" {% if request.cookies.get('theme') == 'dark' %}class="dark-link"{% endif %} >{{ nasa_title }}</a>
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
@@ -558,5 +612,224 @@
         </div>
     </div>
     {% endfor %}
-
+    <!-- New Event -->
+    <div class="portfolio-modal modal fade" id="new_event" tabindex="-1" aria-labelledby="new_event" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Contact Section-->
+                                <section class="page-section" id="contact">
+                                    <div class="container">
+                                        <!-- Contact Section Form-->
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-8 col-xl-7">
+                                                <form id="contactForm" method="post">
+                                                    <!-- input_title input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="input_title" name="input_title"
+                                                            type="text" placeholder="Titlen på begivenheden..." value=""
+                                                            data-sb-validations="required" />
+                                                        <label for="input_title">Titlen på begivenheden *</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="input_title:required">A title is required.
+                                                        </div>
+                                                    </div>
+                                                    <!-- input_host input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="input_host" name="input_host"
+                                                            type="text" placeholder="Vært for begivenheden..."
+                                                            value="" />
+                                                        <label for="input_host">Vært</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-floating mb-3" style="width: 50%;">
+                                                            <input class="form-control" id="input_start_date"
+                                                                name="input_start_date" type="date" placeholder=""
+                                                                data-sb-validations="required" style="font-size: 1.1em;"
+                                                                value="" />
+                                                            <label for="input_start_date"
+                                                                style="padding-left: 0.7em; font-size: 1.2em;">Start
+                                                                dato *</label>
+                                                            <div class="invalid-feedback"
+                                                                data-sb-feedback="input_start_date:required">A start
+                                                                date is required.
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-floating mb-3" style="width: 50%;">
+                                                            <input class="form-control" id="input_start_time"
+                                                                name="input_start_time" type="time" placeholder=""
+                                                                style="font-size: 1.1em;" value="" />
+                                                            <label for="input_start_time"
+                                                                style="padding-left: 0.7em; font-size: 1.2em;">Start
+                                                                tidspunkt</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-floating mb-3" style="width: 50%;">
+                                                            <input class="form-control" id="input_end_date"
+                                                                name="input_end_date" type="date" placeholder=""
+                                                                style="font-size: 1.1em;" value="" />
+                                                            <label for="input_end_date"
+                                                                style="padding-left: 0.7em; font-size: 1.2em;">Slut
+                                                                dato</label>
+                                                        </div>
+                                                        <div class="form-floating mb-3" style="width: 50%;">
+                                                            <input class="form-control" id="input_end_time"
+                                                                name="input_end_time" type="time" placeholder=""
+                                                                style="font-size: 1.1em;" value="" />
+                                                            <label for="input_end_time"
+                                                                style="padding-left: 0.7em; font-size: 1.2em;">Slut
+                                                                tidspunkt</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Message input-->
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control" id="input_desc" name="input_desc"
+                                                            type="text"
+                                                            placeholder="Giv en beskrivelse af begivenheden..."
+                                                            style="height: 10rem;"></textarea>
+                                                        <label for="input_desc">Beskrivelse</label>
+                                                    </div>
+                                                    <!-- Submit success message-->
+                                                    <!---->
+                                                    <!-- This is what your users will see when the form-->
+                                                    <!-- has successfully submitted-->
+                                                    <div class="d-none" id="submitSuccessMessage">
+                                                        <div class="text-center mb-3">
+                                                            <div class="fw-bolder">Begivenheden blev oprettet
+                                                                succesfuldt!</div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Submit error message-->
+                                                    <!---->
+                                                    <!-- This is what your users will see when there is-->
+                                                    <!-- an error submitting the form-->
+                                                    <div class="d-none" id="submitErrorMessage">
+                                                        <div class="text-center text-danger mb-3">Fejl ved oprettelse af
+                                                            begivenhed!</div>
+                                                    </div>
+                                                    <!-- Submit Button-->
+                                                    <input type="hidden" name="input_index">
+                                                    <button class="btn btn-secondary btn-xl" id="submitButton"
+                                                        name="input_button" type="submit" value="Create event"
+                                                        action="{{url_for('index', key=appkey)}}">Opret</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Album -->
+    <div class="portfolio-modal modal fade" id="new_album" tabindex="-1" aria-labelledby="new_album" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Contact Section-->
+                                <section class="page-section" id="contact">
+                                    <div class="container">
+                                        <!-- Contact Section Form-->
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-8 col-xl-7">
+                                                <form id="contactForm" method="post" enctype="multipart/form-data">
+                                                    <!-- album_title input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="album_title" name="album_title"
+                                                            type="text" placeholder="Titlen på albummet..."
+                                                            data-sb-validations="required" />
+                                                        <label for="album_title">Titlen på
+                                                            albummet *</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="album_title:required">A title is required.
+                                                        </div>
+                                                    </div>
+                                                    <!-- album_link input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="album_link" name="album_link"
+                                                            type="url" placeholder="Link til album..." />
+                                                        <label for="album_link">Link til album
+                                                            *</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="album_link:required">A link is required.
+                                                        </div>
+                                                    </div>
+                                                    <!-- album_date input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="album_date" name="album_date"
+                                                            type="date" placeholder="Dato for album..." />
+                                                        <label for="album_date">Dato for album
+                                                            *</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="album_date:required">A date is required.
+                                                        </div>
+                                                    </div>
+                                                    <!-- album_thumbnail input-->
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control file-input" id="album_thumbnail"
+                                                            name="album_thumbnail" type="file"
+                                                            placeholder="Thumbnail..." accept="image/*" />
+                                                        <label for="album_thumbnail">Thumbnail
+                                                            *</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="album_thumbnail:required">A thumbnail is
+                                                            required.
+                                                        </div>
+                                                    </div>
+                                                    <!-- Submit success message-->
+                                                    <!---->
+                                                    <!-- This is what your users will see when the form-->
+                                                    <!-- has successfully submitted-->
+                                                    <div class="d-none" id="submitSuccessMessage">
+                                                        <div class="text-center mb-3">
+                                                            <div class="fw-bolder">Album tilføjet succesfuldt!</div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Submit error message-->
+                                                    <!---->
+                                                    <!-- This is what your users will see when there is-->
+                                                    <!-- an error submitting the form-->
+                                                    <div class="d-none" id="submitErrorMessage">
+                                                        <div class="text-center text-danger mb-3">Fejl ved tilføjelse af
+                                                            album!</div>
+                                                    </div>
+                                                    <!-- Submit Button-->
+                                                    <input type="hidden" name="album_index">
+                                                    <button class="btn btn-secondary btn-xl" id="submitButton"
+                                                        name="input_button" type="submit" value="Add album"
+                                                        action="{{url_for('index', key=appkey)}}">Tilføj</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endblock %}
