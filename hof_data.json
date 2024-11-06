@@ -4,5 +4,11 @@
         "event": "Rate My Mead",
         "date": "November 2023",
         "image": "hall_of_fame/hof_1.png"
+    },
+    {
+        "winner": "Christoffer Iversen",
+        "event": "Nostalgi",
+        "date": "Oktober 2024",
+        "image": "hall_of_fame/hof_2.png"
     }
 ]
