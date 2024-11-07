@@ -2,7 +2,8 @@
 
 {% block content %}
 
-<body style="background-image: url({{image_of_the_day}}); background-repeat:
+<body
+    style="background-image: url({{image_of_the_day}}); background-repeat:
     no-repeat; background-attachment: fixed; background-size: cover; overflow-x: hidden; background-position: center; {% if request.cookies.get('theme') == 'dark' %}background-color:#212529;{% endif %}">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -17,29 +18,31 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
+                            href="{{url_for('index', key=appkey)}}">Rumstationen</a></li>
 
                     {% if flask_settings.padel_tennis.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
+                            href="{{url_for('padel', key=appkey)}}">Padel Tennis</a></li>
                     {% endif %}
 
                     {% if flask_settings.dnd.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
+                            href="{{url_for('dnd', key=appkey)}}">Dungeons & Dragons</a></li>
                     {% endif %}
 
                     {% if flask_settings.minecraft.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
+                            href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
                     {% endif %}
 
                     {% if request.cookies.get("theme") == "dark" %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='hof', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
+                            href="{{url_for('set_theme', page='hof', theme='light', key=appkey)}}"><i
+                                class="fas fa-sun"></i> light</a></li>
                     {% else %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                        href="{{url_for('set_theme', page='hof', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
+                            href="{{url_for('set_theme', page='hof', theme='dark', key=appkey)}}"><i
+                                class="fas fa-moon"></i> dark</a></li>
                     {% endif %}
                     <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                             href="#events">Begivenheder</a></li>
@@ -55,7 +58,8 @@
             <!-- Masthead Avatar Image-->
             <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." /> -->
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0 superior-man" style="color: var(--bs-primary-bg-text-color)">The Superior Man</h1>
+            <h1 class="masthead-heading text-uppercase mb-0 superior-man"
+                style="color: var(--bs-primary-bg-text-color)">The Superior Man</h1>
             <!-- Icon Divider-->
             <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -72,20 +76,32 @@
                 {% for item in data %}
                 <!-- Portfolio Item 1-->
                 <div class="col-md-2 col-lg-2 mb-5">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#item{{ loop.index0 }}"
-                        style="background-color: rgb(var(--bs-secondary-rgb));color: white;">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    <a href="{{ item.album }}" target="_blank" style="text-decoration:none">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal"
+                            data-bs-target="#item{{ loop.index0 }}"
+                            style="background-color: rgb(var(--bs-secondary-rgb));color: white;">
+                            <div
+                                class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i
+                                        class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <div style="background-color: var(--bs-primary); width: 100%;">
+                                <h1 class="hof-winner-name"
+                                    style="padding-top: 0.5em; text-align: center; font-size: 2em; color: var(--bs-gray-900)">
+                                    {{ item.event }}</h1>
+                                <h1 class="hof-winner-name"
+                                    style="padding-bottom: 0.5em; text-align: center; font-size: 1em; color: var(--bs-gray-900)">
+                                    {{ item.date }}</h1>
+                            </div>
+                            <div style="position: relative;">
+                                <img class="img-fluid" src="{{ url_for('static', filename=item.image) }}"
+                                    alt="{{ item.winner }}" style="width:100%; height: 100%; object-fit: cover;" />
+                                <h2 class="text-center"
+                                    style="padding-bottom: 0.1em; color: white; position: absolute; top: 0%; left: 50%; transform: translate(-50%, -0%); font-size: 1.6em; width: 110%; background-color: rgba(0,0,0,0.6)">
+                                    {{ item.winner }}</h2>
+                            </div>
                         </div>
-                        <div style="background-color: var(--bs-primary); width: 100%;">
-                            <h1 class="hof-winner-name" style="padding-top: 0.5em; text-align: center; font-size: 2em; color: var(--bs-gray-900)">{{ item.event }}</h1>
-                            <h1 class="hof-winner-name" style="padding-bottom: 0.5em; text-align: center; font-size: 1em; color: var(--bs-gray-900)">{{ item.date }}</h1>
-                        </div>
-                        <div style="position: relative;">
-                            <img class="img-fluid" src="{{ url_for('static', filename=item.image) }}" alt="{{ item.winner }}" style="width:100%; height: 100%; object-fit: cover;" />
-                            <h2 class="text-center" style="padding-bottom: 0.1em; color: white; position: absolute; top: 0%; left: 50%; transform: translate(-50%, -0%); font-size: 1.6em; width: 110%; background-color: rgba(0,0,0,0.6)">{{ item.winner }}</h2>
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
@@ -100,12 +116,15 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">Urban Dictionary</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.urbandictionary.com/define.php?term=superiority"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                        href="https://www.urbandictionary.com/define.php?term=superiority"><i
+                            class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">Trofæet</h4>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://photos.app.goo.gl/4NgmjUAyfKzHHUvB6"><i class="fab fa-fw fa-dribbble"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                        href="https://photos.app.goo.gl/4NgmjUAyfKzHHUvB6"><i class="fab fa-fw fa-dribbble"></i></a>
                 </div>
                 <!-- Footer About Text-->
                 <div class="col-lg-4">

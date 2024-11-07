@@ -3,12 +3,14 @@
         "winner": "Jonas Jørgensen",
         "event": "Rate My Mead",
         "date": "November 2023",
-        "image": "hall_of_fame/hof_1.png"
+        "image": "hall_of_fame/hof_1.png",
+        "album": "https://photos.app.goo.gl/Qi8kitDUJoxvnnx58"
     },
     {
         "winner": "Christoffer Iversen",
         "event": "Nosserstalgi",
         "date": "Oktober 2024",
-        "image": "hall_of_fame/hof_2.png"
+        "image": "hall_of_fame/hof_2.png",
+        "album": "https://photos.app.goo.gl/UhhmxdUB1mpDcLBA9"
     }
 ]
