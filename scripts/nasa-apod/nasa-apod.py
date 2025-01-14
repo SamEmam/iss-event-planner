@@ -37,6 +37,7 @@ def get_apod_data():
         response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}', timeout=5)
         if response.status_code == 200:
             response_ok = True
+            print(response.json())
     except Exception:
         print("Nasa APOD is down", datetime.today())
 
