@@ -61,8 +61,9 @@ def get_apod_data():
 def download_apod_images():
     try:
         data = json.load(open(data_file, 'r'))
-    except:
+    except Exception:
         print("APOD data is missing, please ensure apod_data.json exists")
+        return
 
     image_ext = data['url'].split('.')[-1]
     image = requests.get(data['url']).content
