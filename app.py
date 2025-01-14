@@ -33,6 +33,7 @@ data_file = os.path.join(SITE_ROOT, data_path, "event_data.json")
 settings_file = os.path.join(SITE_ROOT, data_path, "event_settings.json")
 calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 birthday_calendar_file = os.path.join(SITE_ROOT, data_path, "birthday.ics")
+sdu_calendar_file = os.path.join(SITE_ROOT, data_path, "sdu.ics")
 
 padel_data_file = os.path.join(SITE_ROOT, data_path, "padel_event_data.json")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
@@ -45,6 +46,7 @@ dnd_thumbnails_folder = "./static/thumbnails"
 dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
 dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
 
+
 hof_file = "hof_data.json"
 flask_settings_file = "flask_settings.json"
 minecraft_file = "minecraft_data.json"
@@ -54,6 +56,7 @@ if debug:
     settings_file = "settings.json"
     calendar_file = "rumstationen.ics"
     birthday_calendar_file = "birthday.ics"
+    sdu_calendar_file = "sdu.ics"
 
     padel_data_file = "padel_event_data.json"
     padel_calendar_file = "padel.ics"
@@ -418,6 +421,19 @@ def create_app() -> Flask:
         # turn calendar data into a response
         response = app.make_response(calendar_string)
         response.headers["Content-Disposition"] = "attachment; filename=birthday_calendar.ics"
+        response.headers["Content-Type"] = "text/calendar"
+        return response
+
+    @app.route('/sdu/calendar/')
+    def sdu_calendar_ics():
+
+        # Get the calendar data
+        with io.open(sdu_calendar_file, 'r', newline='\r\n') as calendar_data:
+            calendar_string = calendar_data.read()
+
+        # turn calendar data into a response
+        response = app.make_response(calendar_string)
+        response.headers["Content-Disposition"] = "attachment; filename=sdu_calendar.ics"
         response.headers["Content-Type"] = "text/calendar"
         return response
 

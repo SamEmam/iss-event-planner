@@ -34,6 +34,7 @@ calendar_file = os.path.join(SITE_ROOT, data_path, "rumstationen.ics")
 padel_calendar_file = os.path.join(SITE_ROOT, data_path, "padel.ics")
 dnd_strawpoll_file = os.path.join(SITE_ROOT, data_path, "dnd_strawpoll_data.json")
 dnd_calendar_file = os.path.join(SITE_ROOT, data_path, "dnd.ics")
+sdu_calendar_file = os.path.join(SITE_ROOT, data_path, "sdu.ics")
 
 if debug:
     data_file = "event_data.json"
@@ -43,6 +44,7 @@ if debug:
     padel_calendar_file = "padel.ics"
     dnd_strawpoll_file = "dnd_strawpoll_data.json"
     dnd_calendar_file = "dnd.ics"
+    sdu_calendar_file = "sdu.ics"
 
 
 def get_title(today):
@@ -278,16 +280,33 @@ def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
     json.dump(strawpoll_events, open(strawpoll_data_file, 'w'))
 
 
+def create_nicole_sdu_calendar():
+    sdu_ical_url = 'https://sdu.itslearning.com/Calendar/CalendarFeed.ashx?LocationType=3&LocationID=0&PersonId=441863&CustomerId=900937&ChildId=0&Guid=ee8de37dd338ed5e3d7bdf578f7c210b&Culture=en-GB&FavoriteOnly=True'
+
+    cal = Calendar(requests.get(sdu_ical_url).text)
+
+    with open(sdu_calendar_file, 'w') as ics_file:
+        ics_file.writelines(cal)
+
+
 interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
 interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
 
 @aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
+    # Rumstationen
     generate_ics_file(data_file, calendar_file, normal_enum)
+
+    # Padel
     interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
     generate_ics_file(padel_data_file, padel_calendar_file, padel_enum)
+
+    # DnD
     interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
     generate_ics_file(dnd_strawpoll_file, dnd_calendar_file, dnd_enum)
+
+    # Nicole SDU
+    create_nicole_sdu_calendar()
 
 
 @aiocron.crontab('0 0 1 */2 *')
