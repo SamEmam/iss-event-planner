@@ -19,7 +19,7 @@ if 'Microsoft' in platform.release():
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 data_path = "/data/"
 data_file = os.path.join(SITE_ROOT, data_path, "apod_data.json")
-destination = "apod/"
+destination = "event_thumbnails/"
 apod_folder = os.path.join(SITE_ROOT, data_path, destination)
 bucket = "backup.rumstationen"
 apod_key = "gJcbs0l90YjhKCzskRqr0zQpPRn5gEJVwDVA4KVZ"
