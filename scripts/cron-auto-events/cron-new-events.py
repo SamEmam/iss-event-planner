@@ -291,6 +291,7 @@ def create_nicole_sdu_calendar():
 
 interpret_strawpoll_data(padel_data_file, fetch_strawpoll_data(strawpoll_id_padel))
 interpret_strawpoll_data(dnd_strawpoll_file, fetch_strawpoll_data(strawpoll_id_dnd))
+create_nicole_sdu_calendar()
 
 @aiocron.crontab('*/15 * * * *')
 async def update_ics_file():
