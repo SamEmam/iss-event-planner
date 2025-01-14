@@ -1,0 +1,6 @@
+{
+    "custom_command": "",
+    "container_name": "nasa_apod",
+    "cleanup": "y",
+    "mount_volume": "y"
+}
