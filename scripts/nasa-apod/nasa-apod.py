@@ -37,18 +37,17 @@ def get_apod_data():
         response = requests.get(f'https://api.nasa.gov/planetary/apod?thumbs=True&start_date={start_date}&api_key={apod_key}', timeout=5)
         if response.status_code == 200:
             response_ok = True
-            print(response.json())
     except Exception:
         print("Nasa APOD is down", datetime.today())
 
     if response_ok:
         data = response.json()
         if 'hdurl' in data[-1]:
-            return data[-1]
+            data = data[-1]
         elif 'hdurl' in data[-2]:
-            return data[-2]
+            data = data[-2]
         else:
-            return data[-3]
+            data = data[-3]
     else:
         data = {
             'hdurl': 'https://apod.nasa.gov/apod/image/2306/Trifid_Pugh_2346.jpg',
