@@ -7,7 +7,7 @@
 
 <body style="height: 100%; width:100%;background: black;">
     <div
-        style="background-image: url({{image_of_the_day.hdurl}}), url({{image_of_the_day.url}}); background-repeat:
+        style="background-image: url({{ url_for('fetch_thumbnail', filename='hd_image.jpg') }}), url({{ url_for('fetch_thumbnail', filename='image.jpg') }}); background-repeat:
     no-repeat; background-attachment: fixed; background-size: cover; background-position: center; height: inherit; width: inherit;">
         <section class="page-section" id="contact">
             <div class="container">
