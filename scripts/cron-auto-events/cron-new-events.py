@@ -226,11 +226,11 @@ def auto_generate_dnd_events():
     in_3_months = datetime.today() + relativedelta(months=2)
 
     year_month = in_3_months.strftime('%Y-%m')
-    first_thursday = np.busday_offset(year_month, 0, roll='forward', weekmask='Thu')
-    third_sunday = np.busday_offset(year_month, 2, roll='forward', weekmask='Sun')
+    first_friday = np.busday_offset(year_month, 0, roll='forward', weekmask='Fri')
+    third_friday = np.busday_offset(year_month, 2, roll='forward', weekmask='Fri')
 
-    update_dnd_strawpoll_data(np.datetime_as_string(first_thursday, unit ='m'))
-    update_dnd_strawpoll_data(np.datetime_as_string(third_sunday, unit ='m'))
+    update_dnd_strawpoll_data(np.datetime_as_string(first_friday, unit ='m'))
+    update_dnd_strawpoll_data(np.datetime_as_string(third_friday, unit ='m'))
 
 
 def interpret_strawpoll_data(strawpoll_data_file, strawpoll_data):
