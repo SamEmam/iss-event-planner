@@ -10,5 +10,8 @@
     },
     "minecraft": {
         "enabled": false
+    },
+    "plex": {
+        "enabled": true
     }
 }

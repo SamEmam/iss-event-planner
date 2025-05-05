@@ -4,7 +4,7 @@
 
 <body
     style="background-image: url({{image_of_the_day}}); background-repeat:
-    no-repeat; background-attachment: fixed; background-size: cover; background-position: center; {% if request.cookies.get('theme') == 'dark' %}background-color:#212529;{% endif %}">
+    no-repeat; background-attachment: fixed; background-size: cover; background-position: center; {% if request.cookies.get('theme') != 'light' %}background-color:#212529;{% endif %}">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
@@ -37,14 +37,17 @@
                             href="{{url_for('minecraft', key=appkey)}}">Minecraft</a></li>
                     {% endif %}
 
-                    {% if request.cookies.get("theme") == "dark" %}
+                    {% if flask_settings.plex.enabled %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                            href="{{url_for('set_theme', page='index', theme='light', key=appkey)}}"><i
-                                class="fas fa-sun"></i> light</a></li>
+                        href="{{url_for('plex', key=appkey)}}">Plex</a></li>
+                    {% endif %}
+
+                    {% if request.cookies.get("theme") == "light" %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
+                        href="{{url_for('set_theme', page='index', theme='dark', key=appkey)}}"><i class="fas fa-moon"></i> dark</a></li>
                     {% else %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
-                            href="{{url_for('set_theme', page='index', theme='dark', key=appkey)}}"><i
-                                class="fas fa-moon"></i> dark</a></li>
+                        href="{{url_for('set_theme', page='index', theme='light', key=appkey)}}"><i class="fas fa-sun"></i> light</a></li>
                     {% endif %}
                     <!-- <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-2 px-0 px-lg-2 rounded"
                         href="#create">Opret begivenhed</a></li>
@@ -166,11 +169,11 @@
         <div class="container">
             <!-- Portfolio Section Heading-->
             <!-- <h2
-                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">
+                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') != 'light' %}text-light{% else %}text-secondary{% endif %} mb-0">
                 Begivenheder</h2> -->
             <!-- Icon Divider-->
             <!-- <div class="divider-custom">
-                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}">
+                <div class="divider-custom-line {% if request.cookies.get('theme') != 'light' %}bg-light{% endif %}">
                 </div>
             </div> -->
             <!-- Portfolio Grid Items-->
@@ -365,11 +368,11 @@
         <div class="container">
             <!-- Portfolio Section Heading-->
             <!-- <h2
-                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') == 'dark' %}text-light{% else %}text-secondary{% endif %} mb-0">
+                class="page-section-heading text-center text-uppercase {% if request.cookies.get('theme') != 'light' %}text-light{% else %}text-secondary{% endif %} mb-0">
                 Billeder</h2> -->
             <!-- Icon Divider-->
             <!-- <div class="divider-custom">
-                <div class="divider-custom-line {% if request.cookies.get('theme') == 'dark' %}bg-light{% endif %}">
+                <div class="divider-custom-line {% if request.cookies.get('theme') != 'light' %}bg-light{% endif %}">
                 </div>
             </div> -->
             <div class="row justify-content-center">
@@ -453,7 +456,7 @@
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="text-uppercase mb-4">NASA Image of the day</h4>
                     <p class="lead mb-0">
-                        <a href="https://apod.nasa.gov/apod/astropix.html?" class="{% if request.cookies.get('theme') == 'dark' %}dark-link{% endif %}" >{{ nasa_title }}</a>
+                        <a href="https://apod.nasa.gov/apod/astropix.html?" class="{% if request.cookies.get('theme') != 'light' %}dark-link{% endif %}" >{{ nasa_title }}</a>
                     </p>
                 </div>
                 <!-- Footer Social Icons-->

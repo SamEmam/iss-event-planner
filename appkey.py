@@ -19,6 +19,7 @@ auth_key_dict = {
     "0da6e": ['all'], # padel
     "8b38d": ['all'], # dnd
     "99706": ['all'], # minecraft
+    "cf6dd": ['all'], # plex
 }
 auth_key_dict_old = {
     "marc1234": ['all'],
@@ -31,7 +32,8 @@ auth_key_dict_old = {
     "carksutter": ['all'],
     "padel": ['all'],
     "dnd": ['all'],
-    "minecraft": ['all']
+    "minecraft": ['all'],
+    "plex": ['all']
 }
 
 

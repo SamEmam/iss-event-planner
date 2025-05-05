@@ -153,6 +153,8 @@ def create_app() -> Flask:
                 return redirect(url_for('dnd', key=pwd))
             elif pwd == "99706":
                 return redirect(url_for('minecraft', key=pwd))
+            elif pwd == "cf6dd":
+                return redirect(url_for('plex', key=pwd))
             else:
                 return redirect(url_for('index', key=pwd))
         return render_template(
@@ -355,6 +357,28 @@ def create_app() -> Flask:
             flask_settings=flask_settings
         )
 
+    @app.route('/plex', methods=['GET'])
+    @require_appkey
+    def plex():
+        flask_settings = json.load(open(flask_settings_file, 'r'))
+        if not flask_settings['plex']['enabled']:
+            return redirect(url_for('login', access="denied"))
+
+
+        pwd = request.args.get('key')
+        if pwd == "cf6dd":
+            lock_user_to_site = True
+        else:
+            lock_user_to_site = False
+
+        return render_template(
+            'plex.html',
+            lock_user_to_site=lock_user_to_site,
+            appkey=request.args.get('key'),
+            nasa_title=get_title_of_the_day(),
+            flask_settings=flask_settings
+        )
+
     @app.route('/dungeonmaster', methods=['GET'])
     @require_appkey
     def dungeon_master():
@@ -494,7 +518,7 @@ def create_app() -> Flask:
 
     @app.route("/<theme>/<page>/set-theme")
     @require_appkey
-    def set_theme(theme="light", page="index"):
+    def set_theme(theme="dark", page="index"):
         res = make_response(redirect(url_for(page, key=request.args.get('key'))))
         res.set_cookie("theme", value=theme, max_age=(60 * 60 * 24 * 365 * 2))
         return res
