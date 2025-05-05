@@ -56,18 +56,23 @@
 }
 
 
-.dnd-character-name {
-  min-height: 1.5em !important;
-}
-
 @media (768px <= width < 1400px) {
-  .dnd-character-name {
-    min-height: 3.5em !important;
+  .responsive-width {
+    flex: 0 0 auto;
+    width: 50% !important;
   }
 }
 
 @media (768px <= width < 992px) {
-  .dnd-character-name {
+  .responsive-width {
     font-size: 1em !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .col-6{
+    flex: 0 0 auto;
+    width: 50%;
   }
 }
