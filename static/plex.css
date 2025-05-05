@@ -61,3 +61,9 @@
     width: 50%;
   }
 }
+
+.footer-img {
+  width: 1rem;       /* Roughly 40px if root font-size is 16px */
+  height: 1rem;
+  object-fit: contain; /* Keeps image proportions */
+}
